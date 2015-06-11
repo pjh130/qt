@@ -2,6 +2,11 @@
 *.o
 *.a
 *.so
+*.obj
+*.exe
+*.Debug
+*.Release
+*.user
 
 # Folders
 _obj
