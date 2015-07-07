@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMediaPlayer>
+#include <QDebug>
+#include <QVideoWidget>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,7 +28,17 @@ void MainWindow::on_pushButton_clicked()
 
     QMediaPlayer *player = new QMediaPlayer;
 //    connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-    player->setMedia(QUrl::fromLocalFile(str));
+    QUrl url = QUrl::fromLocalFile(str);
+
+
+    qDebug()<<url.toString();
+    player->setMedia(url);
     player->setVolume(50);
+
+    QVideoWidget *videoWidget = new QVideoWidget();
+    player->setVideoOutput(videoWidget);
+    videoWidget->show();
+
+
     player->play();
 }
