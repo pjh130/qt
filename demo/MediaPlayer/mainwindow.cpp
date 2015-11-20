@@ -36,6 +36,8 @@ void MainWindow::on_pushButton_clicked()
     player->setVolume(50);
 
     QVideoWidget *videoWidget = new QVideoWidget();
+//    videoWidget->setSizePolicy();
+    ui->centralWidget->layout()->addWidget(videoWidget);
     player->setVideoOutput(videoWidget);
     videoWidget->show();
 
