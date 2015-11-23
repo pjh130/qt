@@ -500,7 +500,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "HttpTool", 0));
         groupBoxReq->setTitle(QApplication::translate("MainWindow", "Request", 0));
         label->setText(QApplication::translate("MainWindow", "URL ", 0));
-        lineEditUrl->setText(QApplication::translate("MainWindow", "https://localhost:60000", 0));
+        lineEditUrl->setText(QApplication::translate("MainWindow", "http://localhost:60000", 0));
         comboBoxMethod->clear();
         comboBoxMethod->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "GET", 0)

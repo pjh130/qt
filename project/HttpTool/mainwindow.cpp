@@ -50,7 +50,7 @@ QHttpMultiPart *MainWindow::getBodyDataFormdata()
                 qDebug()<<"value: "<<strValue;
                 QHttpPart textPart;
                 textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"%1\"").arg(strKey)));
-                //textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"%1\"; filename=\"%2\"").arg(strKey).arg("qt.txt")));
+//                textPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"%1\"; filename=\"%2\"").arg(strKey).arg("qt.txt")));
                 textPart.setBody(strValue.toUtf8());
                 multiPart->append(textPart);
             }
@@ -63,7 +63,7 @@ QHttpMultiPart *MainWindow::getBodyDataFormdata()
         QHttpPart imagePart;
         QFile *file = new QFile("image.jpg");
         imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
-        //        imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-msdownload"));
+//                imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-msdownload"));
         imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"%1\"; filename=\"%2\"").arg("strKey").arg(file->fileName())));
 
         file->open(QIODevice::ReadOnly);
@@ -146,9 +146,14 @@ void MainWindow::on_pushButtonSubmit_clicked()
         ParameterItem *pItem = iter.value();
         if (NULL != pItem)
         {
-            if( !pItem->getKey().isEmpty() && !pItem->getValue().isEmpty())
+            QString strKey = pItem->getKey();
+            QString strValue = pItem->getValue();
+            qDebug()<<"key: "<<strKey;
+            qDebug()<<"value: "<<strValue;
+
+            if( !strValue.isEmpty() && !strKey.isEmpty())
             {
-                request.setRawHeader(pItem->getKey().toUtf8(), pItem->getValue().toUtf8());
+                request.setRawHeader(strKey.toUtf8(), strValue.toUtf8());
             }
         }
         iter++;
@@ -188,6 +193,7 @@ void MainWindow::on_pushButtonSubmit_clicked()
                 QMessageBox::warning(this, "Error", "Binary is empty!");
                 return;
             }
+            request.setHeader(QNetworkRequest::ContentTypeHeader, "application/octet-stream");
             reply = qnam.post(request, pF);
             pF->setParent(reply);
             break;
@@ -250,15 +256,13 @@ void MainWindow::httpFinished()
         return;
     }
     reply->ignoreSslErrors();
-    if (QNetworkReply::NoError == reply->error())
-    {
-        ui->labelStatus->setText("200 OK");
-        byRecv += reply->readAll();
-    } else {
-
-        QString strStatus = QString::number(((int)reply->error()));
-        ui->labelStatus->setText(strStatus + " " + reply->errorString());
-    }
+    QVariant status_code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+//    if (QNetworkReply::NoError == reply->error())
+//    {
+//        byRecv += reply->readAll();
+//    } else {
+//    }
+    ui->labelStatus->setText(status_code.toString() + " " + reply->errorString());
 
     ui->labelUrl->setText(reply->url().toString());
     ui->labelMethod->setText(m_strMethod);

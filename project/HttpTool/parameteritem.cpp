@@ -17,7 +17,7 @@ ParameterItem::~ParameterItem()
 
 void ParameterItem::on_pushButtonDel_clicked()
 {
-    emit sigCloseMe(m_strFlag, m_strKey, m_strValue);
+    emit sigCloseMe(m_strFlag, ui->lineEditKey->text().trimmed(), ui->lineEditValue->text().trimmed());
     //close();
 }
 
@@ -32,10 +32,10 @@ void ParameterItem::initValue(QString strKey, QString strValue)
 
 QString ParameterItem::getKey()
 {
-    return m_strKey;
+    return ui->lineEditKey->text().trimmed();
 }
 
 QString ParameterItem::getValue()
 {
-    return m_strValue;
+    return ui->lineEditValue->text().trimmed();
 }

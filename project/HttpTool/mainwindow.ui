@@ -65,7 +65,7 @@
            <item>
             <widget class="QLineEdit" name="lineEditUrl">
              <property name="text">
-              <string>https://localhost:60000</string>
+              <string>http://localhost:60000</string>
              </property>
             </widget>
            </item>
