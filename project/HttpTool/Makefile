@@ -201,7 +201,8 @@ Makefile: HttpTool.pro E:\develop\Qt\5.4.1\5.4\msvc2013_64_opengl\mkspecs\win32-
 		E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/qtmain.prl \
 		E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Core.prl \
 		E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Widgets.prl \
-		E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Gui.prl
+		E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Gui.prl \
+		E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Network.prl
 	$(QMAKE) -spec win32-msvc2013 -o Makefile HttpTool.pro
 E:\develop\Qt\5.4.1\5.4\msvc2013_64_opengl\mkspecs\features\spec_pre.prf:
 E:\develop\Qt\5.4.1\5.4\msvc2013_64_opengl\mkspecs\common\shell-win32.conf:
@@ -332,6 +333,7 @@ E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/qtmain.prl:
 E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Core.prl:
 E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Widgets.prl:
 E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Gui.prl:
+E:/develop/Qt/5.4.1/5.4/msvc2013_64_opengl/lib/Qt5Network.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-msvc2013 -o Makefile HttpTool.pro
 

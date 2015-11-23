@@ -28,7 +28,7 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="5,5">
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="6,4">
       <item>
        <widget class="QGroupBox" name="groupBoxReq">
         <property name="title">
@@ -63,14 +63,18 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEditUrl"/>
+            <widget class="QLineEdit" name="lineEditUrl">
+             <property name="text">
+              <string>https://localhost:60000</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QComboBox" name="comboBox">
+            <widget class="QComboBox" name="comboBoxMethod">
              <item>
               <property name="text">
                <string>GET</string>
@@ -141,54 +145,77 @@
           </layout>
          </item>
          <item>
-          <widget class="QTabWidget" name="tabWidget">
+          <widget class="QTabWidget" name="tabWidgetRequest">
            <property name="currentIndex">
             <number>0</number>
            </property>
-           <widget class="QWidget" name="Content">
+           <widget class="QWidget" name="Auth">
             <attribute name="title">
-             <string>Content to send</string>
+             <string>Authorization</string>
             </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
-                <widget class="QRadioButton" name="radioButtonContent">
-                 <property name="text">
-                  <string>Content</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
+                <widget class="QComboBox" name="comboBoxAuth">
+                 <item>
+                  <property name="text">
+                   <string>No Auth</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Basic Auth</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Digest Auth</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>OAuth 1.0</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>OAuth 2.0</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButtonFile">
-                 <property name="text">
-                  <string>File</string>
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEditFile"/>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButtonFile">
-                 <property name="text">
-                  <string>Browser</string>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
                  </property>
-                </widget>
+                </spacer>
                </item>
               </layout>
              </item>
              <item>
-              <widget class="QTextEdit" name="textEditResquest"/>
+              <widget class="QScrollArea" name="scrollAreaAuth">
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <widget class="QWidget" name="scrollAreaWidgetContents_3">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>567</width>
+                  <height>296</height>
+                 </rect>
+                </property>
+               </widget>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -197,86 +224,287 @@
              <string>Headers</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_7">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <item>
-                <widget class="QPushButton" name="pushButtonHeader">
-                 <property name="text">
-                  <string>增加参数</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_3">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+              <widget class="QScrollArea" name="scrollAreaHeader">
+               <property name="widgetResizable">
+                <bool>true</bool>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>292</height>
-                </size>
-               </property>
-              </spacer>
+               <widget class="QWidget" name="scrollAreaWidgetContents">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>585</width>
+                  <height>342</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayoutHeader">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <item>
+                    <widget class="QPushButton" name="pushButtonHeader">
+                     <property name="text">
+                      <string>增加参数</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_3">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>305</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="tabParameters">
+           <widget class="QWidget" name="tabBody">
             <attribute name="title">
-             <string>Parameters</string>
+             <string>Body</string>
             </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
-               <item>
-                <widget class="QPushButton" name="pushButtonParaAdd">
-                 <property name="text">
-                  <string>增加参数</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+              <widget class="QTabWidget" name="tabWidgetBody">
+               <property name="currentIndex">
+                <number>0</number>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
+               <widget class="QWidget" name="tabFormdata">
+                <attribute name="title">
+                 <string>form-data</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QScrollArea" name="scrollAreaFormdata">
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_4">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>561</width>
+                      <height>299</height>
+                     </rect>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayoutFormdata">
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayoutFormdata">
+                       <item>
+                        <widget class="QPushButton" name="pushButtonAddFormdata">
+                         <property name="text">
+                          <string>增加参数</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_5">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer_4">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>247</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="tabXwwwForm">
+                <attribute name="title">
+                 <string>x-www-form-urlencoded</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayoutXwwFormTab">
+                 <item>
+                  <widget class="QScrollArea" name="scrollAreaXwwwForm">
+                   <property name="widgetResizable">
+                    <bool>true</bool>
+                   </property>
+                   <widget class="QWidget" name="scrollAreaWidgetContents_2">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>0</y>
+                      <width>561</width>
+                      <height>299</height>
+                     </rect>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayoutXwwForm">
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_8">
+                       <item>
+                        <widget class="QPushButton" name="pushButtonAddXwww">
+                         <property name="text">
+                          <string>增加参数</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_2">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <spacer name="verticalSpacer">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>247</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="tabRaw">
+                <attribute name="title">
+                 <string>raw</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QTextEdit" name="textEditRaw"/>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="tabBinary">
+                <attribute name="title">
+                 <string>binary</string>
+                </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                   <item>
+                    <widget class="QPushButton" name="pushButtonBinary">
+                     <property name="text">
+                      <string>选择文件</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEditBinary"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>249</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -333,7 +561,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>GET</string>
+              <string>unknow</string>
              </property>
             </widget>
            </item>
@@ -363,7 +591,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>http://example.com</string>
+              <string>unknow</string>
              </property>
             </widget>
            </item>
@@ -393,7 +621,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>200 OK</string>
+              <string>unknow</string>
              </property>
             </widget>
            </item>
