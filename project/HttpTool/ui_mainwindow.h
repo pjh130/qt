@@ -94,7 +94,7 @@ public:
     QLineEdit *lineEditBinary;
     QSpacerItem *verticalSpacer_3;
     QGroupBox *groupBoxResponse;
-    QVBoxLayout *verticalLayout_4;
+    QVBoxLayout *verticalLayout_11;
     QHBoxLayout *horizontalLayout_5;
     QLabel *label_2;
     QLabel *labelMethod;
@@ -104,7 +104,13 @@ public:
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_4;
     QLabel *labelStatus;
-    QTextEdit *textEditResponse;
+    QHBoxLayout *horizontalLayout_11;
+    QGroupBox *groupBoxResHeaders;
+    QVBoxLayout *verticalLayout_4;
+    QTextEdit *textEditResponseHeaders;
+    QGroupBox *groupBoxContent;
+    QVBoxLayout *verticalLayout_8;
+    QTextEdit *textEditResponseContent;
     QGroupBox *groupBoxHistory;
     QVBoxLayout *verticalLayout_2;
     QColumnView *columnView;
@@ -176,9 +182,10 @@ public:
         Auth = new QWidget();
         Auth->setObjectName(QStringLiteral("Auth"));
         verticalLayout_10 = new QVBoxLayout(Auth);
-        verticalLayout_10->setSpacing(6);
+        verticalLayout_10->setSpacing(0);
         verticalLayout_10->setContentsMargins(11, 11, 11, 11);
         verticalLayout_10->setObjectName(QStringLiteral("verticalLayout_10"));
+        verticalLayout_10->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
@@ -199,7 +206,7 @@ public:
         scrollAreaAuth->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 567, 296));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 428, 320));
         scrollAreaAuth->setWidget(scrollAreaWidgetContents_3);
 
         verticalLayout_10->addWidget(scrollAreaAuth);
@@ -217,12 +224,12 @@ public:
         scrollAreaHeader->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 585, 342));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 428, 342));
         verticalLayoutHeader = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayoutHeader->setSpacing(0);
         verticalLayoutHeader->setContentsMargins(11, 11, 11, 11);
         verticalLayoutHeader->setObjectName(QStringLiteral("verticalLayoutHeader"));
-        verticalLayoutHeader->setContentsMargins(0, -1, 0, 0);
+        verticalLayoutHeader->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setSpacing(6);
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
@@ -259,19 +266,21 @@ public:
         tabFormdata = new QWidget();
         tabFormdata->setObjectName(QStringLiteral("tabFormdata"));
         verticalLayout_9 = new QVBoxLayout(tabFormdata);
-        verticalLayout_9->setSpacing(6);
+        verticalLayout_9->setSpacing(0);
         verticalLayout_9->setContentsMargins(11, 11, 11, 11);
         verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
+        verticalLayout_9->setContentsMargins(0, 0, 0, 0);
         scrollAreaFormdata = new QScrollArea(tabFormdata);
         scrollAreaFormdata->setObjectName(QStringLiteral("scrollAreaFormdata"));
         scrollAreaFormdata->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 561, 299));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 422, 317));
         verticalLayoutFormdata = new QVBoxLayout(scrollAreaWidgetContents_4);
-        verticalLayoutFormdata->setSpacing(6);
+        verticalLayoutFormdata->setSpacing(0);
         verticalLayoutFormdata->setContentsMargins(11, 11, 11, 11);
         verticalLayoutFormdata->setObjectName(QStringLiteral("verticalLayoutFormdata"));
+        verticalLayoutFormdata->setContentsMargins(0, 0, 0, 0);
         horizontalLayoutFormdata = new QHBoxLayout();
         horizontalLayoutFormdata->setSpacing(6);
         horizontalLayoutFormdata->setObjectName(QStringLiteral("horizontalLayoutFormdata"));
@@ -299,15 +308,16 @@ public:
         tabXwwwForm = new QWidget();
         tabXwwwForm->setObjectName(QStringLiteral("tabXwwwForm"));
         verticalLayoutXwwFormTab = new QVBoxLayout(tabXwwwForm);
-        verticalLayoutXwwFormTab->setSpacing(6);
+        verticalLayoutXwwFormTab->setSpacing(0);
         verticalLayoutXwwFormTab->setContentsMargins(11, 11, 11, 11);
         verticalLayoutXwwFormTab->setObjectName(QStringLiteral("verticalLayoutXwwFormTab"));
+        verticalLayoutXwwFormTab->setContentsMargins(0, 0, 0, 0);
         scrollAreaXwwwForm = new QScrollArea(tabXwwwForm);
         scrollAreaXwwwForm->setObjectName(QStringLiteral("scrollAreaXwwwForm"));
         scrollAreaXwwwForm->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 561, 299));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 478, 317));
         verticalLayoutXwwForm = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayoutXwwForm->setSpacing(6);
         verticalLayoutXwwForm->setContentsMargins(11, 11, 11, 11);
@@ -339,9 +349,10 @@ public:
         tabRaw = new QWidget();
         tabRaw->setObjectName(QStringLiteral("tabRaw"));
         verticalLayout_5 = new QVBoxLayout(tabRaw);
-        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setSpacing(0);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         textEditRaw = new QTextEdit(tabRaw);
         textEditRaw->setObjectName(QStringLiteral("textEditRaw"));
 
@@ -351,9 +362,10 @@ public:
         tabBinary = new QWidget();
         tabBinary->setObjectName(QStringLiteral("tabBinary"));
         verticalLayout_6 = new QVBoxLayout(tabBinary);
-        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setSpacing(0);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_10 = new QHBoxLayout();
         horizontalLayout_10->setSpacing(6);
         horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
@@ -387,11 +399,11 @@ public:
 
         groupBoxResponse = new QGroupBox(centralWidget);
         groupBoxResponse->setObjectName(QStringLiteral("groupBoxResponse"));
-        verticalLayout_4 = new QVBoxLayout(groupBoxResponse);
-        verticalLayout_4->setSpacing(10);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        verticalLayout_4->setContentsMargins(9, 0, 0, 0);
+        verticalLayout_11 = new QVBoxLayout(groupBoxResponse);
+        verticalLayout_11->setSpacing(6);
+        verticalLayout_11->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_11->setObjectName(QStringLiteral("verticalLayout_11"));
+        verticalLayout_11->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setSpacing(6);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
@@ -413,7 +425,7 @@ public:
         horizontalLayout_5->addWidget(labelMethod);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_5);
+        verticalLayout_11->addLayout(horizontalLayout_5);
 
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setSpacing(6);
@@ -432,7 +444,7 @@ public:
         horizontalLayout_6->addWidget(labelUrl);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_6);
+        verticalLayout_11->addLayout(horizontalLayout_6);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(6);
@@ -451,18 +463,50 @@ public:
         horizontalLayout_7->addWidget(labelStatus);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_7);
+        verticalLayout_11->addLayout(horizontalLayout_7);
 
-        textEditResponse = new QTextEdit(groupBoxResponse);
-        textEditResponse->setObjectName(QStringLiteral("textEditResponse"));
+        horizontalLayout_11 = new QHBoxLayout();
+        horizontalLayout_11->setSpacing(0);
+        horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
+        groupBoxResHeaders = new QGroupBox(groupBoxResponse);
+        groupBoxResHeaders->setObjectName(QStringLiteral("groupBoxResHeaders"));
+        verticalLayout_4 = new QVBoxLayout(groupBoxResHeaders);
+        verticalLayout_4->setSpacing(0);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
+        textEditResponseHeaders = new QTextEdit(groupBoxResHeaders);
+        textEditResponseHeaders->setObjectName(QStringLiteral("textEditResponseHeaders"));
 
-        verticalLayout_4->addWidget(textEditResponse);
+        verticalLayout_4->addWidget(textEditResponseHeaders);
+
+
+        horizontalLayout_11->addWidget(groupBoxResHeaders);
+
+        groupBoxContent = new QGroupBox(groupBoxResponse);
+        groupBoxContent->setObjectName(QStringLiteral("groupBoxContent"));
+        groupBoxContent->setCheckable(false);
+        verticalLayout_8 = new QVBoxLayout(groupBoxContent);
+        verticalLayout_8->setSpacing(0);
+        verticalLayout_8->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
+        verticalLayout_8->setContentsMargins(0, 0, 0, 0);
+        textEditResponseContent = new QTextEdit(groupBoxContent);
+        textEditResponseContent->setObjectName(QStringLiteral("textEditResponseContent"));
+
+        verticalLayout_8->addWidget(textEditResponseContent);
+
+
+        horizontalLayout_11->addWidget(groupBoxContent);
+
+
+        verticalLayout_11->addLayout(horizontalLayout_11);
 
 
         horizontalLayout_4->addWidget(groupBoxResponse);
 
-        horizontalLayout_4->setStretch(0, 6);
-        horizontalLayout_4->setStretch(1, 4);
+        horizontalLayout_4->setStretch(0, 4);
+        horizontalLayout_4->setStretch(1, 5);
 
         verticalLayout_3->addLayout(horizontalLayout_4);
 
@@ -540,6 +584,8 @@ public:
         labelUrl->setText(QApplication::translate("MainWindow", "unknow", 0));
         label_4->setText(QApplication::translate("MainWindow", "Status\357\274\232 ", 0));
         labelStatus->setText(QApplication::translate("MainWindow", "unknow", 0));
+        groupBoxResHeaders->setTitle(QApplication::translate("MainWindow", "Headers", 0));
+        groupBoxContent->setTitle(QApplication::translate("MainWindow", "Content", 0));
         groupBoxHistory->setTitle(QApplication::translate("MainWindow", "History", 0));
     } // retranslateUi
 

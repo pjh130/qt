@@ -266,7 +266,18 @@ void MainWindow::httpFinished()
 
     ui->labelUrl->setText(reply->url().toString());
     ui->labelMethod->setText(m_strMethod);
-    ui->textEditResponse->setPlainText(byRecv);
+    ui->textEditResponseContent->clear();
+    ui->textEditResponseContent->setPlainText(byRecv);
+
+    QString strHeaders;
+    QList<QNetworkReply::RawHeaderPair> pairs = reply->rawHeaderPairs();
+    for(int i=0; i<pairs.length(); i++)
+    {
+        QPair<QByteArray, QByteArray> item = pairs.at(i);
+        strHeaders = strHeaders + item.first + ": " + item.second + "\r\n";
+    }
+    ui->textEditResponseHeaders->clear();
+    ui->textEditResponseHeaders->setPlainText(strHeaders);
 
     reply->deleteLater();
     reply = NULL;
@@ -339,28 +350,28 @@ void MainWindow::slotCurrentIndexChanged(int index)
     switch(index)
     {
     case MethodGet:
-        ui->tabWidgetRequest->widget(2)->hide();
+//        ui->tabWidgetRequest->widget(2)->hide();
         break;
     case MethodPost:
-        ui->tabWidgetRequest->widget(2)->show();
+//        ui->tabWidgetRequest->widget(2)->show();
         break;
     case MethodPut:
-        ui->tabWidgetRequest->widget(2)->show();
+//        ui->tabWidgetRequest->widget(2)->show();
         break;
     case MethodDele:
-        ui->tabWidgetRequest->widget(2)->show();
+//        ui->tabWidgetRequest->widget(2)->show();
         break;
     case MethodPatch:
-        ui->tabWidgetRequest->widget(2)->show();
+//        ui->tabWidgetRequest->widget(2)->show();
         break;
     case MethodOption:
-        ui->tabWidgetRequest->widget(2)->hide();
+//        ui->tabWidgetRequest->widget(2)->hide();
         break;
     case MethodHead:
-        ui->tabWidgetRequest->widget(2)->hide();
+//        ui->tabWidgetRequest->widget(2)->hide();
         break;
     case MethodTrace:
-        ui->tabWidgetRequest->widget(2)->show();
+//        ui->tabWidgetRequest->widget(2)->show();
         break;
     case MethodConnect:
         break;

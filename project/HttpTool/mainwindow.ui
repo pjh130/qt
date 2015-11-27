@@ -28,7 +28,7 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="6,4">
+     <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="4,5">
       <item>
        <widget class="QGroupBox" name="groupBoxReq">
         <property name="title">
@@ -154,6 +154,21 @@
              <string>Authorization</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_10">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
@@ -210,8 +225,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>567</width>
-                  <height>296</height>
+                  <width>428</width>
+                  <height>320</height>
                  </rect>
                 </property>
                </widget>
@@ -249,7 +264,7 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>585</width>
+                  <width>428</width>
                   <height>342</height>
                  </rect>
                 </property>
@@ -258,6 +273,9 @@
                   <number>0</number>
                  </property>
                  <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
@@ -339,6 +357,21 @@
                  <string>form-data</string>
                 </attribute>
                 <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
                   <widget class="QScrollArea" name="scrollAreaFormdata">
                    <property name="widgetResizable">
@@ -349,11 +382,26 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>561</width>
-                      <height>299</height>
+                      <width>422</width>
+                      <height>317</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayoutFormdata">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
                      <item>
                       <layout class="QHBoxLayout" name="horizontalLayoutFormdata">
                        <item>
@@ -402,6 +450,21 @@
                  <string>x-www-form-urlencoded</string>
                 </attribute>
                 <layout class="QVBoxLayout" name="verticalLayoutXwwFormTab">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
                   <widget class="QScrollArea" name="scrollAreaXwwwForm">
                    <property name="widgetResizable">
@@ -412,8 +475,8 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>561</width>
-                      <height>299</height>
+                      <width>478</width>
+                      <height>317</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayoutXwwForm">
@@ -465,6 +528,21 @@
                  <string>raw</string>
                 </attribute>
                 <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
                   <widget class="QTextEdit" name="textEditRaw"/>
                  </item>
@@ -475,6 +553,21 @@
                  <string>binary</string>
                 </attribute>
                 <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
@@ -518,12 +611,12 @@
         <property name="title">
          <string>Response</string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_11">
          <property name="spacing">
-          <number>10</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>9</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -628,7 +721,68 @@
           </layout>
          </item>
          <item>
-          <widget class="QTextEdit" name="textEditResponse"/>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QGroupBox" name="groupBoxResHeaders">
+             <property name="title">
+              <string>Headers</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTextEdit" name="textEditResponseHeaders"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBoxContent">
+             <property name="title">
+              <string>Content</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTextEdit" name="textEditResponseContent"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
