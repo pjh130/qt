@@ -475,8 +475,8 @@
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>478</width>
-                      <height>317</height>
+                      <width>101</width>
+                      <height>49</height>
                      </rect>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayoutXwwForm">
@@ -749,6 +749,13 @@
               <item>
                <widget class="QTextEdit" name="textEditResponseHeaders"/>
               </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonCopyHeaders">
+                <property name="text">
+                 <string>复制到剪贴板</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -778,6 +785,13 @@
               </property>
               <item>
                <widget class="QTextEdit" name="textEditResponseContent"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonCopyContent">
+                <property name="text">
+                 <string>复制到剪贴板</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

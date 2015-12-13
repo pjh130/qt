@@ -108,9 +108,11 @@ public:
     QGroupBox *groupBoxResHeaders;
     QVBoxLayout *verticalLayout_4;
     QTextEdit *textEditResponseHeaders;
+    QPushButton *pushButtonCopyHeaders;
     QGroupBox *groupBoxContent;
     QVBoxLayout *verticalLayout_8;
     QTextEdit *textEditResponseContent;
+    QPushButton *pushButtonCopyContent;
     QGroupBox *groupBoxHistory;
     QVBoxLayout *verticalLayout_2;
     QColumnView *columnView;
@@ -317,7 +319,7 @@ public:
         scrollAreaXwwwForm->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 478, 317));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 101, 49));
         verticalLayoutXwwForm = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayoutXwwForm->setSpacing(6);
         verticalLayoutXwwForm->setContentsMargins(11, 11, 11, 11);
@@ -480,6 +482,11 @@ public:
 
         verticalLayout_4->addWidget(textEditResponseHeaders);
 
+        pushButtonCopyHeaders = new QPushButton(groupBoxResHeaders);
+        pushButtonCopyHeaders->setObjectName(QStringLiteral("pushButtonCopyHeaders"));
+
+        verticalLayout_4->addWidget(pushButtonCopyHeaders);
+
 
         horizontalLayout_11->addWidget(groupBoxResHeaders);
 
@@ -495,6 +502,11 @@ public:
         textEditResponseContent->setObjectName(QStringLiteral("textEditResponseContent"));
 
         verticalLayout_8->addWidget(textEditResponseContent);
+
+        pushButtonCopyContent = new QPushButton(groupBoxContent);
+        pushButtonCopyContent->setObjectName(QStringLiteral("pushButtonCopyContent"));
+
+        verticalLayout_8->addWidget(pushButtonCopyContent);
 
 
         horizontalLayout_11->addWidget(groupBoxContent);
@@ -585,7 +597,9 @@ public:
         label_4->setText(QApplication::translate("MainWindow", "Status\357\274\232 ", 0));
         labelStatus->setText(QApplication::translate("MainWindow", "unknow", 0));
         groupBoxResHeaders->setTitle(QApplication::translate("MainWindow", "Headers", 0));
+        pushButtonCopyHeaders->setText(QApplication::translate("MainWindow", "\345\244\215\345\210\266\345\210\260\345\211\252\350\264\264\346\235\277", 0));
         groupBoxContent->setTitle(QApplication::translate("MainWindow", "Content", 0));
+        pushButtonCopyContent->setText(QApplication::translate("MainWindow", "\345\244\215\345\210\266\345\210\260\345\211\252\350\264\264\346\235\277", 0));
         groupBoxHistory->setTitle(QApplication::translate("MainWindow", "History", 0));
     } // retranslateUi
 

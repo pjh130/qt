@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[20];
-    char stringdata[332];
+    QByteArrayData data[22];
+    char stringdata[398];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,9 @@ QT_MOC_LITERAL(15, 212, 23), // "slotCurrentIndexChanged"
 QT_MOC_LITERAL(16, 236, 5), // "index"
 QT_MOC_LITERAL(17, 242, 32), // "on_pushButtonAddFormdata_clicked"
 QT_MOC_LITERAL(18, 275, 28), // "on_pushButtonAddXwww_clicked"
-QT_MOC_LITERAL(19, 304, 27) // "on_pushButtonBinary_clicked"
+QT_MOC_LITERAL(19, 304, 27), // "on_pushButtonBinary_clicked"
+QT_MOC_LITERAL(20, 332, 32), // "on_pushButtonCopyHeaders_clicked"
+QT_MOC_LITERAL(21, 365, 32) // "on_pushButtonCopyContent_clicked"
 
     },
     "MainWindow\0on_pushButtonSubmit_clicked\0"
@@ -60,7 +62,9 @@ QT_MOC_LITERAL(19, 304, 27) // "on_pushButtonBinary_clicked"
     "slotCurrentIndexChanged\0index\0"
     "on_pushButtonAddFormdata_clicked\0"
     "on_pushButtonAddXwww_clicked\0"
-    "on_pushButtonBinary_clicked"
+    "on_pushButtonBinary_clicked\0"
+    "on_pushButtonCopyHeaders_clicked\0"
+    "on_pushButtonCopyContent_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,18 +82,20 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x08 /* Private */,
-       3,    0,   75,    2, 0x08 /* Private */,
-       4,    0,   76,    2, 0x08 /* Private */,
-       5,    2,   77,    2, 0x08 /* Private */,
-       8,    0,   82,    2, 0x08 /* Private */,
-       9,    3,   83,    2, 0x08 /* Private */,
-      13,    3,   90,    2, 0x08 /* Private */,
-      14,    3,   97,    2, 0x08 /* Private */,
-      15,    1,  104,    2, 0x08 /* Private */,
-      17,    0,  107,    2, 0x08 /* Private */,
-      18,    0,  108,    2, 0x08 /* Private */,
-      19,    0,  109,    2, 0x08 /* Private */,
+       1,    0,   84,    2, 0x08 /* Private */,
+       3,    0,   85,    2, 0x08 /* Private */,
+       4,    0,   86,    2, 0x08 /* Private */,
+       5,    2,   87,    2, 0x08 /* Private */,
+       8,    0,   92,    2, 0x08 /* Private */,
+       9,    3,   93,    2, 0x08 /* Private */,
+      13,    3,  100,    2, 0x08 /* Private */,
+      14,    3,  107,    2, 0x08 /* Private */,
+      15,    1,  114,    2, 0x08 /* Private */,
+      17,    0,  117,    2, 0x08 /* Private */,
+      18,    0,  118,    2, 0x08 /* Private */,
+      19,    0,  119,    2, 0x08 /* Private */,
+      20,    0,  120,    2, 0x08 /* Private */,
+      21,    0,  121,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -101,6 +107,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,   10,   11,   12,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,   10,   11,   12,
     QMetaType::Void, QMetaType::Int,   16,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -125,6 +133,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_pushButtonAddFormdata_clicked(); break;
         case 10: _t->on_pushButtonAddXwww_clicked(); break;
         case 11: _t->on_pushButtonBinary_clicked(); break;
+        case 12: _t->on_pushButtonCopyHeaders_clicked(); break;
+        case 13: _t->on_pushButtonCopyContent_clicked(); break;
         default: ;
         }
     }
@@ -155,13 +165,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 14;
     }
     return _id;
 }

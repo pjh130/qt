@@ -70,6 +70,10 @@ private slots:
 
     void on_pushButtonBinary_clicked();
 
+    void on_pushButtonCopyHeaders_clicked();
+
+    void on_pushButtonCopyContent_clicked();
+
 private:
     QHttpMultiPart *getBodyDataFormdata();
     QByteArray getBodyDataXwww();

@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QLayout>
 #include <QIODevice>
-
+#include <QClipboard>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -414,4 +414,22 @@ void MainWindow::on_pushButtonBinary_clicked()
     }
 
     ui->lineEditBinary->setText(str);
+}
+
+void MainWindow::on_pushButtonCopyHeaders_clicked()
+{
+    QString str = ui->textEditResponseHeaders->toPlainText();
+
+    QClipboard *tmpClipboard = QApplication::clipboard();
+    tmpClipboard->clear(QClipboard::Clipboard);
+    tmpClipboard->setText(str);
+}
+
+void MainWindow::on_pushButtonCopyContent_clicked()
+{
+    QString str = ui->textEditResponseContent->toPlainText();
+
+    QClipboard *tmpClipboard = QApplication::clipboard();
+    tmpClipboard->clear(QClipboard::Clipboard);
+    tmpClipboard->setText(str);
 }
