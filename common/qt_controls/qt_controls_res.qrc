@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/">
+        <file>controls_res/close.png</file>
+        <file>controls_res/combox_rightdown.png</file>
+        <file>controls_res/combox_rightdown_active.png</file>
+        <file>controls_res/maximum.png</file>
+        <file>controls_res/minimum.png</file>
+        <file>controls_res/resume.png</file>
+        <file>controls_res/cancel.png</file>
+        <file>controls_res/Ok.png</file>
+        <file>controls_res/item_normal.png</file>
+        <file>controls_res/decline.png</file>
+        <file>controls_res/skinWindowBackground.png</file>
+        <file>controls_res/skinwindowdelete.png</file>
+        <file>controls_res/skinWindowforeground.png</file>
+        <file>controls_res/skinAddMuseOn.png</file>
+        <file>controls_res/skinAddNormal.png</file>
+        <file>controls_res/leave.png</file>
+        <file>controls_res/onLine.png</file>
+        <file>controls_res/leave_menu.png</file>
+        <file>controls_res/onLine_menu.png</file>
+        <file>controls_res/PicSelected.png</file>
+        <file>controls_res/skinWindowBar.png</file>
+        <file>controls_res/meeting.png</file>
+        <file>controls_res/meeting_menu.png</file>
+        <file>controls_res/goout.png</file>
+        <file>controls_res/goout_menu.png</file>
+        <file>controls_res/statusBtnBG_active.png</file>
+        <file>controls_res/statusBtnBG_hover.png</file>
+        <file>controls_res/statusBtnBG_normal.png</file>
+        <file>controls_res/Icon01.png</file>
+    </qresource>
+</RCC>
