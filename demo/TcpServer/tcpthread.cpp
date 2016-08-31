@@ -22,21 +22,28 @@ void TcpThread::run()
         qDebug()<<"setSocketDescriptor err: "<<m_pTcp->errorString();
 //        return;
     }
-    connect(m_pTcp, SIGNAL(readyRead()), this, SLOT(readData()), Qt::BlockingQueuedConnection);
-
-    connect(m_pTcp, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorString(QAbstractSocket::SocketError)), Qt::BlockingQueuedConnection);
+    //注意this对象是在外边new的，所以和 m_pTcp 是不在同一个线程内。 DirectConnection是表示接收者在信号发送的线程执行
+    connect(m_pTcp, SIGNAL(readyRead()), this, SLOT(readData()), Qt::DirectConnection);
+    qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
+    connect(m_pTcp, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(errorString(QAbstractSocket::SocketError)), Qt::DirectConnection);
 
     exec();
 }
 
 void TcpThread::readData()
 {
-    qDebug()<<m_pTcp->readAll()<<endl;
-    m_pTcp->write("OK");
+    if (m_pTcp != NULL)
+    {
+        qDebug()<<m_pTcp->readAll()<<endl;
+        m_pTcp->write("OK");
+    } else {
+         qDebug()<<"m_pTcp is NULL"<<endl;
+    }
 }
 
 void TcpThread::errorString(QAbstractSocket::SocketError)
 {
+    return;
 //    emit sigError(socketError);
 
     if (m_pTcp)
@@ -44,7 +51,8 @@ void TcpThread::errorString(QAbstractSocket::SocketError)
         qDebug()<<"SocketError: "<<m_pTcp->errorString()<<endl;
         m_pTcp->close();
         m_pTcp->deleteLater();
+        m_pTcp = NULL;
     }
-    this->exit();
+//    this->exit();
 }
 

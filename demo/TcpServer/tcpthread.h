@@ -8,8 +8,9 @@
 
 class TcpThread : public QThread
 {
+    Q_OBJECT
 public:
-   explicit TcpThread(qintptr handle, QObject *parent);
+   explicit TcpThread(qintptr handle, QObject *parent = 0);
     ~TcpThread();
 
 public:

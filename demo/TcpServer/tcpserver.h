@@ -6,6 +6,7 @@
 
 class TcpServer : public QTcpServer
 {
+    Q_OBJECT
 public:
      explicit TcpServer(QObject *parent = 0);
     ~TcpServer();
