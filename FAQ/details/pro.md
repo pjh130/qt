@@ -29,3 +29,8 @@ QT中.pro文件
 * 方法
 	<p>1、新建一个xxx.rc</p>
 	<p>2、在.pro文件中添加 RC_FILE = xxx.rc</p>
+
+
+#####win7下权限提示（UAC）问题
+* 方法
+	<p>在.pro文件中添加QMAKE_LFLAGS += /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'"即可</p>
