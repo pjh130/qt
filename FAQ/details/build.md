@@ -1,4 +1,5 @@
 ####Qt 如何打包一个软件？
+- [depends查看DLL依赖](http://www.dependencywalker.com/)
 - [如何打包一个软件](https://www.zhihu.com/question/21359230)
 - [Qt 程序打包发布总结](http://blog.csdn.net/liuyez123/article/details/50462637)
 

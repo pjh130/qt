@@ -65,7 +65,7 @@ export QTDIR PATHMANPATH LD_LIBRARY_PATH
 - l  缺点，文件多、杂。
 - Qt官方开发环境默认使用动态链接库方式，在发布生成的可执行程序时，我们需要复制一大堆动态库，如果自己去复制动态库，很可能丢三落四，导致程序在别的电脑里无法正常运行。 因此 Qt 官方开发环境里自带了一个部署工具来帮助开发者自动拷贝大部分的依赖库。在不同的平台使用方式也有所不同。
 - #### Windows平台
-Windows开发环境下windeployqt工具 (如果你已经将Qt的bin目录加入PATH环境,那么你可以直接在命令行使用windeployqt调用.)。首先，将项目中的release文件中的可执行文件拷到一个新建的文件夹中，例如project.exe，用Qt自带的生成必备的dll文件的程序windeployqt，来把必要的动态库拷到该文件夹中，打开命令行，输入windeployqtproject.exe，这时候大部分的dll文件都自动拷贝过来了，但是如果项目还用了一些其他的SDK，比如OpenCV，Chartdir51等等，就需要手动将所需dll拷贝过来，如果不知道还需要哪些软件，可以用Dependency Walker来查看缺少哪些dll文件。
+Windows开发环境下windeployqt工具 (如果你已经将Qt的bin目录加入PATH环境,那么你可以直接在命令行使用windeployqt调用.)。首先，将项目中的release文件中的可执行文件拷到一个新建的文件夹中，例如project.exe，用Qt自带的生成必备的dll文件的程序windeployqt，来把必要的动态库拷到该文件夹中，打开命令行，输入windeployqtproject.exe(不行就输入命令 windeployqt --release files )这时候大部分的dll文件都自动拷贝过来了，但是如果项目还用了一些其他的SDK，比如OpenCV，Chartdir51等等，就需要手动将所需dll拷贝过来，如果不知道还需要哪些软件，可以用Dependency Walker来查看缺少哪些dll文件。
 注意：如果发布的应用是Qt Quick Application应用，那么命令行需要加上QML的安装目录。命令中的D:\Qt\Qt5.5.1\qml是qml的安装目录,请换成你自己的qml安装目录!!!!!
 
 windeployqt hello.exe--qmldir D:\Qt\Qt5.5.1\qml
