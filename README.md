@@ -11,6 +11,7 @@ qt
 
 
 ####学习
+- [有什么很好的软件是用 Qt 编写的](https://www.zhihu.com/question/19630324)
 - [Qt快速入门系列教程目录](http://bbs.qter.org/forum.php?mod=viewthread&tid=193)
 - [QT学习之路](https://www.devbean.net/2012/08/qt-study-road-2-catelog/)
 
