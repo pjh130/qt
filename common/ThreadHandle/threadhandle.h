@@ -1,7 +1,6 @@
 #ifndef THREADHANDLE_H
 #define THREADHANDLE_H
 
-#include "threadhandle_global.h"
 #include <QThread>
 #include <QQueue>
 #include <QList>
@@ -9,7 +8,7 @@
 //线程管理类，类似于一个线程池，单例类
 //两种初始化方式，一种是每个线程处理的连接数，一个是一共多少个线程
 
-class THREADHANDLESHARED_EXPORT ThreadHandle
+class  ThreadHandle
 {
 
 public:
