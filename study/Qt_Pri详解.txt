@@ -1,0 +1,21 @@
+转自 http://www.mamicode.com/info-detail-2592863.html
+
+*.pri
+i 是什么东西？包含(include)的首字母。类似于C、C++中的头文件吧，我们可以把 *.pro 文件内的一部分内容单独放到一个 *.pri 文件内，然后包含进来。
+
+接前面的例子，我们将源文件的设置独立出来，放到propriprfprl.pri文件内：
+
+SOURCES += main.cpp/         
+　　　　　　widget.cpp 
+HEADERS  += widget.h 
+FORMS    += widget.ui
+这时，我们的 propriprfprl.pro 文件就可以简化为：
+
+TEMPLATE = app
+CONFIG += QT
+QT += core gui
+
+TARGET = propriprfprl
+include(propriprfprl.pri)
+这有什么用呢？对我们这个例子来说，确实没什么用，反而多了一个文件，更麻烦了。
+可是，如果一个大点的项目，含有多个*.pro文件呢，这些pro需要有些共同的设置或需要的文件，这时就很有必要了。

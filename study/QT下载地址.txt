@@ -1,0 +1,4 @@
+http://qt-project.org/
+
+资源下载地址
+http://download.qt.io/
