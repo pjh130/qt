@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QStringList>
 #include <QDir>
+#include <QFile>
 #include <QDebug>
 #include "JlCompress.h"
 
@@ -66,8 +67,8 @@ int main(int argc, char *argv[])
      qDebug()<<"extractDir Dir: "<<extractDir();
 
      //删除测试文件
-     QDir dir1(g_compressedPath);
-     qDebug()<<"remove Dir: "<<dir1.absolutePath()<<" "<<dir1.removeRecursively();
+     QFile file(g_compressedPath);
+     qDebug()<<"remove Dir: "<<file.fileName()<<" "<<file.remove();
      QDir dir2(g_compressedPathNew);
      qDebug()<<"remove Dir: "<<dir2.absolutePath()<<" "<<dir2.removeRecursively();
 

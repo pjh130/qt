@@ -13,6 +13,6 @@ win32:CONFIG(release, debug|release): LIBS += -LG:\gopath\src\github.com\pjh130\
 else:win32:CONFIG(debug, debug|release): LIBS += -LG:\gopath\src\github.com\pjh130\qt\common\quazip\quazip\debug -lquazipd
 
 INCLUDEPATH += G:\gopath\src\github.com\pjh130\qt\common\quazip\quazip
-INCLUDEPATH += E:\develop\Qt\5.7\5.7\msvc2013_64\include\QtZlib
+INCLUDEPATH += E:\develop\Qt\Qt5.7.0\5.7\msvc2013_64\include\QtZlib
 
 SOURCES += main.cpp
