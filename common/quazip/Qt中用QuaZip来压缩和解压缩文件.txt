@@ -28,3 +28,19 @@ static bool compressDir(QString fileCompressed, QString dir=QString(), bool recu
 static QStringList extractDir(QString fileCompressed, QString dir=QString())
 第一个参数fileCompressed表示待解压缩的文件
 第二个参数表示解压缩存放的目录
+
+详细的函数和调用
+static bool 	compressFile (QString fileCompressed, QString file)
+ 	Compress a single file.
+static bool 	compressFiles (QString fileCompressed, QStringList files)
+ 	Compress a list of files.
+static bool 	compressDir (QString fileCompressed, QString dir=QString(), bool recursive=true)
+ 	Compress a whole directory.
+static bool 	compressDir (QString fileCompressed, QString dir, bool recursive, QDir::Filters filters)
+ 	Compress a whole directory.
+static QString 	extractFile (QString fileCompressed, QString fileName, QString fileDest=QString())
+ 	Extract a single file.
+static QStringList 	extractFiles (QString fileCompressed, QStringList files, QString dir=QString())
+ 	Extract a list of files.
+static QStringList 	extractDir (QString fileCompressed, QString dir=QString())
+ 	Extract a whole archive.

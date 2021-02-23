@@ -8,7 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 #修改成当前编译环境的实际路径
-INCLUDEPATH += E:\develop\Qt\5.4.1\5.4\msvc2013_64_opengl\include\QtZlib
+INCLUDEPATH += D:\Develop\Qt5.7\5.7\msvc2013_64\include\QtZlib
 
 !win32: LIBS += -lz
 win32 {
