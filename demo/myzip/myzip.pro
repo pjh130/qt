@@ -18,7 +18,7 @@ win32 {
     DEFINES += NOMINMAX
 }
 
-include(D:\Code\Go\src\github.com\pjh130\qt\common\qzip\qzip.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\qzip\qzip.pri)
 
 SOURCES += main.cpp\
         mainwindow.cpp

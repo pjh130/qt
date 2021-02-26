@@ -1,11 +1,13 @@
 #useage:
 #include($$PWD/xxx.pri)
 
-# Location of SMTP Library
-SMTP_LIBRARY_LOCATION = $$PWD
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\email\email.pri)
 
-INCLUDEPATH += $$SMTP_LIBRARY_LOCATION
-DEPENDPATH += $$SMTP_LIBRARY_LOCATION
+# Location
+LOG_LIBRARY_LOCATION = $$PWD
+
+INCLUDEPATH += $$LOG_LIBRARY_LOCATION
+DEPENDPATH += $$LOG_LIBRARY_LOCATION
 
 HEADERS += \
     $$PWD/logex.h

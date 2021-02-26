@@ -11,6 +11,10 @@
  *
  * win下excel快速读取类
  * 参考天池项目源码，天池源码地址：https://github.com/qtcn/tianchi/blob/v0.0.2-build20130701/include/tianchi/file/tcmsexcel.h
+
+    ##include <windows.h>
+    #// 在后台线程中使用QAxObject必须先初始化
+    #CoInitializeEx(NULL, COINIT_MULTITHREADED);
 */
 
 class ExcelBasePrivate;

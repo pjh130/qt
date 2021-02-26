@@ -9,50 +9,65 @@
 #include <QDateTime>
 #include <QtCore>
 #include <QDir>
+#include "email.h"
 
 //日志等级
 typedef enum {
-    LEVEL_PRINT,
+    LEVEL_PRINTF,
     LEVEL_LOG,
     LEVEL_EMAIL,
     LEVEL_SMS
 }LOG_LEVEL_EN;
 
+typedef struct {
+
+}INI_SMS_ST;
+
 typedef struct
 {
-    QString strSave;
+    QString strLogDir; //日志的存放目录
     int i64MaxSize;
     LOG_LEVEL_EN level;
-}LOG_INI_ST;
+
+    EMAIL_TO_ST email;
+    INI_SMS_ST sms;
+}INI_LOG_ST;
+
+//默认的日志大小
+#define LOG_MAX_SIZE 1024*1024*300
+//默认的一条日志内容长度
+#define LOG_ONE_MAX_LENGTH 100
 
 class LogEx
 {
 public:
     explicit LogEx();
+    ~LogEx();
 
     static LogEx & getClass(); //返回对象引用，是单例类
-    void initLog(LOG_INI_ST ini);
-    void writeLog(QString strLog);
+    void initLog(INI_LOG_ST init);
+    void writeLog(QString strLog, LOG_LEVEL_EN level = LEVEL_PRINTF);
 
 private:
     void autoInit();
+    void iniLogDir(QString strDir);
 
-    void levelPrint(QString strLog);
+    void levelPrintf(QString strLog);
     void levelLog(QString strLog);
-    void levelEmail(QString strLog);
-    void levelSms(QString strLog);
+    void levelEmail(QString strLog); //具体实现还需要完善
+    void levelSms(QString strLog);   //具体实现还需要完善
 
 signals:
 
 public slots:
 
 private:
-    QString m_strLogDir;
+    QString m_strLogSave;
     QString m_strLogName;
     QFile *m_pFile;
     bool m_bInit;
     QMutex m_mutx;
-    LOG_INI_ST m_init;
+    INI_LOG_ST m_init;
 };
 
 #endif // LOGEX_H
