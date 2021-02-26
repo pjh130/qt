@@ -11,6 +11,8 @@
 #include "threadhandle.h"
 #include "sqliteex.h"
 #include "mysqlex.h"
+#include "psqlex.h"
+#include "odbcex.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +28,8 @@ public:
 
     void testSqlite();
     void testMysql();
+    void testOdbc();
+    void testPsql();
 
 private slots:
     void on_pushButton_email_clicked();

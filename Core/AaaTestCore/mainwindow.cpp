@@ -185,8 +185,10 @@ void MainWindow::on_pushButton_sql_clicked()
         testMysql();
         break;
     case 2:
+        testOdbc();
         break;
     case 3:
+        testPsql();
         break;
     case 4:
         break;
@@ -304,6 +306,39 @@ void MainWindow::testMysql()
         qDebug()<<"Success to init db mysql!";
     } else {
         qDebug()<<"Failed to init db: "<<MySqlEx::getClass().getDatabase().lastError().text();
+        return;
+    }
+}
+
+void MainWindow::testOdbc()
+{
+    INI_DB_ST st;
+    st.strDatabaseName = "my.db";
+    st.strHostName = "";
+    st.strUserName = "";
+    st.strPassword = "";
+
+    if(OdbcEx::getClass().initDb(st))
+    {
+        qDebug()<<"Success to init db mysql!";
+    } else {
+        qDebug()<<"Failed to init db: "<<OdbcEx::getClass().getDatabase().lastError().text();
+        return;
+    }
+}
+void MainWindow::testPsql()
+{
+    INI_DB_ST st;
+    st.strDatabaseName = "my.db";
+    st.strHostName = "";
+    st.strUserName = "";
+    st.strPassword = "";
+
+    if(PsqlEx::getClass().initDb(st))
+    {
+        qDebug()<<"Success to init db mysql!";
+    } else {
+        qDebug()<<"Failed to init db: "<<PsqlEx::getClass().getDatabase().lastError().text();
         return;
     }
 }

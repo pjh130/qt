@@ -21,6 +21,7 @@ signals:
 protected:
 
 private:
+
 };
 
 #endif // MYSQLEX_H
