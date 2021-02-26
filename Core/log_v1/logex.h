@@ -45,7 +45,7 @@ public:
     ~LogEx();
 
     static LogEx & getClass(); //返回对象引用，是单例类
-    void initLog(INI_LOG_ST init);
+    void initClass(INI_LOG_ST init);
     void writeLog(QString strLog, LOG_LEVEL_EN level = LEVEL_PRINTF);
 
 private:

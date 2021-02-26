@@ -35,6 +35,7 @@ public:
     QPushButton *pushButton_network;
     QPushButton *pushButton_zip;
     QPushButton *pushButton_thread;
+    QPushButton *pushButton_sql;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -80,6 +81,11 @@ public:
 
         verticalLayout->addWidget(pushButton_thread);
 
+        pushButton_sql = new QPushButton(centralWidget);
+        pushButton_sql->setObjectName(QStringLiteral("pushButton_sql"));
+
+        verticalLayout->addWidget(pushButton_sql);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -106,6 +112,7 @@ public:
         pushButton_network->setText(QApplication::translate("MainWindow", "network", 0));
         pushButton_zip->setText(QApplication::translate("MainWindow", "zip", 0));
         pushButton_thread->setText(QApplication::translate("MainWindow", "thread", 0));
+        pushButton_sql->setText(QApplication::translate("MainWindow", "sql", 0));
     } // retranslateUi
 
 };

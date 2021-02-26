@@ -58,7 +58,7 @@ void LogEx::autoInit()
     m_bInit = true;
 }
 
-void LogEx::initLog(INI_LOG_ST init)
+void LogEx::initClass(INI_LOG_ST init)
 {
     iniLogDir(init.strLogDir);
 

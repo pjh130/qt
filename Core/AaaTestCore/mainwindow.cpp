@@ -79,7 +79,7 @@ void MainWindow::on_pushButton_excel_clicked()
 void MainWindow::on_pushButton_log_clicked()
 {
     INI_LOG_ST init;
-    LogEx::getClass().initLog(init);
+    LogEx::getClass().initClass(init);
 
     LogEx::getClass().writeLog("Hello world!");
     LogEx::getClass().writeLog("Test 1");
@@ -172,4 +172,138 @@ void MainWindow::slotWorkResult(bool bOk, QString strTask, QByteArray data)
 
     file.write(data);
     file.close();
+}
+
+void MainWindow::on_pushButton_sql_clicked()
+{
+    int i= 1;
+    switch(i) {
+    case 0:
+        testSqlite();
+        break;
+    case 1:
+        testMysql();
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    case 7:
+        break;
+    case 8:
+        break;
+    default:
+        break;
+    }
+
+
+
+}
+
+void MainWindow::testSqlite()
+{
+    INI_DB_ST st;
+    st.strDatabaseName = "my.db";
+
+    if(SqliteEx::getClass().initDb(st))
+    {
+        qDebug()<<"Success to init db sqllite!";
+    } else {
+        qDebug()<<"Failed to init db: "<<SqliteEx::getClass().getDatabase().lastError().text();
+        return;
+    }
+
+    bool bOk;
+    //判断表是否存在
+    QString str = "SELECT COUNT(*) as CNT FROM sqlite_master WHERE type = 'table' AND name = 'students'";
+
+    bool bFindTable = false;
+    bOk = SqliteEx::getClass().getQuery().exec(str);
+    if (bOk)
+    {
+        qDebug()<<"exec ok: ";
+        while(SqliteEx::getClass().getQuery().next())
+        {
+            int i = SqliteEx::getClass().getQuery().value("CNT").toInt();
+            int j = SqliteEx::getClass().getQuery().value(0).toInt();
+            qDebug()<<"CNT: "<<i<<"  RecNo:"<<j;
+            if (i>=1)
+            {
+                bFindTable = true;
+                break;
+            }
+        }
+    } else {
+        qDebug()<<"exec fail: "<<SqliteEx::getClass().getDatabase().lastError().text();
+    }
+
+    //没有找到表就创建
+    if (!bFindTable)
+    {
+        //创建一个students表,标题分别为id、name、score、class
+        bOk = SqliteEx::getClass().getQuery().exec("CREATE TABLE students ("
+                                                   "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                                                   "name VARCHAR(40) NOT NULL, "
+                                                   "score INTEGER NOT NULL, "
+                                                   "class VARCHAR(40) NOT NULL)");
+        if (bOk)
+        {
+            qDebug()<<"exec ok";
+        } else {
+            qDebug()<<"exec fail: "<<SqliteEx::getClass().getDatabase().lastError().text();
+            return;
+        }
+
+        //插入数据
+        for (int i = 0; i< 10; ++i)
+        {
+            SqliteEx::getClass().getQuery().prepare("INSERT INTO students (id, name, score, class) VALUES (:id, :name, :score, :class)");
+            SqliteEx::getClass().getQuery().bindValue(":name", QString("smith_%1").arg(i+1));
+            SqliteEx::getClass().getQuery().bindValue(":score", 80+i);
+            SqliteEx::getClass().getQuery().bindValue(":class", QString::number(i+1));
+            SqliteEx::getClass().getQuery().exec();
+        }
+    } else {
+        qDebug()<<"students table is exist!";
+    }
+
+    //查询数据
+    str = "SELECT * FROM students";
+    bOk = SqliteEx::getClass().getQuery().exec(str);
+    if (bOk)
+    {
+        qDebug()<<"exec ok: ";
+        while(SqliteEx::getClass().getQuery().next())
+        {
+            qDebug()<<"id: "<< SqliteEx::getClass().getQuery().value("id").toInt();
+            qDebug()<<"name: "<< SqliteEx::getClass().getQuery().value("name").toString();
+            qDebug()<<"score: "<< SqliteEx::getClass().getQuery().value("score").toInt();
+            qDebug()<<"class: "<< SqliteEx::getClass().getQuery().value("class").toString()<<endl;
+        }
+    } else {
+        qDebug()<<"exec fail: "<<SqliteEx::getClass().getDatabase().lastError().text();
+    }
+}
+
+void MainWindow::testMysql()
+{
+    INI_DB_ST st;
+    st.strDatabaseName = "my.db";
+    st.strHostName = "";
+    st.strUserName = "";
+    st.strPassword = "";
+
+    if(MySqlEx::getClass().initDb(st))
+    {
+        qDebug()<<"Success to init db mysql!";
+    } else {
+        qDebug()<<"Failed to init db: "<<MySqlEx::getClass().getDatabase().lastError().text();
+        return;
+    }
 }
