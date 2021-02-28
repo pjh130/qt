@@ -29,7 +29,7 @@ public:
     /// @brief 取执行文件的版本，仅支持 Windows
     /// @param [in] exeFile 包含版本信息的文件名(.exe, .dll等)
     /// @return 版本信息(xxx.xxx.xxx.xxx)
-    static QString fileVersion(const QString& exeFile);
+//    static QString fileVersion(const QString & exeFile);
 
 };
 

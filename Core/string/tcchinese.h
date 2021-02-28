@@ -16,13 +16,17 @@
 #ifndef TIANCHI_TCCHINESE_H
 #define TIANCHI_TCCHINESE_H
 
-#include <tianchi/tcglobal.h>
+//#include <tianchi/tcglobal.h>
+#include "systemex.h"
+#if defined(Q_OS_WIN)
+  #include <windows.h>
+#endif
 
 #include <QString>
 
 /// @brief 汉语相关处理类
 /// @note 此类仅限在 Windows 下有效，使用时需要在 .pro 文件中加上 LIB += -lole32
-class TIANCHI_API TcChinese
+class TcChinese
 {
 public:
     /// 取得多个汉字的首字母

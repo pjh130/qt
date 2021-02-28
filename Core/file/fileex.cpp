@@ -126,36 +126,36 @@ QString FileEx::fileSize2String(qint64 i64FileSize)
     return QString::number(i64FileSize) + "b";
 }
 
-QString FileEx::fileVersion(const QString&  exeFile)
-{
-    QString ret;
+//QString FileEx::fileVersion(const QString & exeFile)
+//{
+//    QString ret;
 
-#if defined(Q_OS_WIN)
-    int size = GetFileVersionInfoSize(exeFile.toStdWString().c_str(), NULL);
-    if (size > 0)
-    {
-        char* data = new char[size +1];
-        if (GetFileVersionInfo(exeFile.toStdWString().c_str(), 0, size, data))
-        {
-            VS_FIXEDFILEINFO* fileInfo;
-            unsigned int      fileInfoSize = 0;
-            if (VerQueryValue(data, L"\\", (void**)&fileInfo, &fileInfoSize))
-            {
-                int vMajor  = HIWORD(fileInfo->dwFileVersionMS);
-                int vMinor  = LOWORD(fileInfo->dwFileVersionMS);
-                int Release = HIWORD(fileInfo->dwFileVersionLS);
-                int vBuild  = LOWORD(fileInfo->dwFileVersionLS);
-                ret.append(QString::number(vMajor)).append(".")
-                        .append(QString::number(vMinor)).append(".")
-                        .append(QString::number(Release)).append(".")
-                        .append(QString::number(vBuild));
-            }
-        }
-        delete [] data;
-    }
-#else
-    Q_UNUSED(exeFile)
-#endif
-    return ret;
-}
+//#if defined(Q_OS_WIN)
+//    int size = GetFileVersionInfoSize(exeFile.toStdWString().c_str(), NULL);
+//    if (size > 0)
+//    {
+//        char* data = new char[size +1];
+//        if (GetFileVersionInfo(exeFile.toStdWString().c_str(), 0, size, data))
+//        {
+//            VS_FIXEDFILEINFO* fileInfo;
+//            unsigned int      fileInfoSize = 0;
+//            if (VerQueryValue(data, L"\\", (void**)&fileInfo, &fileInfoSize))
+//            {
+//                int vMajor  = HIWORD(fileInfo->dwFileVersionMS);
+//                int vMinor  = LOWORD(fileInfo->dwFileVersionMS);
+//                int Release = HIWORD(fileInfo->dwFileVersionLS);
+//                int vBuild  = LOWORD(fileInfo->dwFileVersionLS);
+//                ret.append(QString::number(vMajor)).append(".")
+//                        .append(QString::number(vMinor)).append(".")
+//                        .append(QString::number(Release)).append(".")
+//                        .append(QString::number(vBuild));
+//            }
+//        }
+//        delete [] data;
+//    }
+//#else
+//    Q_UNUSED(exeFile)
+//#endif
+//    return ret;
+//}
 

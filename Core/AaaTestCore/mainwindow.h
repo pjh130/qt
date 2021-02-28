@@ -13,6 +13,11 @@
 #include "mysqlex.h"
 #include "psqlex.h"
 #include "odbcex.h"
+#include "direx.h"
+#include "fileex.h"
+#include "systemex.h"
+#include "stringex.h"
+#include "timeex.h"
 
 namespace Ui {
 class MainWindow;
@@ -47,6 +52,14 @@ private slots:
     void slotWorkResult(bool bOk, QString strTask, QByteArray data);
 
     void on_pushButton_sql_clicked();
+
+    void on_pushButton_file_clicked();
+
+    void on_pushButton_time_clicked();
+
+    void on_pushButton_os_clicked();
+
+    void on_pushButton_string_clicked();
 
 signals:
     void addWork(REQUEST_ST request);

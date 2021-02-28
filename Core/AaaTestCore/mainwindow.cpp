@@ -344,3 +344,32 @@ void MainWindow::testPsql()
         return;
     }
 }
+
+void MainWindow::on_pushButton_file_clicked()
+{
+    qDebug()<<FileEx::getHash("D:\\test\\a.xlsx");
+    qDebug()<<FileEx::searchFiles("D:\\test");
+}
+
+void MainWindow::on_pushButton_time_clicked()
+{
+    qDebug()<<TimeEx::YYYY_MM_DD_HH_MM_SS();
+    TimeEx::blockTime(1000*10);
+    qDebug()<<TimeEx::YYYY_MM_DD_HH_MM_SS_ZZZ();
+}
+
+void MainWindow::on_pushButton_os_clicked()
+{
+    qDebug()<<SystemEx::systemName();
+
+    QString strErrMsg;
+    QList<qint64> lstPid;
+    SystemEx::isProcessRunningByFilename("D:\\Code\\Go\\src\\github.com\\pjh130\\qt\\Core\\AaaTestCore\\release\\AaaTestCore.exe", strErrMsg, lstPid, true);
+    qDebug()<<"strErrMsg: "<<strErrMsg;
+    qDebug()<<"lstPid: "<<lstPid;
+}
+
+void MainWindow::on_pushButton_string_clicked()
+{
+
+}

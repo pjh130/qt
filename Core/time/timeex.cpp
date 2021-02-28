@@ -13,7 +13,7 @@ TimeEx::~TimeEx()
 void TimeEx::blockTime(qint64 timeout)
 {
     QEventLoop loop;
-    QTimer::singleShot(timeout, &loop, SLOT(loop.exit()));
+    QTimer::singleShot(timeout, &loop, SLOT(quit()));
     loop.exec();
 }
 

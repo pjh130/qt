@@ -1,4 +1,4 @@
-#include <tianchi/chinese/tcchinese.h>
+#include "tcchinese.h"
 
 #include <QString>
 

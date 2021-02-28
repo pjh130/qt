@@ -64,6 +64,34 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_file">
+      <property name="text">
+       <string>file</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_time">
+      <property name="text">
+       <string>time</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_os">
+      <property name="text">
+       <string>os</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_string">
+      <property name="text">
+       <string>string</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -72,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

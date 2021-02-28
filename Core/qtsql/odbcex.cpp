@@ -28,10 +28,13 @@ bool OdbcEx::initDb(INI_DB_ST init)
     setInit(init);
 
     getDatabase() = QSqlDatabase::addDatabase("QODBC");
-//    getDatabase().setHostName(getInit().strHostName);
-//    getDatabase().setDatabaseName(getInit().strDatabaseName);       //这里输入你的数据库名
-//    getDatabase().setUserName(getInit().strUserName);
-//    getDatabase().setPassword(getInit().strPassword);   //这里输入你的密码
+
+    QString dsn = QString("DRIVER={SQL SERVER};SERVER=%1;DATABASE=%2;")
+        .arg(getInit().strHostName).arg(getInit().strDatabaseName);
+    getDatabase().setDatabaseName(dsn);
+    getDatabase().setUserName(getInit().strUserName);
+    getDatabase().setPassword(getInit().strPassword);
+
     if (!getDatabase().open())
     {
         setInitOK(false);

@@ -33,6 +33,10 @@ public:
     QPushButton *pushButton_zip;
     QPushButton *pushButton_thread;
     QPushButton *pushButton_sql;
+    QPushButton *pushButton_file;
+    QPushButton *pushButton_time;
+    QPushButton *pushButton_os;
+    QPushButton *pushButton_string;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -83,10 +87,30 @@ public:
 
         verticalLayout->addWidget(pushButton_sql);
 
+        pushButton_file = new QPushButton(centralWidget);
+        pushButton_file->setObjectName(QString::fromUtf8("pushButton_file"));
+
+        verticalLayout->addWidget(pushButton_file);
+
+        pushButton_time = new QPushButton(centralWidget);
+        pushButton_time->setObjectName(QString::fromUtf8("pushButton_time"));
+
+        verticalLayout->addWidget(pushButton_time);
+
+        pushButton_os = new QPushButton(centralWidget);
+        pushButton_os->setObjectName(QString::fromUtf8("pushButton_os"));
+
+        verticalLayout->addWidget(pushButton_os);
+
+        pushButton_string = new QPushButton(centralWidget);
+        pushButton_string->setObjectName(QString::fromUtf8("pushButton_string"));
+
+        verticalLayout->addWidget(pushButton_string);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 17));
+        menuBar->setGeometry(QRect(0, 0, 400, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -110,6 +134,10 @@ public:
         pushButton_zip->setText(QCoreApplication::translate("MainWindow", "zip", nullptr));
         pushButton_thread->setText(QCoreApplication::translate("MainWindow", "thread", nullptr));
         pushButton_sql->setText(QCoreApplication::translate("MainWindow", "sql", nullptr));
+        pushButton_file->setText(QCoreApplication::translate("MainWindow", "file", nullptr));
+        pushButton_time->setText(QCoreApplication::translate("MainWindow", "time", nullptr));
+        pushButton_os->setText(QCoreApplication::translate("MainWindow", "os", nullptr));
+        pushButton_string->setText(QCoreApplication::translate("MainWindow", "string", nullptr));
     } // retranslateUi
 
 };
