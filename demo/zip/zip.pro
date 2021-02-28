@@ -9,7 +9,7 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-include(D:\Code\Go\src\github.com\pjh130\qt\common\qzip\qzip.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\qzip\qzip.pri)
 
 #win32:CONFIG(release, debug|release): LIBS += -LG:\gopath\src\github.com\pjh130\qt\common\quazip\quazip\release -lquazip
 #else:win32:CONFIG(debug, debug|release): LIBS += -LG:\gopath\src\github.com\pjh130\qt\common\quazip\quazip\debug -lquazipd

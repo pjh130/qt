@@ -33,7 +33,7 @@ public:
     void setInitOK(bool bOk);
 
     void closeDB();
-
+    QStringList tables();
 private:
 
 

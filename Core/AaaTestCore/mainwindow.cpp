@@ -176,7 +176,7 @@ void MainWindow::slotWorkResult(bool bOk, QString strTask, QByteArray data)
 
 void MainWindow::on_pushButton_sql_clicked()
 {
-    int i= 1;
+    int i= 0;
     switch(i) {
     case 0:
         testSqlite();
@@ -220,6 +220,8 @@ void MainWindow::testSqlite()
         qDebug()<<"Failed to init db: "<<SqliteEx::getClass().getDatabase().lastError().text();
         return;
     }
+
+    qDebug()<<"tables:    "<<SqliteEx::getClass().tables();
 
     bool bOk;
     //判断表是否存在
@@ -296,10 +298,10 @@ void MainWindow::testSqlite()
 void MainWindow::testMysql()
 {
     INI_DB_ST st;
-    st.strDatabaseName = "my.db";
-    st.strHostName = "";
-    st.strUserName = "";
-    st.strPassword = "";
+    st.strDatabaseName = "mysql";
+    st.strHostName = "localhost";
+    st.strUserName = "root";
+    st.strPassword = "abc123456";
 
     if(MySqlEx::getClass().initDb(st))
     {

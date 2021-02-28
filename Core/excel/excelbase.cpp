@@ -180,7 +180,7 @@ void ExcelBase::saveAsNew(const QString& filename)
 #endif // Q_OS_WIN
 }
 
-//这种保存方式在新版的excel中会出错
+
 void ExcelBase::saveAs(const QString& filename)
 {
 #if defined(Q_OS_WIN)
@@ -191,8 +191,10 @@ void ExcelBase::saveAs(const QString& filename)
         QString strPath = d->filename;
         strPath = strPath.replace('/','\\');
         qDebug()<<strPath;
-        d->book->dynamicCall("SaveAs(const QString&,int,const QString&,const QString&,bool,bool)", strPath
-                             ,56,QString(""),QString(""),false,false);
+        //这种保存方式在新版的excel中会出错
+//        d->book->dynamicCall("SaveAs(const QString&,int,const QString&,const QString&,bool,bool)", strPath
+//                             ,56,QString(""),QString(""),false,false);
+        d->book->dynamicCall("SaveAs(const QString&)", strPath);
     }
 #else
     Q_UNUSED(filename)
@@ -207,8 +209,8 @@ void ExcelBase::save()
     Q_D(ExcelBase);
     if(d->filename.isEmpty())
         return;
-//    saveAs(d->filename);
-    saveAsNew(d->filename);
+    saveAs(d->filename);
+//    saveAsNew(d->filename);
 #else
     Q_UNUSED(filename)
 #endif // Q_OS_WIN

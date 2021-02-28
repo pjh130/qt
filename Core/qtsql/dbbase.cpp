@@ -12,7 +12,10 @@ DbBase::~DbBase()
 
 void DbBase::closeDB()
 {
-    m_database.close();
+    if (m_database.isOpen())
+    {
+      m_database.close();
+    }
 }
 
 void DbBase::setInit(INI_DB_ST init)
@@ -21,6 +24,11 @@ void DbBase::setInit(INI_DB_ST init)
     m_init.strDatabaseName = init.strDatabaseName;
     m_init.strUserName = init.strUserName;
     m_init.strPassword = init.strPassword;
+}
+
+QStringList DbBase::tables()
+{
+    return m_database.tables();
 }
 
 bool DbBase::isInitOK()

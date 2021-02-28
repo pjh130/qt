@@ -204,7 +204,7 @@ void NetworkAccessManagerEx::slotReadyRead()
         return;
     }
 
-    //旧数据
+    //旧数据(因为不知道数据缓存是否能一次读完)
     QByteArray old = m_buff.value(strTask);
     QByteArray arr = old + reply->readAll();
 
@@ -228,7 +228,9 @@ void NetworkAccessManagerEx::slotReplyFinished(QNetworkReply *reply)
 
         //旧数据
         QByteArray old = m_buff.value(strTask);
-        QByteArray data = old + reply->readAll();
+        QByteArray newdata = reply->readAll();
+        qDebug()<<"new data length: "<<newdata.length();
+        QByteArray data = old + newdata;
 
         //删除链表数据
         m_reply.remove(reply);

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -43,59 +40,59 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
+            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(400, 338);
         centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         pushButton_email = new QPushButton(centralWidget);
-        pushButton_email->setObjectName(QStringLiteral("pushButton_email"));
+        pushButton_email->setObjectName(QString::fromUtf8("pushButton_email"));
 
         verticalLayout->addWidget(pushButton_email);
 
         pushButton_excel = new QPushButton(centralWidget);
-        pushButton_excel->setObjectName(QStringLiteral("pushButton_excel"));
+        pushButton_excel->setObjectName(QString::fromUtf8("pushButton_excel"));
 
         verticalLayout->addWidget(pushButton_excel);
 
         pushButton_log = new QPushButton(centralWidget);
-        pushButton_log->setObjectName(QStringLiteral("pushButton_log"));
+        pushButton_log->setObjectName(QString::fromUtf8("pushButton_log"));
 
         verticalLayout->addWidget(pushButton_log);
 
         pushButton_network = new QPushButton(centralWidget);
-        pushButton_network->setObjectName(QStringLiteral("pushButton_network"));
+        pushButton_network->setObjectName(QString::fromUtf8("pushButton_network"));
 
         verticalLayout->addWidget(pushButton_network);
 
         pushButton_zip = new QPushButton(centralWidget);
-        pushButton_zip->setObjectName(QStringLiteral("pushButton_zip"));
+        pushButton_zip->setObjectName(QString::fromUtf8("pushButton_zip"));
 
         verticalLayout->addWidget(pushButton_zip);
 
         pushButton_thread = new QPushButton(centralWidget);
-        pushButton_thread->setObjectName(QStringLiteral("pushButton_thread"));
+        pushButton_thread->setObjectName(QString::fromUtf8("pushButton_thread"));
 
         verticalLayout->addWidget(pushButton_thread);
 
         pushButton_sql = new QPushButton(centralWidget);
-        pushButton_sql->setObjectName(QStringLiteral("pushButton_sql"));
+        pushButton_sql->setObjectName(QString::fromUtf8("pushButton_sql"));
 
         verticalLayout->addWidget(pushButton_sql);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 400, 17));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
+        statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
@@ -105,14 +102,14 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        pushButton_email->setText(QApplication::translate("MainWindow", "email", 0));
-        pushButton_excel->setText(QApplication::translate("MainWindow", "excel", 0));
-        pushButton_log->setText(QApplication::translate("MainWindow", "log", 0));
-        pushButton_network->setText(QApplication::translate("MainWindow", "network", 0));
-        pushButton_zip->setText(QApplication::translate("MainWindow", "zip", 0));
-        pushButton_thread->setText(QApplication::translate("MainWindow", "thread", 0));
-        pushButton_sql->setText(QApplication::translate("MainWindow", "sql", 0));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        pushButton_email->setText(QCoreApplication::translate("MainWindow", "email", nullptr));
+        pushButton_excel->setText(QCoreApplication::translate("MainWindow", "excel", nullptr));
+        pushButton_log->setText(QCoreApplication::translate("MainWindow", "log", nullptr));
+        pushButton_network->setText(QCoreApplication::translate("MainWindow", "network", nullptr));
+        pushButton_zip->setText(QCoreApplication::translate("MainWindow", "zip", nullptr));
+        pushButton_thread->setText(QCoreApplication::translate("MainWindow", "thread", nullptr));
+        pushButton_sql->setText(QCoreApplication::translate("MainWindow", "sql", nullptr));
     } // retranslateUi
 
 };

@@ -15,6 +15,11 @@ include(D:\Code\Go\src\github.com\pjh130\qt\Core\ThreadHandle\threadhandle.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\excel\excel.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\qzip\qzip.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\qtsql\qtsql.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\file\file.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\time\time.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\image\image.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\string\string.pri)
+include(D:\Code\Qt\toStudy\tianchi\src\lib.pri)
 
 TARGET = AaaTestCore
 TEMPLATE = app

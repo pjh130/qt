@@ -35,14 +35,29 @@ bool SqliteEx::initDb(INI_DB_ST init)
     }
 
     getDatabase() = QSqlDatabase::addDatabase("QSQLITE");
+    if (!getInit().strHostName.isEmpty())
+    {
+        getDatabase().setHostName(getInit().strHostName);
+    }
+    if (!getInit().strDatabaseName.isEmpty())
+    {
+        getDatabase().setDatabaseName(getInit().strDatabaseName);       //这里输入你的数据库名
+    }
+    if (!getInit().strUserName.isEmpty())
+    {
+        getDatabase().setUserName(getInit().strUserName);
+    }
+    if (!getInit().strPassword.isEmpty())
+    {
+        getDatabase().setPassword(getInit().strPassword);   //这里输入你的密码
+    }
+
     //如果本目录下没有该文件,则会在本目录下生成,否则连接该文件
     getDatabase().setDatabaseName(strDir + "/" + getInit().strDatabaseName);
     if (!getDatabase().open())
     {
         setInitOK(false);
-    }
-    else
-    {
+    } else {
         //打开成功
         getQuery() = QSqlQuery(getDatabase());
         setInitOK(true);
