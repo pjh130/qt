@@ -31,6 +31,7 @@ public:
     static bool isProcessRunningByAppName(QString strAppName, QString &strErrMsg,  QList<qint64> &lstPid, bool bGetAllPids/*=false*/);
     static bool killProcessByAppName(const QString &strFilename, QString &strErrMsg, bool bKillAll=true);
     static bool killProcessByFilename(const QString &strFilename, QString &strErrMsg, bool bKillAll=true);
+    static bool isAppInstanceRunning(QString strMtxName, QString strAppFile);
 };
 
 #endif // SYSTEMEX_H

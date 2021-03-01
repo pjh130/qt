@@ -6,6 +6,7 @@
 #include "logex.h"
 #include "email.h"
 #include "networkaccessmanagerex.h"
+#include "tcpserver.h"
 #include "JlCompress.h"
 #include "excelbase.h"
 #include "threadhandle.h"

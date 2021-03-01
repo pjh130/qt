@@ -111,6 +111,9 @@ void MainWindow::on_pushButton_network_clicked()
     st.strTask = QUuid::createUuid().toString();
 
     emit addWork(st);
+
+    TcpServer *ser = new TcpServer;
+    ser->listen(QHostAddress::Any,6666);
 }
 
 void MainWindow::on_pushButton_zip_clicked()

@@ -403,3 +403,42 @@ bool SystemEx::killProcessByAppName(const QString &strAppName, QString &strErrMs
         return false;
     }
 }
+
+/*==========================================
+//is one instance of the app had running before?
+//
+//strMtxName: the mutex name(only in windows)
+//strAppFile: the app file(only in linux)
+//
+//author: moyannie
+//date: 2011/07/19
+//modified:
+===========================================*/
+bool SystemEx::isAppInstanceRunning(QString strMtxName, QString strAppFile)
+{
+#ifdef Q_OS_WIN
+    Q_UNUSED(strAppFile)
+    CreateMutex(NULL, false, QString("Global\\%1").arg(strMtxName).toStdWString().data());
+    if(ERROR_ALREADY_EXISTS == GetLastError()) return true;
+#else
+    Q_UNUSED(strMtxName)
+    QDir dirProcs("/proc");
+    dirProcs.setFilter(QDir::Dirs);
+    QStringList lstProcs = dirProcs.entryList();
+    long lPid = 0; bool bOk = false; char buf[1024] = {0};
+    int iRunningTimes = 0;
+    for(int i=0; i<lstProcs.length(); i++)
+    {
+        if((lPid=lstProcs.at(i).toLong(&bOk)) && bOk)
+        {
+            memset(buf, 0, sizeof(buf));
+            readlink(QString("/proc/%1/exe").arg(lstProcs.at(i)).toUtf8().constData(), buf, sizeof(buf));
+            if(QString(buf) == QDir(strAppFile).canonicalPath())
+            {
+                if(++iRunningTimes > 1) return true;   //printf("the app have startup\n");
+            }
+        }
+    }
+#endif
+    return false;
+}
