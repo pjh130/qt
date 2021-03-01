@@ -8,7 +8,7 @@ INCLUDEPATH += D:\Develop\Qt\5.15.2\msvc2019_64\include\QtZlib
 QZIP_LIBRARY_LOCATION = $$PWD
 
 win32:CONFIG(release, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/release/ -lquazip
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/debug/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/debug/ -lquazipd
 else:unix: LIBS += -L$$QZIP_LIBRARY_LOCATION -lquazip
 
 INCLUDEPATH += $$QZIP_LIBRARY_LOCATION/header

@@ -6,13 +6,19 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4){
+    QT += widgets
+    message("test ...")
+}else{
+    message("pla,pla,pla ....")
+}
 
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\core.pri)
 
 TARGET = AaaTestCore
 TEMPLATE = app
 
+DEFINES += QT_MESSAGELOGCONTEXT
 
 SOURCES += main.cpp\
         mainwindow.cpp

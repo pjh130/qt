@@ -53,19 +53,19 @@ QByteArray FileEx::readFile(QString strFileName)
 }
 
 //从目录及子目录中检索出所有文件名
-QStringList FileEx::searchFiles(const QString& path)
+QStringList FileEx::allFiles(const QString & strDir)
 {
     QStringList ret;
     // 这个函数可以执行任何任务，
     // 这里只是简单地输出各个文件（夹）的名字
-    QDir dir(path);
+    QDir dir(strDir);
     QStringList
     list = dir.entryList(QDir::Dirs, QDir::Name);
     for (QStringList::Iterator it = list.begin(); it != list.end(); it++)
     {
         if ("." != *it && ".." != *it)
         {
-            ret.append(searchFiles(path + QDir::separator() + *it));
+            ret.append(allFiles(strDir + QDir::separator() + *it));
         }
     }
     list = dir.entryList(QDir::Files, QDir::Name);

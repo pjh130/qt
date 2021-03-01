@@ -1,9 +1,14 @@
+#====仅仅是个人总结用，部分代码来别人的成果，非常感谢原作者====
+#  所有涉及的原作者有如下（如果有遗漏会补上）：
+#    1. 天池共享源码库 Tianchi share library for Qt (C++)
+#    2. moyannie同学
+
 #useage:
 #include($$PWD/xxx.pri)
 
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\email\email.pri)
-include(D:\Code\Go\src\github.com\pjh130\qt\Core\log_v1\log_v1.pri)
-include(D:\Code\Go\src\github.com\pjh130\qt\Core\network_v1\network_v1.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\logex\logex.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\network\network.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\ThreadHandle\threadhandle.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\excel\excel.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\qzip\qzip.pri)

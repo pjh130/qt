@@ -20,7 +20,7 @@ public:
     static QByteArray readFile(QString strFileName);
 
     //从目录及子目录中检索出所有文件名
-    static QStringList searchFiles(const QString& path);
+    static QStringList allFiles(const QString & strDir);
 
     static QString getHash(const QString &strFilename,
                                    QCryptographicHash::Algorithm method = QCryptographicHash::Md5);

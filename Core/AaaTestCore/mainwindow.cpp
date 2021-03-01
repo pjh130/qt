@@ -79,6 +79,7 @@ void MainWindow::on_pushButton_excel_clicked()
 void MainWindow::on_pushButton_log_clicked()
 {
     INI_LOG_ST init;
+    init.strLogDir = "D:\\test\\log";
     LogEx::getClass().initClass(init);
 
     LogEx::getClass().writeLog("Hello world!");
@@ -86,6 +87,11 @@ void MainWindow::on_pushButton_log_clicked()
     LogEx::getClass().writeLog("Test 2", LEVEL_LOG);
     LogEx::getClass().writeLog("Test 3", LEVEL_EMAIL);
     LogEx::getClass().writeLog("Test 4", LEVEL_SMS);
+
+    QMessageLogContext context;
+    LogEx::getClass().customLog(QtDebugMsg, context, "Test 5");
+    LogEx::getClass().customLog(QtWarningMsg, context, "Test 6");
+    LogEx::getClass().customLog(QtCriticalMsg, context, "Test 7");
 }
 
 void MainWindow::on_pushButton_network_clicked()
@@ -348,7 +354,9 @@ void MainWindow::testPsql()
 void MainWindow::on_pushButton_file_clicked()
 {
     qDebug()<<FileEx::getHash("D:\\test\\a.xlsx");
-    qDebug()<<FileEx::searchFiles("D:\\test");
+    qDebug()<<FileEx::allFiles("D:\\test");
+    qDebug()<<FileEx::fileSize2String(QFileInfo("D:\\test\\a.xlsx").size());
+    qDebug()<<FileEx::fileSize2String(QFileInfo("D:\\DevelopTool\\Qt\\qt-opensource-windows-x86-5.12.10.exe").size());
 }
 
 void MainWindow::on_pushButton_time_clicked()
