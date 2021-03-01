@@ -361,6 +361,7 @@ void MainWindow::on_pushButton_time_clicked()
 void MainWindow::on_pushButton_os_clicked()
 {
     qDebug()<<SystemEx::systemName();
+    qDebug()<<SystemEx::hostName();
 
     QString strErrMsg;
     QList<qint64> lstPid;
@@ -372,4 +373,16 @@ void MainWindow::on_pushButton_os_clicked()
 void MainWindow::on_pushButton_string_clicked()
 {
 
+}
+
+void MainWindow::on_pushButton_textcodec_clicked()
+{
+
+}
+
+void MainWindow::on_pushButton_image_clicked()
+{
+    QString strSrc = "D:\\test\\matebook.png";
+    QString strDec = "D:\\test\\new\\matebook.png";
+    qDebug()<<"toGrayImge: "<<ImageEx::toGrayImge(strSrc, strDec);
 }

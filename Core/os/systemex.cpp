@@ -54,6 +54,11 @@ QString SystemEx::systemName()
     return ret;
 }
 
+QString SystemEx::hostName()
+{
+    return QHostInfo::localHostName();
+}
+
 /*==========================================
 //check if the process is running by pid
 //

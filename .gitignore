@@ -6,6 +6,8 @@
 *.exe
 *.Debug
 *.Release
+*-Debug
+*-Release
 *.user
 *.log
 

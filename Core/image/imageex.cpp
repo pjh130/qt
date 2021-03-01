@@ -11,10 +11,15 @@ ImageEx::~ImageEx()
 }
 
 //this can create a new image file and return a new file path
-bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath)
+bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath, bool bOverwrite)
 {
-    if(strSrcPath.isEmpty() || !QFileInfo::exists(strSrcPath)
-            || !QFileInfo::exists(strDesPath))
+    //如果是不覆盖，文件原来存在就直接报错
+    if (!bOverwrite && QFileInfo::exists(strDesPath))
+    {
+        return false;
+    }
+
+    if(strSrcPath.isEmpty() || !QFileInfo::exists(strSrcPath))
     {
         return false;
     }
@@ -34,7 +39,7 @@ bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath)
         }
     }
 
-    //如果目录不存在
+    //如果目录不存在需要创建
     QFileInfo info(strDesPath);
     QDir dir(info.absoluteDir());
     if (!dir.exists())

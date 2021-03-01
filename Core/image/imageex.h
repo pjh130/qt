@@ -10,7 +10,8 @@ public:
     ImageEx();
     ~ImageEx();
     //让图片变灰
-    static bool toGrayImge(const QString &strSrcPath, QString &strDesPath);
+    static bool toGrayImge(const QString &strSrcPath, QString &strDesPath,
+                           bool bOverwrite = true);
 };
 
 #endif // IMAGEEX_H

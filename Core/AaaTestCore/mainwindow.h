@@ -18,6 +18,8 @@
 #include "systemex.h"
 #include "stringex.h"
 #include "timeex.h"
+#include "imageex.h"
+#include "textcodecex.h"
 
 namespace Ui {
 class MainWindow;
@@ -60,6 +62,10 @@ private slots:
     void on_pushButton_os_clicked();
 
     void on_pushButton_string_clicked();
+
+    void on_pushButton_textcodec_clicked();
+
+    void on_pushButton_image_clicked();
 
 signals:
     void addWork(REQUEST_ST request);

@@ -2,6 +2,7 @@
 #define SYSTEMEX_H
 
 #include <QtCore>
+#include <QHostInfo>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Psapi.h>
@@ -20,6 +21,7 @@ public:
     /// @note Windows从注册表中获取,Linux从依次从/etc下的os-release
     ///       lsb-release, *-release文件获取
     static QString systemName();
+    static QString hostName();
 
     static bool isProcessRunningByPid(long lPid, QString &strErrMsg,
                                bool bGetImageFile=false, PWCHAR pImageFileBuf=0, uint *puiBufSize=0);
