@@ -353,10 +353,14 @@ void MainWindow::testPsql()
 
 void MainWindow::on_pushButton_file_clicked()
 {
-    qDebug()<<FileEx::getHash("D:\\test\\a.xlsx");
+    QString str ="D:\\test\\a.xlsx";
     qDebug()<<FileEx::allFiles("D:\\test");
-    qDebug()<<FileEx::fileSize2String(QFileInfo("D:\\test\\a.xlsx").size());
-    qDebug()<<FileEx::fileSize2String(QFileInfo("D:\\DevelopTool\\Qt\\qt-opensource-windows-x86-5.12.10.exe").size());
+    qDebug()<<FileEx::fileSize2String(QFileInfo(str).size());
+    qDebug()<<FileEx::getHash(str);
+    str = "D:\\DevelopTool\\Qt\\qt-opensource-windows-x86-5.12.10.exe";
+    qDebug()<<FileEx::fileSize2String(QFileInfo(str).size());
+    qDebug()<<FileEx::getHash(str);
+
 }
 
 void MainWindow::on_pushButton_time_clicked()
@@ -393,4 +397,23 @@ void MainWindow::on_pushButton_image_clicked()
     QString strSrc = "D:\\test\\matebook.png";
     QString strDec = "D:\\test\\new\\matebook.png";
     qDebug()<<"toGrayImge: "<<ImageEx::toGrayImge(strSrc, strDec);
+}
+
+void MainWindow::on_pushButton_settings_clicked()
+{
+    QString strPath = QCoreApplication::applicationDirPath() + QDir::separator() + "ini";
+    strPath = strPath + QDir::separator() + "setting.ini";
+    QString strGroup = "user1";
+    QString strName = "zhangsan";
+    QString strValue = "1234567";
+    SettingsEx::setValue(strPath, strGroup, strName, strValue);
+    qDebug()<<SettingsEx::getValue(strPath, strGroup, strName);
+
+    strGroup = "user2";
+    strName = "lisi";
+    strValue = "654321";
+    SettingsEx::setValue(strPath, strGroup, strName, strValue);
+    qDebug()<<SettingsEx::getValue(strPath, strGroup, strName);
+
+    SettingsEx::removeValue(strPath, strGroup, strName);
 }

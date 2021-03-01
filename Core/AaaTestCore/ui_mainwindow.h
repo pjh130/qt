@@ -37,6 +37,7 @@ public:
     QPushButton *pushButton_time;
     QPushButton *pushButton_os;
     QPushButton *pushButton_string;
+    QPushButton *pushButton_settings;
     QPushButton *pushButton_image;
     QPushButton *pushButton_textcodec;
     QMenuBar *menuBar;
@@ -47,7 +48,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(400, 358);
+        MainWindow->resize(400, 410);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -109,6 +110,11 @@ public:
 
         verticalLayout->addWidget(pushButton_string);
 
+        pushButton_settings = new QPushButton(centralWidget);
+        pushButton_settings->setObjectName(QString::fromUtf8("pushButton_settings"));
+
+        verticalLayout->addWidget(pushButton_settings);
+
         pushButton_image = new QPushButton(centralWidget);
         pushButton_image->setObjectName(QString::fromUtf8("pushButton_image"));
 
@@ -150,6 +156,7 @@ public:
         pushButton_time->setText(QCoreApplication::translate("MainWindow", "time", nullptr));
         pushButton_os->setText(QCoreApplication::translate("MainWindow", "os", nullptr));
         pushButton_string->setText(QCoreApplication::translate("MainWindow", "string", nullptr));
+        pushButton_settings->setText(QCoreApplication::translate("MainWindow", "settings", nullptr));
         pushButton_image->setText(QCoreApplication::translate("MainWindow", "image", nullptr));
         pushButton_textcodec->setText(QCoreApplication::translate("MainWindow", "textcodec", nullptr));
     } // retranslateUi

@@ -4,7 +4,7 @@ LogEx::LogEx()
 {
     m_pFile = NULL;
     m_bInit = false;
-    m_init.strLogDir = QCoreApplication::applicationDirPath() + "/log";
+    m_init.strLogDir = QCoreApplication::applicationDirPath() + QDir::separator() + "log";
     m_strLogName = "log.log";
 
     levelPrintf("Default max log size: " + QString::number( LOG_MAX_SIZE));
@@ -27,7 +27,7 @@ LogEx & LogEx::getClass()
     return log;
 }
 
-void LogEx::customLog(QtMsgType type, const QMessageLogContext &context,
+void LogEx::customLog(QtMsgType type, const QMessageLogContext & context,
                                  const QString & msg)
 {
     QString txt;
@@ -74,7 +74,7 @@ void LogEx::iniLogDir(QString strDir)
         dir.mkdir(m_init.strLogDir);
     }
 
-    m_strLogSave = m_init.strLogDir + "/" + m_strLogName;
+    m_strLogSave = m_init.strLogDir + QDir::separator() + m_strLogName;
 
     levelPrintf("Log save path: " + m_strLogSave);
 }
@@ -147,7 +147,7 @@ void LogEx::levelLog(QString strLog)
         }
 
         //备份日志文件
-        QString strNew = m_init.strLogDir + "/" + QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss") + "-" + m_strLogName;
+        QString strNew = m_init.strLogDir + QDir::separator() + QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss") + "-" + m_strLogName;
         QFile::rename(m_strLogSave, strNew);
         levelPrintf("Log is large, need to rename: " + strNew);
 

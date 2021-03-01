@@ -1,7 +1,7 @@
 #include "fileex.h"
 
 #if defined(Q_OS_WIN)
-  #include <windows.h>
+#include <windows.h>
 #endif
 
 FileEx::FileEx()
@@ -15,7 +15,7 @@ FileEx::~FileEx()
 }
 
 bool FileEx::witeFile(QString strFileName, QByteArray data,
-              QIODevice::OpenModeFlag mode)
+                      QIODevice::OpenModeFlag mode)
 {
     if (!strFileName.isEmpty())
     {
@@ -60,7 +60,7 @@ QStringList FileEx::allFiles(const QString & strDir)
     // 这里只是简单地输出各个文件（夹）的名字
     QDir dir(strDir);
     QStringList
-    list = dir.entryList(QDir::Dirs, QDir::Name);
+            list = dir.entryList(QDir::Dirs, QDir::Name);
     for (QStringList::Iterator it = list.begin(); it != list.end(); it++)
     {
         if ("." != *it && ".." != *it)
@@ -90,8 +90,23 @@ QString FileEx::getHash(const QString &strFilename, QCryptographicHash::Algorith
         return "";
     }
 
-    QByteArray byHash = QCryptographicHash::hash(file.readAll(), method);
-
+    QByteArray byHash;
+    if (false)
+    {
+        //大文件时候会出错，没找到好的方法之前废弃不用
+        byHash = QCryptographicHash::hash(file.readAll(), method);
+    } else {
+        //有个弊端：文件太大了会很耗时阻塞执行的线程
+        QCryptographicHash hs(QCryptographicHash::Md5);
+        QByteArray buffer;
+        while (!(buffer = file.read(10 * 1024 * 1024)).isEmpty())
+        {
+            hs.addData(buffer);
+            //加上不会造成主界面卡死
+            QCoreApplication::processEvents();
+        }
+        byHash = hs.result();
+    }
     file.close();
 
     return QString(byHash.toHex().data());

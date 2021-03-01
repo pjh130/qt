@@ -49,7 +49,7 @@ public:
     //常规日志接口
     void writeLog(QString strLog, LOG_LEVEL_EN level = LEVEL_PRINTF);
     //自定义的日志接口
-    void customLog(QtMsgType type, const QMessageLogContext &context,
+    void customLog(QtMsgType type, const QMessageLogContext & context,
                               const QString & msg);
 
 private:

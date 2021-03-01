@@ -29,6 +29,8 @@ bool EmailEx::send(EMAIL_TO_ST stTo)
 
     //设置超时5分钟
     smtp.setSendMessageTimeout(1000*60*5);
+    smtp.setResponseTimeout(1000*60*5);
+    smtp.setConnectionTimeout(1000*60*5);
 
     smtp.setUser(stTo.strUser);
     smtp.setPassword(stTo.strPwd);

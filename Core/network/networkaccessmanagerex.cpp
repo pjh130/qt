@@ -200,7 +200,6 @@ void NetworkAccessManagerEx::slotReadyRead()
     {
         strTask = m_reply.value(reply);
     } else {
-        qDebug()<<"network result can't find data";
         return;
     }
 
@@ -224,12 +223,10 @@ void NetworkAccessManagerEx::slotReplyFinished(QNetworkReply *reply)
     {
         strTask = m_reply.value(reply);
         QString str = "Find [" + strTask + "] network result";
-        qDebug()<<str;
 
         //旧数据
         QByteArray old = m_buff.value(strTask);
         QByteArray newdata = reply->readAll();
-        qDebug()<<"new data length: "<<newdata.length();
         QByteArray data = old + newdata;
 
         //删除链表数据
@@ -246,7 +243,6 @@ void NetworkAccessManagerEx::slotReplyFinished(QNetworkReply *reply)
         emit workResult(bOk, strTask, data);
 
     } else {
-        //        qDebug()<<"network result can't find data";
     }
 
     //delete reply;

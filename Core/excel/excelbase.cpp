@@ -169,11 +169,9 @@ void ExcelBase::saveAsNew(const QString& filename)
         d->filename = filename;
         QString strPath = d->filename;
         strPath = strPath.replace('/','\\');
-        qDebug()<<strPath;
-//        d->book->dynamicCall("SaveAs(const QString&,int,const QString&,const QString&,bool,bool)", strPath
-//                             ,56,QString(""),QString(""),false,false);
+
         QVariant v = d->book->dynamicCall("SaveAs(const QString&)", strPath);
-        qDebug()<<strPath<<" SaveAs result:"<<v;
+
     }
 #else
     Q_UNUSED(filename)
@@ -190,7 +188,7 @@ void ExcelBase::saveAs(const QString& filename)
         d->filename = filename;
         QString strPath = d->filename;
         strPath = strPath.replace('/','\\');
-        qDebug()<<strPath;
+
         //这种保存方式在新版的excel中会出错
 //        d->book->dynamicCall("SaveAs(const QString&,int,const QString&,const QString&,bool,bool)", strPath
 //                             ,56,QString(""),QString(""),false,false);
@@ -516,7 +514,7 @@ bool ExcelBase::writeCurrentSheet(const QList<QList<QVariant> > &cells)
     convertToColName(col,rangStr);
     rangStr += QString::number(row);
     rangStr = "A1:" + rangStr;
-    qDebug()<<rangStr;
+
     QAxObject *range = d->sheet->querySubObject("Range(const QString&)",rangStr);
     if(NULL == range || range->isNull())
     {
@@ -548,7 +546,7 @@ bool ExcelBase::writeCurrentSheetRow(int iPos, const QList<QList<QVariant> > &ce
     convertToColName(col,rangStr);
     rangStr += QString::number(row+iPos-1);
     rangStr = "A"+ QString::number(iPos) + ":" + rangStr;
-    qDebug()<<rangStr;
+
     QAxObject *range = d->sheet->querySubObject("Range(const QString&)",rangStr);
     if(NULL == range || range->isNull())
     {

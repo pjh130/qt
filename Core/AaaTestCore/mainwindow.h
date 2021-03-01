@@ -20,6 +20,7 @@
 #include "timeex.h"
 #include "imageex.h"
 #include "textcodecex.h"
+#include "settingsex.h"
 
 namespace Ui {
 class MainWindow;
@@ -66,6 +67,8 @@ private slots:
     void on_pushButton_textcodec_clicked();
 
     void on_pushButton_image_clicked();
+
+    void on_pushButton_settings_clicked();
 
 signals:
     void addWork(REQUEST_ST request);
