@@ -68,7 +68,9 @@ void TcpServer::slotReceiveData(const qintptr socketID, const QByteArray data)
 void TcpServer::slotSendDataRet(const qintptr socketID, const QString &strKey,
                  const bool &bOk, const QString &strError)
 {
-    qDebug()<<"slotSendDataRet socketID: "<<socketID<<" "<<bOk;
+//    qDebug()<<"slotSendDataRet: "<<QThread::currentThreadId();
+    qDebug()<<"slotSendDataRet socketID: "<<socketID<<" "<<bOk<<" "<<strKey;
+    strError.isEmpty();
 }
 
 void TcpServer::clear()

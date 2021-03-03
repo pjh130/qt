@@ -23,6 +23,7 @@ signals:
     void sentDisConnect(int i); //断开特定连接，并释放资源，-1为断开所有。
 
 public slots:
+    //在这里处理接收到的数据逻辑
     void slotReceiveData(const qintptr socketID, const QByteArray data);
     //发送数据的结果
     void slotSendDataRet(const qintptr socketID, const QString &strKey,

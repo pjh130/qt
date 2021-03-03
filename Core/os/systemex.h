@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QHostInfo>
+#include <QStorageInfo>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #include <Psapi.h>
@@ -23,6 +24,11 @@ public:
     static QString systemName();
     static QString hostName();
 
+    //磁盘空间相关
+    static quint64 getDiskSpace(const QString driver);  //磁盘总空间
+    static quint64 getDiskFreeSpace(const QString driver); //磁盘剩余空间
+
+    //系统进程相关
     static bool isProcessRunningByPid(long lPid, QString &strErrMsg,
                                bool bGetImageFile=false, PWCHAR pImageFileBuf=0, uint *puiBufSize=0);
     static bool isProcessRunningByFilename(QString strFilename, QString &strErrMsg,

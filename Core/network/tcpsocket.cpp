@@ -27,8 +27,10 @@ TcpSocket::~TcpSocket()
 
 void TcpSocket::slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data)
 {
+//    qDebug()<<"slotSentData: "<<QThread::currentThreadId();
     if(socketID == m_socketID)
     {
+        //只发送匹配自己的数据
         qint64 send = write(data);
         if (send == data.length())
         {
@@ -38,6 +40,19 @@ void TcpSocket::slotSentData(const qintptr socketID, const QString &strKey, cons
             //失败
             emit sendDataRet(m_socketID, strKey, false, errorString());
         }
+    } else if(-1 == socketID ){
+        //默认是数据群发
+        qint64 send = write(data);
+        if (send == data.length())
+        {
+            //成功
+            emit sendDataRet(m_socketID, strKey, true, "");
+        } else {
+            //失败
+            emit sendDataRet(m_socketID, strKey, false, errorString());
+        }
+    } else {
+        //不做任何处理
     }
 }
 
@@ -57,6 +72,7 @@ void TcpSocket::disConTcp(const qintptr socketID)
 
 void TcpSocket::slotReadData()
 {
+//    qDebug()<<"slotReadData: "<<QThread::currentThreadId();
     QByteArray data  = this->readAll();
 
     //收到的数据不做处理转发出去

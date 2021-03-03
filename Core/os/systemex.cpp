@@ -1,6 +1,6 @@
 #include "systemex.h"
 #if defined(Q_OS_WIN)
-  #include <windows.h>
+#include <windows.h>
 #endif
 
 SystemEx::SystemEx()
@@ -37,8 +37,8 @@ QString SystemEx::systemName()
     else
     {
         QStringList slFile = QDir("/etc/").entryList(
-                QStringList() << "*-release",
-                QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+                    QStringList() << "*-release",
+                    QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
         if (!slFile.isEmpty())
         {
             QFile file("/etc/" + slFile.first());
@@ -73,7 +73,7 @@ QString SystemEx::hostName()
 //modified:
 ===========================================*/
 bool SystemEx::isProcessRunningByPid(long lPid, QString &strErrMsg,
-         bool bGetImageFile/*=false*/, PWCHAR pImageFileBuf/*=0*/, uint *puiBufSize/*=0*/)
+                                     bool bGetImageFile/*=false*/, PWCHAR pImageFileBuf/*=0*/, uint *puiBufSize/*=0*/)
 {
     //check input params
     if(lPid <= 0)
@@ -165,7 +165,7 @@ bool SystemEx::isProcessRunningByPid(long lPid, QString &strErrMsg,
 //modified:
 ===========================================*/
 bool SystemEx::isProcessRunningByFilename(QString strFilename, QString &strErrMsg,
-                                QList<qint64> &lstPid, bool bGetAllPids/*=false*/)
+                                          QList<qint64> &lstPid, bool bGetAllPids/*=false*/)
 {
     bool bRnt = false;
     strErrMsg = "";
@@ -303,7 +303,7 @@ author: liuwei
 Date: 2011-11-29
 ****************************************************/
 bool SystemEx::isProcessRunningByAppName(QString strAppName, QString &strErrMsg,
-                                QList<qint64> &lstPid, bool bGetAllPids/*=false*/)
+                                         QList<qint64> &lstPid, bool bGetAllPids/*=false*/)
 {
     bool bRnt = false;
     strErrMsg = "";
@@ -441,4 +441,64 @@ bool SystemEx::isAppInstanceRunning(QString strMtxName, QString strAppFile)
     }
 #endif
     return false;
+}
+
+quint64 SystemEx::getDiskFreeSpace(const QString driver)
+{
+    QDir dir(driver);
+    //driver.endsWith(":")防止参数是c:会变成死循环
+    while(!dir.isRoot() && dir.exists() && !driver.endsWith(":"))
+    {
+        dir.cdUp();
+    }
+
+    QStorageInfo storage(dir.path());
+    if (storage.isValid() && storage.isReady()) {
+        return storage.bytesFree();
+    } else {
+        return 0;
+    }
+//#ifdef Q_OS_WIN
+//    LPCWSTR lpcwstrDriver=(LPCWSTR)driver.utf16();
+//    ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
+//    if( !GetDiskFreeSpaceEx( lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
+//    {
+//        qDebug() << "ERROR: Call to GetDiskFreeSpaceEx() failed.";
+//        return 0;
+//    }
+//    return (quint64) liTotalFreeBytes.QuadPart;
+//#else
+//#endif
+    return 0;
+}
+
+quint64 SystemEx::getDiskSpace(const QString driver)
+{
+    QDir dir(driver);
+    //driver.endsWith(":")防止参数是c:会变成死循环
+    while(!dir.isRoot() && dir.exists() && !driver.endsWith(":"))
+    {
+        dir.cdUp();
+    }
+
+    QStorageInfo storage(dir.path());
+    if (storage.isValid() && storage.isReady()) {
+        return storage.bytesTotal();
+    } else {
+        return 0;
+    }
+
+// 不是跨平台的代码，暂时不用
+//#ifdef Q_OS_WIN
+//    LPCWSTR lpcwstrDriver=(LPCWSTR)driver.utf16();
+//    ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
+//    if( !GetDiskFreeSpaceEx( lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
+//    {
+//        qDebug() << "ERROR: Call to GetDiskFreeSpaceEx() failed.";
+//        return 0;
+//    }
+//    return (quint64) liTotalBytes.QuadPart;
+//#else
+//#endif
+    return 0;
 }

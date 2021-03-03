@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    qDebug()<<"MainWindow: "<<QThread::currentThreadId();
 }
 
 MainWindow::~MainWindow()
@@ -149,6 +150,7 @@ void MainWindow::on_pushButton_zip_clicked()
 
 void MainWindow::on_pushButton_thread_clicked()
 {
+    qDebug()<<"on_pushButton_thread_clicked: "<<QThread::currentThreadId();
     ThreadHandle::getClass().initThreadType(ThreadHandle::THREADSIZE, 1);
     QThread *pThread1 = ThreadHandle::getClass().getThread();
     ThreadHandle::getClass().getThread();
@@ -375,8 +377,16 @@ void MainWindow::on_pushButton_time_clicked()
 
 void MainWindow::on_pushButton_os_clicked()
 {
+    qDebug()<<QLocale::system().name();
     qDebug()<<SystemEx::systemName();
     qDebug()<<SystemEx::hostName();
+
+    qDebug()<<"getDiskFreeSpace app: "<<SystemEx::getDiskFreeSpace(QCoreApplication::applicationDirPath());
+    qDebug()<<"getDiskFreeSpace C: "<<SystemEx::getDiskFreeSpace("C:/");
+    qDebug()<<"getDiskSpace C: "<<SystemEx::getDiskSpace("C:") / (1024*1024*1024);
+    qDebug()<<"getDiskFreeSpace D: "<<SystemEx::getDiskFreeSpace("D:\\");
+    qDebug()<<"getDiskSpace D: "<<SystemEx::getDiskSpace("D:") / (1024*1024*1024);
+    qDebug()<<"getDiskFreeSpace E: "<<SystemEx::getDiskFreeSpace("E:");
 
     QString strErrMsg;
     QList<qint64> lstPid;
