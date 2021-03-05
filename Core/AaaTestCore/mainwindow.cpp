@@ -97,21 +97,33 @@ void MainWindow::on_pushButton_log_clicked()
 
 void MainWindow::on_pushButton_network_clicked()
 {
-    NetworkAccessManagerEx *network = new NetworkAccessManagerEx();
-    network->start();
-
-    connect(this, SIGNAL(start()), network, SLOT(slotStart()));
-    connect(this, SIGNAL(addWork(REQUEST_ST)), network, SLOT(slotAddWork(REQUEST_ST)));
-    connect(network, SIGNAL(workResult(bool,QString,QByteArray)), this, SLOT(slotWorkResult(bool,QString,QByteArray)));
-
-    emit start();
-
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
-    st.strUrl = "http://www.baidu.com/";
+    st.strUrl = "http://www.bbbbbaidu.com/";
     st.strTask = QUuid::createUuid().toString();
 
-    emit addWork(st);
+    if (false)
+    {
+        NetworkAccessManagerEx *network = new NetworkAccessManagerEx();
+        network->start();
+
+        connect(this, SIGNAL(start()), network, SLOT(slotStart()));
+        connect(this, SIGNAL(addWork(REQUEST_ST)), network, SLOT(slotAddWork(REQUEST_ST)));
+        connect(network, SIGNAL(workResult(REPLY_ST)), this, SLOT(slotWorkResult(REPLY_ST)));
+
+        emit start();
+        emit addWork(st);
+    } else {
+        QString strError;
+        QByteArray byData = NetworkAccessManagerEx::RequestBlock(st, strError);
+        if (byData.isEmpty())
+        {
+            qDebug()<<"NetworkAccessManagerEx::RequestBlock strError: "<<strError;
+        } else {
+            qDebug()<<"NetworkAccessManagerEx::RequestBlock length: "<<byData.length();
+        }
+    }
+
 
     TcpServer *ser = new TcpServer;
     ser->listen(QHostAddress::Any,6666);
@@ -168,11 +180,17 @@ void MainWindow::on_pushButton_thread_clicked()
     qDebug()<<"currentThreadId obj2: "<<obj->thread()->currentThreadId();
 }
 
-void MainWindow::slotWorkResult(bool bOk, QString strTask, QByteArray data)
+void MainWindow::slotWorkResult(REPLY_ST st)
 {
-    qDebug()<<"bOk: "<<bOk;
-    qDebug()<<"strTask: "<<strTask;
-    qDebug()<<"data: "<<data.length();
+    qDebug()<<"bOk: "<<st.bOk;
+    qDebug()<<"strTask: "<<st.strTask;
+    qDebug()<<"data: "<<st.byData.length();
+
+    if (!st.bOk)
+    {
+        qDebug()<<"strError: "<<st.strError;
+        return;
+    }
 
     QFile file("D:\\test\\network.html");
     if (!file.open(QIODevice::Append))
@@ -181,7 +199,7 @@ void MainWindow::slotWorkResult(bool bOk, QString strTask, QByteArray data)
         return;
     }
 
-    file.write(data);
+    file.write(st.byData);
     file.close();
 }
 

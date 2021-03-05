@@ -53,7 +53,7 @@ private slots:
 
     void on_pushButton_thread_clicked();
 
-    void slotWorkResult(bool bOk, QString strTask, QByteArray data);
+    void slotWorkResult(REPLY_ST st);
 
     void on_pushButton_sql_clicked();
 

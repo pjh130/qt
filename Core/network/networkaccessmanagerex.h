@@ -10,6 +10,7 @@
 #include <QMap>
 #include <QMutex>
 #include <QUuid>
+#include <QEventLoop>
 
 typedef enum
 {
@@ -33,6 +34,14 @@ typedef struct
     QMap<QByteArray, QByteArray> map;
 }REQUEST_ST;
 
+typedef struct
+{
+    bool  bOk;
+    QString strTask;
+    QString strError;
+    QByteArray byData;
+}REPLY_ST;
+
 class NetworkAccessManagerEx : public QThread
 {
     Q_OBJECT
@@ -40,6 +49,9 @@ class NetworkAccessManagerEx : public QThread
 public:
     NetworkAccessManagerEx();
     ~NetworkAccessManagerEx();
+
+    //阻塞的方式执行http请求,如果返回值为空，则strError里边会有错误信息
+    static QByteArray RequestBlock(const REQUEST_ST request, QString &strError);
 
 public slots:
     void slotStart();
@@ -52,8 +64,8 @@ public slots:
     void slotReplyFinished(QNetworkReply *reply);
 
 private:
+    //信号槽的方式请求
     void dealRequest(const REQUEST_ST &request);
-
     void dealRequestHead(const REQUEST_ST &request);
     void dealRequestGet(const REQUEST_ST &request);
     void dealRequestPost(const REQUEST_ST &request);
@@ -64,9 +76,21 @@ private:
     void dealRequestTrace(const REQUEST_ST &request);
     void dealRequestConnect(const REQUEST_ST &request);
 
+    //阻塞的方式请求
+    static QByteArray dealRequestBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestHeadBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestGetBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestPostBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestDeleteBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestOptionsBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestPutBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestPatchBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestTraceBlock(const REQUEST_ST &request, QString &strError);
+    static QByteArray dealRequestConnectBlock(const REQUEST_ST &request, QString &strError);
+
 
 signals:
-    void workResult(bool bOk, QString strTask, QByteArray data);
+    void workResult(REPLY_ST st);
 
     void workFinished();
     void workStart();
