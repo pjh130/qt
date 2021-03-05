@@ -99,7 +99,7 @@ void MainWindow::on_pushButton_network_clicked()
 {
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
-    st.strUrl = "http://www.bbbbbaidu.com/";
+    st.strUrl = "http://www.baidu.com/";
     st.strTask = QUuid::createUuid().toString();
 
     if (false)
