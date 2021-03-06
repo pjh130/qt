@@ -22,6 +22,7 @@
 #include "imageex.h"
 #include "textcodecex.h"
 #include "settingsex.h"
+#include "fullscreenwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -71,12 +72,17 @@ private slots:
 
     void on_pushButton_settings_clicked();
 
+    void on_pushButton_ScreenShot_clicked();
+
+     void slotFinishPixmap(const QPixmap &finishPixmap);
+
 signals:
     void addWork(REQUEST_ST request);
     void start();
 
 private:
     Ui::MainWindow *ui;
+    FullScreenWidget *fullWidget;
 };
 
 #endif // MAINWINDOW_H

@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     qDebug()<<"MainWindow: "<<QThread::currentThreadId();
+
+    fullWidget = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -449,4 +451,28 @@ void MainWindow::on_pushButton_settings_clicked()
     qDebug()<<SettingsEx::getValue(strPath, strGroup, strName);
 
     SettingsEx::removeValue(strPath, strGroup, strName);
+}
+
+void MainWindow::on_pushButton_ScreenShot_clicked()
+{
+    fullWidget = new FullScreenWidget(true);
+    connect(fullWidget, SIGNAL(finishPixmap(QPixmap)),this ,SLOT(slotFinishPixmap(QPixmap)));
+    fullWidget->start();
+    fullWidget->show();
+}
+
+void MainWindow::slotFinishPixmap(const QPixmap &finishPixmap)
+{
+    qDebug()<<"MainWindow::slotFinishPixmap";
+    if (fullWidget)
+    {
+        fullWidget->deleteLater();
+        fullWidget = NULL;
+    }
+
+    if(finishPixmap.isNull())
+    {
+        qDebug()<<"MainWindow::slotFinishPixmap finishPixmap.isNull";
+    }
+//    Q_UNUSED(finishPixmap);
 }

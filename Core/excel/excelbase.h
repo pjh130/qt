@@ -7,7 +7,7 @@
 #include <QVariant>
 
 /*
- * 这类库完全是抄袭过来的没做商用，非常感谢源代码的作者，具体的地址看下边：
+ * 这类库大部分是抄袭过来的没做商用，非常感谢源代码的作者，具体的地址看下边：
  *
  * win下excel快速读取类
  * 参考天池项目源码，天池源码地址：https://github.com/qtcn/tianchi/blob/v0.0.2-build20130701/include/tianchi/file/tcmsexcel.h
@@ -81,6 +81,10 @@ public:
     /// @brief 当前打开的 Excel 的 Sheet 名
     QString currentSheetName();
 
+    QString currentSheetName(int index);
+    bool deleteSheet(const QString &sheetName);
+    bool deleteSheet(int sheetIndex);
+
     /// @brief 读取单元格 Sheet 的内容
     /// @param [in] row 行号，从 1 开始
     /// @param [in] col 列号，从 1 开始
@@ -101,6 +105,12 @@ public:
 
     void cellFormat(int row, int col, const QString& format);
     void cellAlign(int row, int col, Alignment hAlign, Alignment vAlign);
+
+    //range 合并单元格 例如 "A5:C7"
+    bool mergeCells(const QString& str);
+    bool mergeCells(int topLeftRow, int topLeftColumn, int bottomRightRow, int bottomRightColumn);
+    bool clearCell(int row, int column);
+    bool clearCell(const QString& cell);
 
     /// @brief 获取有效区域信息
     /// @see rowStart() const

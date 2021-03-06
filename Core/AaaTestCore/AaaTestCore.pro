@@ -14,6 +14,7 @@ greaterThan(QT_MAJOR_VERSION, 4){
 }
 
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\core.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Ui\ui.pri)
 
 TARGET = AaaTestCore
 TEMPLATE = app

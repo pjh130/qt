@@ -36,13 +36,13 @@ public:
 
 ExcelBasePrivate::ExcelBasePrivate(ExcelBase *qptr)
     : q_ptr(qptr)
-#if defined(Q_OS_WIN)
+    #if defined(Q_OS_WIN)
     , excel(NULL)
     , books(NULL)
     , book(NULL)
     , sheets(NULL)
     , sheet(NULL)
-#endif // Q_OS_WIN
+    #endif // Q_OS_WIN
 {
 }
 
@@ -106,7 +106,7 @@ void ExcelBasePrivate::destory()
 
 
 ExcelBase::ExcelBase(QObject* par):QObject(par)
-    ,d_ptr(new ExcelBasePrivate(this))
+  ,d_ptr(new ExcelBasePrivate(this))
 {
 }
 
@@ -190,8 +190,8 @@ void ExcelBase::saveAs(const QString& filename)
         strPath = strPath.replace('/','\\');
 
         //这种保存方式在新版的excel中会出错
-//        d->book->dynamicCall("SaveAs(const QString&,int,const QString&,const QString&,bool,bool)", strPath
-//                             ,56,QString(""),QString(""),false,false);
+        //        d->book->dynamicCall("SaveAs(const QString&,int,const QString&,const QString&,bool,bool)", strPath
+        //                             ,56,QString(""),QString(""),false,false);
         d->book->dynamicCall("SaveAs(const QString&)", strPath);
     }
 #else
@@ -208,7 +208,7 @@ void ExcelBase::save()
     if(d->filename.isEmpty())
         return;
     saveAs(d->filename);
-//    saveAsNew(d->filename);
+    //    saveAsNew(d->filename);
 #else
     Q_UNUSED(filename)
 #endif // Q_OS_WIN
@@ -265,6 +265,58 @@ QString ExcelBase::currentSheetName()
 {
     Q_D(ExcelBase);
     return d->sheetName;
+}
+
+QString ExcelBase::currentSheetName(int index)
+{
+    QString strName;
+#if defined(Q_OS_WIN)
+    if (setCurrentSheet(index))
+    {
+        strName = currentSheetName();
+    }
+#else
+    Q_UNUSED(index)
+#endif // Q_OS_WIN
+    return strName;
+}
+
+bool ExcelBase::deleteSheet(const QString &sheetName)
+{
+    bool bRet = false;
+#if defined(Q_OS_WIN)
+    Q_D(ExcelBase);
+    if (d->excel != NULL && !d->excel->isNull())
+    {
+        QAxObject * a = d->sheets->querySubObject("Item(const QString&)", sheetName);
+        a->dynamicCall("delete");
+
+        bRet = true;
+        delete a;
+    }
+#else
+    Q_UNUSED(sheetName)
+#endif // Q_OS_WIN
+    return bRet;
+}
+
+bool ExcelBase::deleteSheet(int sheetIndex)
+{
+    bool bRet = false;
+#if defined(Q_OS_WIN)
+    Q_D(ExcelBase);
+    if (d->excel != NULL && !d->excel->isNull())
+    {
+        QAxObject * a = d->sheets->querySubObject("Item(int)", sheetIndex);
+        a->dynamicCall("delete");
+
+        bRet = true;
+        delete a;
+    }
+#else
+    Q_UNUSED(sheetIndex)
+#endif // Q_OS_WIN
+    return bRet;
 }
 
 void ExcelBase::setVisible(bool value)
@@ -433,6 +485,99 @@ void ExcelBase::write(int row, int col, const QVariant& value)
     Q_UNUSED(col)
     Q_UNUSED(value)
 #endif // Q_OS_WIN
+}
+
+bool ExcelBase::clearCell(int row, int column)
+{
+    bool ret = false;
+#if defined(Q_OS_WIN)
+    Q_D(ExcelBase);
+    if (d->sheet != NULL && ! d->sheet->isNull())
+    {
+        QString cell;
+        cell.append(QChar(column - 1 + 'A'));
+        cell.append(QString::number(row));
+
+        QAxObject *range = d->sheet->querySubObject("Range(const QString&)", cell);
+        range->dynamicCall("ClearContents()");
+
+        delete range;
+        ret = true;
+    }
+#else
+    Q_UNUSED(range)
+#endif // Q_OS_WIN
+    return ret;
+}
+bool ExcelBase::clearCell(const QString& cell)
+{
+    bool ret = false;
+#if defined(Q_OS_WIN)
+    Q_D(ExcelBase);
+    if (d->sheet != NULL && ! d->sheet->isNull())
+    {
+        QAxObject *range = d->sheet->querySubObject("Range(const QString&)", cell);
+        range->dynamicCall("ClearContents()");
+
+        delete range;
+        ret = true;
+    }
+#else
+    Q_UNUSED(range)
+#endif // Q_OS_WIN
+    return ret;
+}
+
+bool ExcelBase::mergeCells(const QString& str)
+{
+    bool ret = false;
+#if defined(Q_OS_WIN)
+    Q_D(ExcelBase);
+    if (d->sheet != NULL && ! d->sheet->isNull())
+    {
+        QAxObject *range = d->sheet->querySubObject("Range(const QString&)", str);
+        range->setProperty("VerticalAlignment", -4108);//xlCenter
+        range->setProperty("WrapText", true);
+        range->setProperty("MergeCells", true);
+
+        delete range;
+        ret = true;
+    }
+#else
+    Q_UNUSED(range)
+#endif // Q_OS_WIN
+    return ret;
+}
+
+bool ExcelBase::mergeCells(int topLeftRow, int topLeftColumn, int bottomRightRow, int bottomRightColumn)
+{
+    bool ret = false;
+#if defined(Q_OS_WIN)
+    Q_D(ExcelBase);
+    if (d->sheet != NULL && ! d->sheet->isNull())
+    {
+        QString cell;
+        cell.append(QChar(topLeftColumn - 1 + 'A'));
+        cell.append(QString::number(topLeftRow));
+        cell.append(":");
+        cell.append(QChar(bottomRightColumn - 1 + 'A'));
+        cell.append(QString::number(bottomRightRow));
+
+        QAxObject *range = d->sheet->querySubObject("Range(const QString&)", cell);
+        range->setProperty("VerticalAlignment", -4108);//xlCenter
+        range->setProperty("WrapText", true);
+        range->setProperty("MergeCells", true);
+
+        delete range;
+        ret = true;
+    }
+#else
+    Q_UNUSED(topLeftRow)
+    Q_UNUSED(topLeftColumn)
+    Q_UNUSED(bottomRightRow)
+    Q_UNUSED(bottomRightColumn)
+#endif // Q_OS_WIN
+    return ret;
 }
 
 bool ExcelBase::usedRange(int& rowStart, int& colStart, int& rowEnd, int& colEnd)

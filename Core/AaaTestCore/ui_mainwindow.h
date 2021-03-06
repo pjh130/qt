@@ -40,6 +40,7 @@ public:
     QPushButton *pushButton_settings;
     QPushButton *pushButton_image;
     QPushButton *pushButton_textcodec;
+    QPushButton *pushButton_ScreenShot;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -48,7 +49,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(400, 410);
+        MainWindow->resize(400, 436);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -125,6 +126,11 @@ public:
 
         verticalLayout->addWidget(pushButton_textcodec);
 
+        pushButton_ScreenShot = new QPushButton(centralWidget);
+        pushButton_ScreenShot->setObjectName(QString::fromUtf8("pushButton_ScreenShot"));
+
+        verticalLayout->addWidget(pushButton_ScreenShot);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -159,6 +165,7 @@ public:
         pushButton_settings->setText(QCoreApplication::translate("MainWindow", "settings", nullptr));
         pushButton_image->setText(QCoreApplication::translate("MainWindow", "image", nullptr));
         pushButton_textcodec->setText(QCoreApplication::translate("MainWindow", "textcodec", nullptr));
+        pushButton_ScreenShot->setText(QCoreApplication::translate("MainWindow", "ScreenShot", nullptr));
     } // retranslateUi
 
 };

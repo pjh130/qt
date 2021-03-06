@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>410</height>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -110,6 +110,13 @@
      <widget class="QPushButton" name="pushButton_textcodec">
       <property name="text">
        <string>textcodec</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_ScreenShot">
+      <property name="text">
+       <string>ScreenShot</string>
       </property>
      </widget>
     </item>

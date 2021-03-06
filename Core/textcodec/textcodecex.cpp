@@ -27,3 +27,15 @@ void TextCodecEx::setCodecForLocale()
 #endif
 
 }
+
+QByteArray TextCodecEx::fromUnicode(const QString &strFrom, const QByteArray &byCodeType)
+{
+    QTextCodec *codec = QTextCodec::codecForName(byCodeType);
+    return codec->fromUnicode(strFrom);
+}
+
+QString TextCodecEx::toUnicode(const QByteArray &byFrom, const QByteArray &byCodeType)
+{
+    QTextCodec *codec = QTextCodec::codecForName(byCodeType);
+    return codec->toUnicode(byFrom);
+}
