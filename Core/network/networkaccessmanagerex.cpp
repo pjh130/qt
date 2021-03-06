@@ -34,9 +34,9 @@ void NetworkAccessManagerEx::slotStart()
     emit workStart();
 }
 
-QByteArray NetworkAccessManagerEx::RequestBlock(const REQUEST_ST request, QString &strError)
-{
-    return dealRequestBlock(request, strError);
+void NetworkAccessManagerEx::RequestBlock(const REQUEST_ST &request, REPLY_ST &st)
+{   st.strTask = request.strTask;
+    return dealRequestBlock(request, st);
 }
 void NetworkAccessManagerEx::slotWork()
 {
@@ -52,42 +52,39 @@ void NetworkAccessManagerEx::slotWork()
     dealRequest(stReq);
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
     switch (request.method) {
     case REQUEST_METHOD_HEAD:
-        byData = dealRequestHeadBlock(request, strError);
+        dealRequestHeadBlock(request, st);
         break;
     case REQUEST_METHOD_GET:
-        byData = dealRequestGetBlock(request, strError);
+        dealRequestGetBlock(request, st);
         break;
     case REQUEST_METHOD_POST:
-        byData = dealRequestPostBlock(request, strError);
+        dealRequestPostBlock(request, st);
         break;
     case REQUEST_METHOD_DELETE:
-        byData = dealRequestDeleteBlock(request, strError);
+        dealRequestDeleteBlock(request, st);
         break;
     case REQUEST_METHOD_OPTIONS:
-        byData = dealRequestOptionsBlock(request, strError);
+        dealRequestOptionsBlock(request, st);
         break;
     case REQUEST_METHOD_PUT:
-        byData = dealRequestPutBlock(request, strError);
+        dealRequestPutBlock(request, st);
         break;
     case REQUEST_METHOD_PATCH:
-        byData = dealRequestPatchBlock(request, strError);
+        dealRequestPatchBlock(request, st);
         break;
     case REQUEST_METHOD_TRACE:
-        byData = dealRequestTraceBlock(request, strError);
+        dealRequestTraceBlock(request, st);
         break;
     case REQUEST_METHOD_CONNECT:
-        byData = dealRequestConnectBlock(request, strError);
+        dealRequestConnectBlock(request, st);
         break;
     default:
         break;
     }
-
-    return byData;
 }
 
 void NetworkAccessManagerEx::dealRequest(const REQUEST_ST &request)
@@ -125,9 +122,8 @@ void NetworkAccessManagerEx::dealRequest(const REQUEST_ST &request)
     }
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestHeadBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestHeadBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
     QNetworkRequest req(request.strUrl);
     QMapIterator<QByteArray, QByteArray> i(request.map);
     while (i.hasNext()) {
@@ -145,14 +141,14 @@ QByteArray NetworkAccessManagerEx::dealRequestHeadBlock(const REQUEST_ST &reques
     //判断是否正常执行
     if (QNetworkReply::NoError != reply->error())
     {
-        strError = reply->errorString();
+        st.bOk = false;
+        st.strError = reply->errorString();
     } else {
-        byData = reply->readAll();
+        st.bOk = true;
+        st.byData = reply->readAll();
     }
     reply->close();
     reply->deleteLater();
-
-    return byData;
 }
 
 void NetworkAccessManagerEx::dealRequestHead(const REQUEST_ST &request)
@@ -171,9 +167,8 @@ void NetworkAccessManagerEx::dealRequestHead(const REQUEST_ST &request)
     m_reply.insert(reply, request.strTask);
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestGetBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestGetBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
     QNetworkRequest req(request.strUrl);
     QMapIterator<QByteArray, QByteArray> i(request.map);
     while (i.hasNext()) {
@@ -191,14 +186,14 @@ QByteArray NetworkAccessManagerEx::dealRequestGetBlock(const REQUEST_ST &request
     //判断是否正常执行
     if (QNetworkReply::NoError != reply->error())
     {
-        strError = reply->errorString();
+        st.bOk = false;
+        st.strError = reply->errorString();
     } else {
-        byData = reply->readAll();
+        st.bOk = true;
+        st.byData = reply->readAll();
     }
     reply->close();
     reply->deleteLater();
-
-    return byData;
 }
 void NetworkAccessManagerEx::dealRequestGet(const REQUEST_ST &request)
 {
@@ -216,7 +211,7 @@ void NetworkAccessManagerEx::dealRequestGet(const REQUEST_ST &request)
     m_reply.insert(reply, request.strTask);
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestPostBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestPostBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
     QByteArray byData;
     QNetworkRequest req(request.strUrl);
@@ -236,14 +231,15 @@ QByteArray NetworkAccessManagerEx::dealRequestPostBlock(const REQUEST_ST &reques
     //判断是否正常执行
     if (QNetworkReply::NoError != reply->error())
     {
-        strError = reply->errorString();
+        st.bOk = false;
+        st.strError = reply->errorString();
     } else {
-        byData = reply->readAll();
+        st.bOk = true;
+        st.byData = reply->readAll();
     }
     reply->close();
     reply->deleteLater();
 
-    return byData;
 }
 void NetworkAccessManagerEx::dealRequestPost(const REQUEST_ST &request)
 {
@@ -261,9 +257,8 @@ void NetworkAccessManagerEx::dealRequestPost(const REQUEST_ST &request)
     m_reply.insert(reply, request.strTask);
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestDeleteBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestDeleteBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
     QNetworkRequest req(request.strUrl);
     QMapIterator<QByteArray, QByteArray> i(request.map);
     while (i.hasNext()) {
@@ -281,14 +276,14 @@ QByteArray NetworkAccessManagerEx::dealRequestDeleteBlock(const REQUEST_ST &requ
     //判断是否正常执行
     if (QNetworkReply::NoError != reply->error())
     {
-        strError = reply->errorString();
+        st.bOk = false;
+        st.strError = reply->errorString();
     } else {
-        byData = reply->readAll();
+        st.bOk = true;
+        st.byData = reply->readAll();
     }
     reply->close();
     reply->deleteLater();
-
-    return byData;
 }
 
 void NetworkAccessManagerEx::dealRequestDelete(const REQUEST_ST &request)
@@ -307,11 +302,10 @@ void NetworkAccessManagerEx::dealRequestDelete(const REQUEST_ST &request)
     m_reply.insert(reply, request.strTask);
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestOptionsBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestOptionsBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
-    strError = "This request type unsupport now!";
-    return byData;
+    st.bOk = false;
+    st.strError = "This request type unsupport now!";
 }
 
 void NetworkAccessManagerEx::dealRequestOptions(const REQUEST_ST &request)
@@ -319,9 +313,8 @@ void NetworkAccessManagerEx::dealRequestOptions(const REQUEST_ST &request)
 
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestPutBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestPutBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
     QNetworkRequest req(request.strUrl);
     QMapIterator<QByteArray, QByteArray> i(request.map);
     while (i.hasNext()) {
@@ -339,14 +332,14 @@ QByteArray NetworkAccessManagerEx::dealRequestPutBlock(const REQUEST_ST &request
     //判断是否正常执行
     if (QNetworkReply::NoError != reply->error())
     {
-        strError = reply->errorString();
+        st.bOk = false;
+        st.strError = reply->errorString();
     } else {
-        byData = reply->readAll();
+        st.bOk = true;
+        st.byData = reply->readAll();
     }
     reply->close();
     reply->deleteLater();
-
-    return byData;
 }
 
 void NetworkAccessManagerEx::dealRequestPut(const REQUEST_ST &request)
@@ -365,11 +358,10 @@ void NetworkAccessManagerEx::dealRequestPut(const REQUEST_ST &request)
     m_reply.insert(reply, request.strTask);
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestPatchBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestPatchBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
-    strError = "This request type unsupport now!";
-    return byData;
+    st.bOk = false;
+    st.strError = "This request type unsupport now!";
 }
 
 void NetworkAccessManagerEx::dealRequestPatch(const REQUEST_ST &request)
@@ -377,11 +369,10 @@ void NetworkAccessManagerEx::dealRequestPatch(const REQUEST_ST &request)
 
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestTraceBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestTraceBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
-    strError = "This request type unsupport now!";
-    return byData;
+    st.bOk = false;
+    st.strError = "This request type unsupport now!";
 }
 
 void NetworkAccessManagerEx::dealRequestTrace(const REQUEST_ST &request)
@@ -389,11 +380,10 @@ void NetworkAccessManagerEx::dealRequestTrace(const REQUEST_ST &request)
 
 }
 
-QByteArray NetworkAccessManagerEx::dealRequestConnectBlock(const REQUEST_ST &request, QString &strError)
+void NetworkAccessManagerEx::dealRequestConnectBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
-    QByteArray byData;
-    strError = "This request type unsupport now!";
-    return byData;
+    st.bOk = false;
+    st.strError = "This request type unsupport now!";
 }
 
 void NetworkAccessManagerEx::dealRequestConnect(const REQUEST_ST &request)

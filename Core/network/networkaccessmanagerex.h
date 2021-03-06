@@ -51,7 +51,7 @@ public:
     ~NetworkAccessManagerEx();
 
     //阻塞的方式执行http请求,如果返回值为空，则strError里边会有错误信息
-    static QByteArray RequestBlock(const REQUEST_ST request, QString &strError);
+    static void RequestBlock(const REQUEST_ST &request, REPLY_ST &st);
 
 public slots:
     void slotStart();
@@ -77,16 +77,16 @@ private:
     void dealRequestConnect(const REQUEST_ST &request);
 
     //阻塞的方式请求
-    static QByteArray dealRequestBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestHeadBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestGetBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestPostBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestDeleteBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestOptionsBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestPutBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestPatchBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestTraceBlock(const REQUEST_ST &request, QString &strError);
-    static QByteArray dealRequestConnectBlock(const REQUEST_ST &request, QString &strError);
+    static void dealRequestBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestHeadBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestGetBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestPostBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestDeleteBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestOptionsBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestPutBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestPatchBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestTraceBlock(const REQUEST_ST &request, REPLY_ST &st);
+    static void dealRequestConnectBlock(const REQUEST_ST &request, REPLY_ST &st);
 
 
 signals:

@@ -100,6 +100,7 @@ void MainWindow::on_pushButton_network_clicked()
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
     st.strUrl = "http://www.baidu.com/";
+//    st.strUrl = "http://www.bbbbbbbbbaidu.com/";
     st.strTask = QUuid::createUuid().toString();
 
     if (false)
@@ -114,13 +115,14 @@ void MainWindow::on_pushButton_network_clicked()
         emit start();
         emit addWork(st);
     } else {
-        QString strError;
-        QByteArray byData = NetworkAccessManagerEx::RequestBlock(st, strError);
-        if (byData.isEmpty())
+        REPLY_ST reply;
+        NetworkAccessManagerEx::RequestBlock(st, reply);
+        qDebug()<<"NetworkAccessManagerEx::RequestBlock strTask: "<<reply.strTask;
+        if (!reply.bOk)
         {
-            qDebug()<<"NetworkAccessManagerEx::RequestBlock strError: "<<strError;
+            qDebug()<<"NetworkAccessManagerEx::RequestBlock strError: "<<reply.strError;
         } else {
-            qDebug()<<"NetworkAccessManagerEx::RequestBlock length: "<<byData.length();
+            qDebug()<<"NetworkAccessManagerEx::RequestBlock length: "<<reply.byData.length();
         }
     }
 
