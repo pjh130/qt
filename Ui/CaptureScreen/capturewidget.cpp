@@ -535,7 +535,7 @@ void CaptureWidget::showWelComeTips(QPainter *painter)
 
     //    QString strTipsText = QString(tr("温馨提示\n鼠标拖动进行截屏;截屏区域内右键保存;\n截屏区域外右键取消;ESC退出;"));
 
-    QString infoWelcome = tr("Welcome You\nIDKin Screen Capture!");
+    QString infoWelcome = tr("Welcome You\n Screen Capture!");
     int x = (rtDeskCapture.width() - infoWelcomeWidth)/2;
     int y = (rtDeskCapture.height() - infoWelcomeHeight)/2;
     QRect rect = QRect(QPoint(x,y),QSize(infoWelcomeWidth,infoWelcomeHeight));
