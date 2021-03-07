@@ -15,6 +15,9 @@
 #include <QClipboard>
 #include <QDebug>
 #include <QScreen>
+#include <QLabel>
+#include <QToolBar>
+#include "qmath.h"
 
 class FullScreenWidget : public QWidget
 {
@@ -35,11 +38,23 @@ public:
         initShot,
         beginShot,
         finishShot,
+        editShot,
+        editEndShot,
         endShot,
         beginMoveShot,
         finishMoveShot,
         beginControl,
         finishControl
+    };
+
+    enum drawItemType
+    {
+        drawNone     = 0,//no draw operation.
+        drawRectange = 1,//add rectange.
+        drawEllipse  = 2,//add ellipse.
+        drawRamLine  = 3,//add random line.
+        drawArrow    = 4,//add line with arrow
+        drawText     = 5 //add text
     };
 
     //移动选区中的8个控制点，按照顺时针方向从左上控制点到左中控制点分配编号为1～8
@@ -62,6 +77,15 @@ public slots:
     void cancelSelectedRect(); //取消选择区域
     void savePixmap(); //保选取行为的方法
     void slotQuit();
+    void finishScreen();
+
+    //绘制
+    void drawRectAct();
+    void drawEllipseAct();
+    void drawRamLineAct();
+    void drawArrowAct();
+    void drawTextAct();
+    void drawGeometry(QPainter *painter);
 
 signals:
     void finishPixmap(const QPixmap &finishPixmap); //完成切图后的图片,发送信号给连接者
@@ -89,11 +113,36 @@ private:
     QAction *cancelAction; //取消选取行为
     QAction *quitAction; //退出选取行为
     QMenu *contextMenu; //选中区域右键菜单
+
+    QToolBar *mainToolbar;
+    QActionGroup *actDraws;            //all draw operation in one group because only one draw type in working,
+    QAction *actDrawRect;             //draw rectange starting or ending operation.
+    QAction *actDrawEllipse;          //draw ellipse starting or ending operation.
+    QAction *actDrawRandomLine;       //draw random line starting or ending operation.
+    QAction *actDrawArrow;            //add arrow operation.
+    QAction *actDrawText;             //add text operation.
+    QAction *actOk;
+    QAction *actSave;
+    QAction *actQuit;
+
+    drawItemType     drawGeoType;      //current draw operation type
+    QPen             linePen;          //pen used by draw line
+    QFont            textFont;
+    QRect      rtTextInput;            //input box rectange.
+    QString    textInputString;        //input box content.
+
+    bool             drawOnce;         //once draw operation finish flag.
+    QPoint           drawFrom;         //draw operation start point,for rectange,ellipse
+    QPoint           drawTo;           //draw operation end point,for rectange,ellipse
+    QVector<QPoint>  drawRandomLines;  //draw random line operate points.
+
     int screenwidth; //整个屏幕的宽度
     int screenheight; //整个屏幕的高度
     int screenx; //选区的X
     int screeny; //选区的Y
     int tipWidth,tipHeight,infoWidth,infoHeight; //加载初始框的宽度，高度；显示坐标信息的宽度，高度
+    const qreal  defaultSpaceSize=2;
+    QSize infoTipSize;
 
     QRect getSelectedRect(); //获取选取
     QRect getRect(const QPoint &beginPoint, const QPoint &endPoint); //根据两个点获取选取坐标
@@ -112,6 +161,8 @@ private:
     QRect getMoveControlSelectedRect(void);//获取移动控制点的选区
     int getMinValue(int num1, int num2);//获取两个数中的最小值
     void drawXYWHInfo(void); //打印选取的x,y,h,w值信息
+    void addTollbars();
+    void showToolbars(QRect rectFrame);
 
     //重写基类方法
     void keyPressEvent(QKeyEvent *event);

@@ -22,7 +22,9 @@
 #include "imageex.h"
 #include "textcodecex.h"
 #include "settingsex.h"
-#include "fullscreenwidget.h"
+//#include "fullscreenwidget.h"
+#include "capturewidget.h"
+#include <QShortcut>
 
 namespace Ui {
 class MainWindow;
@@ -76,13 +78,17 @@ private slots:
 
      void slotFinishPixmap(const QPixmap &finishPixmap);
 
+     void on_pushButton_qxtglobalshortcut_clicked();
+
 signals:
     void addWork(REQUEST_ST request);
     void start();
+    void startCaptureWidget();
 
 private:
     Ui::MainWindow *ui;
-    FullScreenWidget *fullWidget;
+//    FullScreenWidget *fullWidget;
+    CaptureWidget *captureWidget;
 };
 
 #endif // MAINWINDOW_H

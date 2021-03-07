@@ -7,8 +7,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     qDebug()<<"MainWindow: "<<QThread::currentThreadId();
+    //程序内的热键
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_D),this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(on_pushButton_ScreenShot_clicked()));
 
-    fullWidget = NULL;
+    //    fullWidget = NULL;
+    captureWidget = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -102,7 +106,7 @@ void MainWindow::on_pushButton_network_clicked()
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
     st.strUrl = "http://www.baidu.com/";
-//    st.strUrl = "http://www.bbbbbbbbbaidu.com/";
+    //    st.strUrl = "http://www.bbbbbbbbbaidu.com/";
     st.strTask = QUuid::createUuid().toString();
 
     if (false)
@@ -455,24 +459,41 @@ void MainWindow::on_pushButton_settings_clicked()
 
 void MainWindow::on_pushButton_ScreenShot_clicked()
 {
-    fullWidget = new FullScreenWidget(true);
-    connect(fullWidget, SIGNAL(finishPixmap(QPixmap)),this ,SLOT(slotFinishPixmap(QPixmap)));
-    fullWidget->start();
-    fullWidget->show();
+    //    fullWidget = new FullScreenWidget(true);
+    //    connect(fullWidget, SIGNAL(finishPixmap(QPixmap)),this ,SLOT(slotFinishPixmap(QPixmap)));
+    //    fullWidget->start();
+    //    fullWidget->show();
+    captureWidget = new CaptureWidget(this);
+    connect(captureWidget, SIGNAL(exitCapture(QPixmap)),this ,SLOT(slotFinishPixmap(QPixmap)));
+    connect(this, SIGNAL(startCaptureWidget()),captureWidget ,SLOT(toggle()));
+
+    emit startCaptureWidget();
 }
 
 void MainWindow::slotFinishPixmap(const QPixmap &finishPixmap)
 {
     qDebug()<<"MainWindow::slotFinishPixmap";
-    if (fullWidget)
-    {
-        fullWidget->deleteLater();
-        fullWidget = NULL;
-    }
+    //    if (fullWidget)
+    //    {
+    //        fullWidget->deleteLater();
+    //        fullWidget = NULL;
+    //    }
 
+    if (captureWidget)
+    {
+        captureWidget->deleteLater();
+        captureWidget = NULL;
+    }
     if(finishPixmap.isNull())
     {
         qDebug()<<"MainWindow::slotFinishPixmap finishPixmap.isNull";
+    } else {
+//        finishPixmap.save("D:\\test\\pixmap.png");
     }
-//    Q_UNUSED(finishPixmap);
+    Q_UNUSED(finishPixmap);
+}
+
+void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
+{
+
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>436</height>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,6 +54,20 @@
      <widget class="QPushButton" name="pushButton_thread">
       <property name="text">
        <string>thread</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_ScreenShot">
+      <property name="text">
+       <string>CaptureScreen</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_qxtglobalshortcut">
+      <property name="text">
+       <string>qxtglobalshortcut</string>
       </property>
      </widget>
     </item>
@@ -110,13 +124,6 @@
      <widget class="QPushButton" name="pushButton_textcodec">
       <property name="text">
        <string>textcodec</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_ScreenShot">
-      <property name="text">
-       <string>ScreenShot</string>
       </property>
      </widget>
     </item>

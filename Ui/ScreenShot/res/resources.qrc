@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/">
+        <file>cursor.png</file>
+        <file>Brush01.png</file>
+        <file>Brush02.png</file>
+        <file>Ellipse.png</file>
+        <file>Rectange.png</file>
+        <file>Arrow.png</file>
+        <file>Copy.png</file>
+        <file>Quit.png</file>
+        <file>Save.png</file>
+        <file>Text.png</file>
+        <file>CLR_Icon/BigClr.png</file>
+        <file>CLR_Icon/Clr001.png</file>
+        <file>CLR_Icon/Clr002.png</file>
+        <file>CLR_Icon/Clr003.png</file>
+        <file>CLR_Icon/Clr004.png</file>
+        <file>CLR_Icon/Clr005.png</file>
+        <file>CLR_Icon/Clr006.png</file>
+        <file>CLR_Icon/Clr007.png</file>
+        <file>CLR_Icon/Clr008.png</file>
+        <file>CLR_Icon/Clr009.png</file>
+        <file>CLR_Icon/Clr010.png</file>
+        <file>CLR_Icon/Clr011.png</file>
+        <file>CLR_Icon/Clr012.png</file>
+        <file>CLR_Icon/Clr013.png</file>
+        <file>CLR_Icon/Clr014.png</file>
+        <file>CLR_Icon/Clr015.png</file>
+        <file>CLR_Icon/Clr016.png</file>
+        <file>point01.png</file>
+        <file>point02.png</file>
+        <file>point03.png</file>
+    </qresource>
+</RCC>

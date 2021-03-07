@@ -11,3 +11,6 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/fullscreenwidget.cpp
+
+RESOURCES += \
+    $$PWD/res/resources.qrc

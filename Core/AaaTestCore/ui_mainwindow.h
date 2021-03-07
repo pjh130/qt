@@ -32,6 +32,8 @@ public:
     QPushButton *pushButton_network;
     QPushButton *pushButton_zip;
     QPushButton *pushButton_thread;
+    QPushButton *pushButton_ScreenShot;
+    QPushButton *pushButton_qxtglobalshortcut;
     QPushButton *pushButton_sql;
     QPushButton *pushButton_file;
     QPushButton *pushButton_time;
@@ -40,7 +42,6 @@ public:
     QPushButton *pushButton_settings;
     QPushButton *pushButton_image;
     QPushButton *pushButton_textcodec;
-    QPushButton *pushButton_ScreenShot;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -49,7 +50,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(400, 436);
+        MainWindow->resize(400, 488);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -85,6 +86,16 @@ public:
         pushButton_thread->setObjectName(QString::fromUtf8("pushButton_thread"));
 
         verticalLayout->addWidget(pushButton_thread);
+
+        pushButton_ScreenShot = new QPushButton(centralWidget);
+        pushButton_ScreenShot->setObjectName(QString::fromUtf8("pushButton_ScreenShot"));
+
+        verticalLayout->addWidget(pushButton_ScreenShot);
+
+        pushButton_qxtglobalshortcut = new QPushButton(centralWidget);
+        pushButton_qxtglobalshortcut->setObjectName(QString::fromUtf8("pushButton_qxtglobalshortcut"));
+
+        verticalLayout->addWidget(pushButton_qxtglobalshortcut);
 
         pushButton_sql = new QPushButton(centralWidget);
         pushButton_sql->setObjectName(QString::fromUtf8("pushButton_sql"));
@@ -126,11 +137,6 @@ public:
 
         verticalLayout->addWidget(pushButton_textcodec);
 
-        pushButton_ScreenShot = new QPushButton(centralWidget);
-        pushButton_ScreenShot->setObjectName(QString::fromUtf8("pushButton_ScreenShot"));
-
-        verticalLayout->addWidget(pushButton_ScreenShot);
-
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -157,6 +163,8 @@ public:
         pushButton_network->setText(QCoreApplication::translate("MainWindow", "network", nullptr));
         pushButton_zip->setText(QCoreApplication::translate("MainWindow", "zip", nullptr));
         pushButton_thread->setText(QCoreApplication::translate("MainWindow", "thread", nullptr));
+        pushButton_ScreenShot->setText(QCoreApplication::translate("MainWindow", "CaptureScreen", nullptr));
+        pushButton_qxtglobalshortcut->setText(QCoreApplication::translate("MainWindow", "qxtglobalshortcut", nullptr));
         pushButton_sql->setText(QCoreApplication::translate("MainWindow", "sql", nullptr));
         pushButton_file->setText(QCoreApplication::translate("MainWindow", "file", nullptr));
         pushButton_time->setText(QCoreApplication::translate("MainWindow", "time", nullptr));
@@ -165,7 +173,6 @@ public:
         pushButton_settings->setText(QCoreApplication::translate("MainWindow", "settings", nullptr));
         pushButton_image->setText(QCoreApplication::translate("MainWindow", "image", nullptr));
         pushButton_textcodec->setText(QCoreApplication::translate("MainWindow", "textcodec", nullptr));
-        pushButton_ScreenShot->setText(QCoreApplication::translate("MainWindow", "ScreenShot", nullptr));
     } // retranslateUi
 
 };

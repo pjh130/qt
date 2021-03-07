@@ -5,12 +5,20 @@
 
 FullScreenWidget::FullScreenWidget(bool bSimple)
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowState(Qt::WindowActive|Qt::WindowFullScreen);
     m_bSimple = bSimple;
     tipWidth = 300; //温馨提示框的宽度
     tipHeight = 100; //温馨提示框的高度
     infoWidth = 100; //坐标信息框的宽度
-    infoHeight = 50; //坐标信息框的高度
+    infoHeight = 70; //坐标信息框的高度
+    infoTipSize = QSize(infoWidth,infoHeight);
+
+    if (true)
+    {
+        addTollbars();
+    }
+
     initFullScreenWidget();
 }
 
@@ -31,14 +39,26 @@ void FullScreenWidget::initSelectedMenu()
     connect(quitAction,SIGNAL(triggered()),this,SLOT(slotQuit()));
 }
 
-void FullScreenWidget::slotQuit()
+void FullScreenWidget::finishScreen()
 {
     if (m_bSimple)
     {
-        emit finishPixmap(shotPixmap);
-    } else {
-        hide();
+        if (!shotPixmap.isNull())
+        {
+            //同时把截图放到粘贴板
+            QClipboard *clipboard = QApplication::clipboard();
+            clipboard->clear(QClipboard::Clipboard);
+            clipboard->setPixmap(shotPixmap);
+        }
     }
+    emit finishPixmap(shotPixmap);
+    //    hide();
+    close();
+}
+
+void FullScreenWidget::slotQuit()
+{
+    finishScreen();
 }
 
 void FullScreenWidget::savePixmap()
@@ -48,13 +68,13 @@ void FullScreenWidget::savePixmap()
     if(fileName.isNull())
         return;
 
-    shotPixmap.save(fileName);
-    if (m_bSimple)
+    if (fileName.isEmpty())
     {
-        emit finishPixmap(shotPixmap);
-    } else {
-        hide();
+        currentShotState = finishShot;
+        return;
     }
+    shotPixmap.save(fileName);
+    finishScreen();
 }
 
 void FullScreenWidget::start()
@@ -116,7 +136,22 @@ void FullScreenWidget::paintEvent(QPaintEvent *event)
         selectedRect = getRect(beginPoint,endPoint); //获取选区
         drawSelectedPixmap();
         break;
+    case editShot:
+        qDebug()<<"FullScreenWidget::paintEvent editShot";
+        drawSelectedPixmap();
 
+        if(drawOnce){
+            drawGeometry(&painter);
+//           QPainter p(&shotPixmap);
+//           QPoint x = drawFrom - selectedRect.topLeft();
+//           QPoint y = selectedRect.bottomRight() - drawTo;
+
+//           qDebug()<<"shotPixmap: "<<shotPixmap.rect();
+//           qDebug()<<"QRect: "<<QRect(x, y);
+//           p.drawRect(QRect(x, y));
+//           p.save();
+        }
+        break;
     case beginMoveShot:
     case finishMoveShot:
         selectedRect = getMoveAllSelectedRect(); //获取选区
@@ -146,13 +181,8 @@ void FullScreenWidget::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Escape)
     {
-        if(m_bSimple)
-        {
-            emit finishPixmap(shotPixmap);
-        } else {
-            initFullScreenWidget();
-            hide();
-        }
+        initFullScreenWidget();
+        finishScreen();
     }
 }
 
@@ -165,9 +195,17 @@ void FullScreenWidget::mousePressEvent(QMouseEvent *event)
         beginPoint = event->pos();
     }
 
+    //编辑
+    if(event->button() == Qt::LeftButton && currentShotState == editShot)
+    {
+        qDebug()<<"FullScreenWidget::mousePressEvent currentShotState == editShot";
+        drawOnce = true;
+        drawFrom = event->pos();
+    }
+
     //移动选区改变选区的所在位置
     if(event->button() == Qt::LeftButton && isInSelectedRect(event->pos()) &&
-            getMoveControlState(event->pos()) == moveControl0)
+            getMoveControlState(event->pos()) == moveControl0 && currentShotState != editShot)
     {
         currentShotState = beginMoveShot; //启用开始移动选取选项,beginMoveShot状态
         moveBeginPoint = event->pos();
@@ -184,10 +222,7 @@ void FullScreenWidget::mousePressEvent(QMouseEvent *event)
     {
         if (currentShotState == beginShot || currentShotState == initShot)
         {
-            if(m_bSimple)
-            {
-                emit finishPixmap(shotPixmap);
-            }
+            finishScreen();
         } else {
             cancelSelectedRect();
         }
@@ -200,7 +235,17 @@ void FullScreenWidget::mouseReleaseEvent(QMouseEvent *event)
     {
         currentShotState = finishShot;
         endPoint = event->pos();
+
+        showToolbars(QRect(beginPoint, endPoint));
         update();
+    }
+
+    //编辑
+    if(event->button() == Qt::LeftButton && currentShotState == editShot)
+    {
+        drawTo = event->pos();
+        update();
+        drawOnce = false;
     }
 
     if(event->button() == Qt::LeftButton && currentShotState == beginMoveShot)
@@ -228,10 +273,21 @@ void FullScreenWidget::mouseMoveEvent(QMouseEvent *event)
         update();
     }
 
+    //编辑
+    if(currentShotState == editShot)
+    {
+        drawTo = event->pos();
+        if (drawOnce)
+        {
+            update();
+        }
+    }
+
     //当确定选区后，对选区进行移动操作
     if(currentShotState == beginMoveShot || currentShotState == beginControl)
     {
         moveEndPoint = event->pos();
+        showToolbars(QRect(selectedRect.topLeft(), selectedRect.bottomRight()));
         update();
     }
 
@@ -244,13 +300,7 @@ void FullScreenWidget::mouseDoubleClickEvent(QMouseEvent *event)
     Q_UNUSED(event);
     if(currentShotState == finishShot || currentShotState == finishMoveShot || currentShotState == finishControl)
     {
-        if (m_bSimple){
-            //同时把截图放到粘贴板
-            QClipboard *clipboard = QApplication::clipboard();
-            clipboard->setPixmap(shotPixmap);
-        }
-        emit finishPixmap(shotPixmap); //当完成时发送finishPixmap信号
-        hide();
+        finishScreen();
     }
 }
 
@@ -300,26 +350,274 @@ bool FullScreenWidget::isInSelectedRect(const QPoint &point)
     return selectedRect.contains(x,y);
 }
 
+void FullScreenWidget::addTollbars()
+{
+    mainToolbar    =new QToolBar(tr("main tool bar"),this);
+    mainToolbar->setIconSize (QSize(16,16));
+    //set tool bar's attribute
+    mainToolbar->setAutoFillBackground(true);
+    mainToolbar->setFloatable(true);
+    mainToolbar->setMovable(false);
+    mainToolbar->setVisible(false);
+
+    actOk    = new QAction(tr("OK"),this);
+    actSave  = new QAction(tr("Save"),this);
+    actQuit = new QAction(tr("Quit"),this);
+    //group
+    actDraws         =new QActionGroup(this);
+    actDrawRect      =new QAction(tr("Rectange"),this);
+    actDrawEllipse   =new QAction(tr("Ellipse"),this);
+    actDrawRandomLine=new QAction(tr("Brush"),this);
+    actDrawArrow     =new QAction(tr("Arrow"),this);
+    actDrawText      =new QAction(tr("T"),this);
+    //set draw actions
+    actDraws->addAction(actDrawRect);
+    actDraws->addAction(actDrawEllipse);
+    actDraws->addAction(actDrawRandomLine);
+    actDraws->addAction(actDrawArrow);
+    actDraws->addAction(actDrawText);
+    actDrawRect->setCheckable(true);
+    actDrawEllipse->setCheckable(true);
+    actDrawRandomLine->setCheckable(true);
+    actDrawArrow->setCheckable(true);
+    actDrawText->setCheckable(true);
+
+    //add icon
+    actDrawRect->setIcon(QIcon(QString::fromUtf8(":/Rectange.png")));
+    actDrawEllipse->setIcon(QIcon(QString::fromUtf8(":/Ellipse.png")));
+    actDrawRandomLine->setIcon(QIcon(QString::fromUtf8(":/Brush01.png")));
+    actDrawArrow->setIcon(QIcon(QString::fromUtf8(":/Arrow.png")));
+    actDrawText->setIcon(QIcon(QString::fromUtf8(":/Text.png")));
+    actOk->setIcon(QIcon(QString::fromUtf8(":/Copy.png")));
+    actSave->setIcon(QIcon(QString::fromUtf8(":/Save.png")));
+    actQuit->setIcon(QIcon(QString::fromUtf8(":/Quit.png")));
+    //add action
+    mainToolbar->addActions(actDraws->actions());
+    mainToolbar->addAction(actSave);
+    mainToolbar->addAction(actQuit);
+    mainToolbar->addAction(actOk);
+
+    //add connect
+    connect(actOk,SIGNAL(triggered()),this,SLOT(finishScreen()));
+    connect(actSave,SIGNAL(triggered()),this,SLOT(savePixmap()));
+    connect(actQuit,SIGNAL(triggered()),this,SLOT(slotQuit()));
+    //group
+    connect(actDrawRect,SIGNAL(triggered()),this,SLOT(drawRectAct()));
+    connect(actDrawEllipse,SIGNAL(triggered()),this,SLOT(drawEllipseAct()));
+    connect(actDrawRandomLine,SIGNAL(triggered()),this,SLOT(drawRamLineAct()));
+    connect(actDrawArrow,SIGNAL(triggered()),this,SLOT(drawArrowAct()));
+    connect(actDrawText,SIGNAL(triggered()),this,SLOT(drawTextAct()));
+}
+
+void FullScreenWidget::drawRectAct(/*bool bToggled*/)
+{
+    drawOnce = false;
+    qDebug()<<"FullScreenWidget::drawRectAct";
+    //enter the edit state
+    if(currentShotState==finishShot)
+    {
+        qDebug()<<"FullScreenWidget::drawRectAct 1";
+        currentShotState = editShot;
+    } else {
+        qDebug()<<"FullScreenWidget::drawRectAct 2";
+    }
+    drawGeoType=drawRectange;
+    actDrawRect->setChecked(true);
+    //    drawToTargetPixmap();
+    //    //not in draw rectange state, goto rectange state
+    //    if(drawGeoType!=drawRectange)
+    //    {
+    //        drawGeoType=drawRectange;
+    //        actDrawRect->setChecked(true);
+    //        attrTextSettingBar->setVisible(false);
+    //        ShowAttrExtToolBar(rtPickRect,attrLineSettingBar);
+    //    }
+    //    //already in draw rectange state, goto no draw type state
+    //    else
+    //    {
+    //        drawGeoType=drawNone;
+    //        actDrawRect->setChecked(false);
+    //        attrLineSettingBar->setVisible(false);
+    //    }
+    //    //drawFrom = drawTo;
+    //    resetDrawStatusValues();
+    update();
+}
+
+void FullScreenWidget::drawEllipseAct(/*bool bToggled*/)
+{
+    return;
+    //enter the edit state
+    if(currentShotState==finishShot)
+    {
+        currentShotState = editShot;
+    }
+    //    drawToTargetPixmap();
+    //    //no draw Ellipse state,goto draw ellipse state
+    //    if(drawGeoType!=drawEllipse)
+    //    {
+    //        drawGeoType=drawEllipse;
+    //        actDrawEllipse->setChecked(true);
+    //        attrTextSettingBar->setVisible(false);
+    //        ShowAttrExtToolBar(rtPickRect,attrLineSettingBar);
+    //    }
+    //    //already in draw ellipse state, goto no draw type state
+    //    else
+    //    {
+    //        drawGeoType=drawNone;
+    //        actDrawEllipse->setChecked(false);
+    //        attrLineSettingBar->setVisible(false);
+    //    }
+    //    //drawFrom = drawTo;
+    //    resetDrawStatusValues();
+    update();
+}
+
+void FullScreenWidget::drawArrowAct()
+{
+    return;
+    //enter the edit state
+    if(currentShotState==finishShot)
+    {
+        currentShotState = editShot;
+    }
+    //    drawToTargetPixmap();
+    //    //no draw arrow state,goto draw Arrow state
+    //    if(drawGeoType!=drawArrow)
+    //    {
+    //        drawGeoType=drawArrow;
+    //        actDrawArrow->setChecked(true);
+    //        attrTextSettingBar->setVisible(false);
+    //        ShowAttrExtToolBar(rtPickRect,attrLineSettingBar);
+    //    }
+    //    //already in draw arrow state, goto no draw type state
+    //    else
+    //    {
+    //        drawGeoType=drawNone;
+    //        actDrawArrow->setChecked(false);
+    //        attrLineSettingBar->setVisible(false);
+    //    }
+    //    //drawFrom = drawTo;
+    //    resetDrawStatusValues();
+    update();
+}
+
+void FullScreenWidget::drawTextAct()
+{
+    return;
+    //enter the edit state
+    if(currentShotState==finishShot)
+    {
+        currentShotState = editShot;
+    }
+    //    drawToTargetPixmap();
+    //    //no draw text state,goto draw Arrow state
+    //    if(drawGeoType!=drawText)
+    //    {
+    //        drawGeoType=drawText;
+    //        actDrawText->setChecked(true);
+    //        attrLineSettingBar->setVisible(false);
+    //        ShowAttrExtToolBar(rtPickRect,attrTextSettingBar);
+    //    }
+    //    //already in draw text state, goto no draw type state
+    //    else
+    //    {
+    //        drawGeoType=drawNone;
+    //        actDrawText->setChecked(false);
+    //        attrTextSettingBar->setVisible(false);
+    //    }
+    //    //drawFrom = drawTo;
+    //    resetDrawStatusValues();
+    update();
+}
+
+void FullScreenWidget::drawRamLineAct(/*bool bToggled*/)
+{
+    return;
+    //enter the edit state
+    if(currentShotState==finishShot)
+    {
+        currentShotState = editShot;
+    }
+
+    //    drawToTargetPixmap();
+    //    //not draw random line,goto draw random line
+    //    if(drawGeoType!=drawRamLine)
+    //    {
+    //        drawGeoType=drawRamLine;
+    //        actDrawRandomLine->setChecked(true);
+    //        attrTextSettingBar->setVisible(false);
+    //        ShowAttrExtToolBar(rtPickRect,attrLineSettingBar);
+    //    }
+    //    //already in draw random line,goto none
+    //    else
+    //    {
+    //        drawGeoType=drawNone;
+    //        actDrawRandomLine->setChecked(false);
+    //        attrLineSettingBar->setVisible(false);
+    //    }
+    //    //drawFrom = drawTo;
+    //    resetDrawStatusValues();
+    update();
+}
+
+void FullScreenWidget::showToolbars(QRect rectFrame)
+{
+    //    QSize sizeToolBar = mainToolbar->size();
+    QRect rcWidget  = geometry();
+    QPoint realPoint = rectFrame.bottomLeft();
+    mainToolbar->setOrientation(Qt::Horizontal);
+    mainToolbar->setMinimumSize(48, 36);
+    mainToolbar->adjustSize();
+    QSize sizeToolBar = mainToolbar->size();
+
+    //1,default :工具栏显示在窗口下边
+
+    //2,如果下边空余区域太小,将工具栏显示到上边
+    if(rcWidget.bottomLeft().y()<(rectFrame.bottomLeft().y()+sizeToolBar.height() + defaultSpaceSize))
+    {
+        //3,如果上边空余区域太小,将工具栏显示到frame框的左上角
+        if(rcWidget.topLeft().y() > (rectFrame.topLeft().y() - sizeToolBar.height() - defaultSpaceSize))
+        {
+            realPoint.setX(rectFrame.topLeft().x() + defaultSpaceSize + infoTipSize.width());
+            realPoint.setY(rectFrame.topLeft().y() + defaultSpaceSize);
+        }
+        else
+        {
+            sizeToolBar = mainToolbar->size();
+            realPoint.setX(rectFrame.x()+ infoTipSize.width());
+            realPoint.setY(rectFrame.y()-sizeToolBar.height()-defaultSpaceSize);
+        }
+    }
+    else
+    {
+        realPoint.setX(rectFrame.bottomLeft().x());
+        realPoint.setY(rectFrame.bottomLeft().y()+defaultSpaceSize);
+    }
+    //set main toolbar position and display
+    mainToolbar->move(realPoint);
+    mainToolbar->setVisible(true);
+}
+
 void FullScreenWidget::cancelSelectedRect()
 {
+    mainToolbar->setVisible(false);
     initFullScreenWidget();
     update(); //进行重绘，将选取区域去掉
 }
 
 void FullScreenWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-    initSelectedMenu();
+    //简单模式就不用显示菜单了
+    if (m_bSimple)
+    {
+        return;
+    }
 
+    initSelectedMenu();
     if(isInSelectedRect(event->pos())){
         contextMenu->addAction(savePixmapAction);
-    }
-    else{
-        //简单模式就不用显示菜单了
-        if (m_bSimple)
-        {
-            return;
-        }
-
+    } else{
         contextMenu->addAction(cancelAction);
         contextMenu->addAction(quitAction);
     }
@@ -454,9 +752,12 @@ void FullScreenWidget::updateMouseShape(const QPoint &point)
     case finishMoveShot:
     case finishControl:
         if(getSelectedRect().contains(point))
+        {
             setCursor(Qt::OpenHandCursor);
-        else
+        } else {
+
             updateMoveControlMouseShape(getMoveControlState(point));
+        }
         break;
     case beginControl:
         updateMoveControlMouseShape(controlValue); //调用函数对移动8个控制点进行鼠标状态的改变
@@ -615,6 +916,122 @@ void FullScreenWidget::drawSelectedPixmap(void)
     draw8ControlPoint(selectedRect); //画出选区的8个控制点
 }
 
+void FullScreenWidget::drawGeometry(QPainter *painter)
+{
+    if(drawGeoType==drawRectange)
+    {
+        qDebug()<<"FullScreenWidget::drawGeometry drawRectange";
+        QRect rtDraw(drawFrom,drawTo);
+        painter->save();
+        painter->setPen(linePen);
+        painter->drawRect(rtDraw);
+        painter->restore();
+        actDrawRect->setChecked(false);
+    }
+    else if(drawGeoType==drawEllipse)
+    {
+        QRect rtDraw(drawFrom,drawTo);
+        painter->save();
+        painter->setPen(linePen);
+        painter->drawEllipse(rtDraw.center(),rtDraw.width()/2,rtDraw.height()/2);
+        painter->restore();
+    }
+    else if(drawGeoType==drawRamLine)
+    {
+        painter->save();
+        painter->setPen(linePen);
+        painter->drawLines(drawRandomLines);
+        painter->restore();}
+    else if(drawGeoType==drawArrow)
+    {
+        painter->setRenderHint(QPainter::Antialiasing);
+
+        bool isRight = true;
+        qreal rotateAngle = 0;
+        qreal lineLen = 0;
+
+        //calculate arrow.
+        if(drawFrom.x()==drawTo.x() && drawFrom.y()==drawTo.y())
+        {
+            //from point and to point is same,do nothing
+            isRight = false;
+        }
+        else if(drawFrom.x()==drawTo.x())
+        {
+            if(drawFrom.y() < drawTo.y()) //down arrow
+            {
+                rotateAngle = M_PI*0.5;//rotate 90 degree
+            }
+            else                          //up arrow
+            {
+                rotateAngle =-M_PI*0.5;//rotate -90 degree
+            }
+            lineLen = qAbs(drawFrom.y() - drawTo.y());
+        }
+        else if(drawFrom.y()==drawTo.y())
+        {
+            if(drawFrom.x()>drawTo.x())  //left arrow
+            {
+                rotateAngle = M_PI;//rotate 180 degree
+            }
+            else                         //right arrow
+            {
+                rotateAngle = 0;//rotate 0 degree
+            }
+            lineLen = qAbs(drawFrom.x()-drawTo.x());
+        }
+        else
+        {
+            qreal absAngle = qAtan2(qAbs(drawTo.y()-drawFrom.y()),qAbs(drawTo.x()-drawFrom.x()));
+            lineLen = qAbs(drawFrom.x() - drawTo.x()) /qCos(absAngle);
+            if(drawFrom.x() < drawTo.x())//coordinate 1,4
+            {
+                if(drawFrom.y()<drawTo.y())   //coordiante 1
+                {
+                    rotateAngle = absAngle;//rotate -a degree
+                }
+                else                          //coordinate 1
+                {
+                    rotateAngle = -1.0 * absAngle;//rotate a degree
+                }
+            }
+            else if(drawFrom.x()>drawTo.x())  //coordiante 2,3
+            {
+                if(drawFrom.y()<drawTo.y())   //coodinatte 2
+                {
+                    rotateAngle =  M_PI-absAngle;//rotate a degree;
+                }
+                else                          //coordinate 3
+                {
+                    rotateAngle =  M_PI+absAngle;//rotate -a degree;
+                }
+            }
+        }
+        if(isRight)  //need draw line with arrow
+        {
+            painter->setPen(linePen);
+            rotateAngle = 180.0 *rotateAngle / M_PI;
+
+            painter->save();
+            painter->translate(drawFrom);
+            painter->rotate(rotateAngle);
+            painter->drawLine(QPoint(0,0),         QPoint(lineLen,0));
+            painter->drawLine(QPoint(lineLen-8,-6),QPoint(lineLen,0));
+            painter->drawLine(QPoint(lineLen-8,+6),QPoint(lineLen,0));
+            painter->restore();
+        }
+    }
+    else if(drawGeoType==drawText)
+    {
+        QFont orgFont = painter->font();
+        painter->setFont(textFont);
+        //        painter->setPen(textColorUsed);
+        textInputString = "Hello world";
+        painter->drawText(rtTextInput,textInputString,QTextOption(Qt::AlignVCenter));
+        painter->setFont(orgFont);
+    }
+}
+
 void FullScreenWidget::drawXYWHInfo(void)
 {
     int x,y;
@@ -629,7 +1046,7 @@ void FullScreenWidget::drawXYWHInfo(void)
     case beginControl:
     case finishControl:
         x = selectedRect.x() + 5;
-        y = selectedRect.y() > infoHeight ? selectedRect.y()-infoHeight:selectedRect.y();
+        y = (selectedRect.y() > infoHeight ? selectedRect.y()-infoHeight:selectedRect.y());
         rect = QRect(x,y,infoWidth,infoHeight);
         strTipsText = QString(QStringLiteral(" 坐标信息\n x:%1 y:%2\n w:%3 h:%4")).arg(selectedRect.x(),4).arg(selectedRect.y(),4)
                 .arg(selectedRect.width(),4).arg(selectedRect.height(),4);
