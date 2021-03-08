@@ -20,6 +20,7 @@ include(D:\Code\Go\src\github.com\pjh130\qt\Core\string\string.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\os\os.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\textcodec\textcodec.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\settings\settings.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\QHotkey\qhotkey.pri)
 
 #加入路径
 CORE_LIBRARY_LOCATION = $$PWD

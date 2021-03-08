@@ -67,7 +67,7 @@
     <item>
      <widget class="QPushButton" name="pushButton_qxtglobalshortcut">
       <property name="text">
-       <string>qxtglobalshortcut</string>
+       <string>hotkey</string>
       </property>
      </widget>
     </item>

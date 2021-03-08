@@ -6,13 +6,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //注册自定义的信号槽参数
+    qRegisterMetaType<QPrivateSignal>("QPrivateSignal");
     qDebug()<<"MainWindow: "<<QThread::currentThreadId();
     //程序内的热键
-    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_D),this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(on_pushButton_ScreenShot_clicked()));
+    //    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_D),this);
+    //    connect(shortcut, SIGNAL(activated()), this, SLOT(on_pushButton_ScreenShot_clicked()));
 
     //    fullWidget = NULL;
     captureWidget = NULL;
+    hotkey = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -459,10 +462,6 @@ void MainWindow::on_pushButton_settings_clicked()
 
 void MainWindow::on_pushButton_ScreenShot_clicked()
 {
-    //    fullWidget = new FullScreenWidget(true);
-    //    connect(fullWidget, SIGNAL(finishPixmap(QPixmap)),this ,SLOT(slotFinishPixmap(QPixmap)));
-    //    fullWidget->start();
-    //    fullWidget->show();
     captureWidget = new CaptureWidget(this);
     connect(captureWidget, SIGNAL(exitCapture(QPixmap)),this ,SLOT(slotFinishPixmap(QPixmap)));
     connect(this, SIGNAL(startCaptureWidget()),captureWidget ,SLOT(toggle()));
@@ -473,12 +472,6 @@ void MainWindow::on_pushButton_ScreenShot_clicked()
 void MainWindow::slotFinishPixmap(const QPixmap &finishPixmap)
 {
     qDebug()<<"MainWindow::slotFinishPixmap";
-    //    if (fullWidget)
-    //    {
-    //        fullWidget->deleteLater();
-    //        fullWidget = NULL;
-    //    }
-
     if (captureWidget)
     {
         captureWidget->deleteLater();
@@ -488,12 +481,13 @@ void MainWindow::slotFinishPixmap(const QPixmap &finishPixmap)
     {
         qDebug()<<"MainWindow::slotFinishPixmap finishPixmap.isNull";
     } else {
-//        finishPixmap.save("D:\\test\\pixmap.png");
+        //        finishPixmap.save("D:\\test\\pixmap.png");
     }
     Q_UNUSED(finishPixmap);
 }
 
 void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
 {
-
+    hotkey = new QHotkey(QKeySequence("ctrl+alt+D"), true, this);
+    connect(hotkey, &QHotkey::activated, this, &MainWindow::on_pushButton_ScreenShot_clicked);
 }

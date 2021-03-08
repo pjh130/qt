@@ -164,7 +164,7 @@ public:
         pushButton_zip->setText(QCoreApplication::translate("MainWindow", "zip", nullptr));
         pushButton_thread->setText(QCoreApplication::translate("MainWindow", "thread", nullptr));
         pushButton_ScreenShot->setText(QCoreApplication::translate("MainWindow", "CaptureScreen", nullptr));
-        pushButton_qxtglobalshortcut->setText(QCoreApplication::translate("MainWindow", "qxtglobalshortcut", nullptr));
+        pushButton_qxtglobalshortcut->setText(QCoreApplication::translate("MainWindow", "hotkey", nullptr));
         pushButton_sql->setText(QCoreApplication::translate("MainWindow", "sql", nullptr));
         pushButton_file->setText(QCoreApplication::translate("MainWindow", "file", nullptr));
         pushButton_time->setText(QCoreApplication::translate("MainWindow", "time", nullptr));

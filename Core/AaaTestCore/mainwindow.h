@@ -25,6 +25,7 @@
 //#include "fullscreenwidget.h"
 #include "capturewidget.h"
 #include <QShortcut>
+#include <QHotkey>
 
 namespace Ui {
 class MainWindow;
@@ -89,6 +90,7 @@ private:
     Ui::MainWindow *ui;
 //    FullScreenWidget *fullWidget;
     CaptureWidget *captureWidget;
+    QHotkey *hotkey;
 };
 
 #endif // MAINWINDOW_H
