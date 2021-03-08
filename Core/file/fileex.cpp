@@ -14,8 +14,8 @@ FileEx::~FileEx()
 
 }
 
-bool FileEx::witeFile(QString strFileName, QByteArray data,
-                      QIODevice::OpenModeFlag mode)
+bool FileEx::witeFile(const QString &strFileName, const QByteArray &data,
+                      const QIODevice::OpenModeFlag &mode)
 {
     if (!strFileName.isEmpty())
     {
@@ -38,7 +38,7 @@ bool FileEx::witeFile(QString strFileName, QByteArray data,
     return false;
 }
 
-QByteArray FileEx::readFile(QString strFileName)
+QByteArray FileEx::readFile(const QString &strFileName)
 {
     QByteArray data;
     QFile f(strFileName);
@@ -53,7 +53,7 @@ QByteArray FileEx::readFile(QString strFileName)
 }
 
 //从目录及子目录中检索出所有文件名
-QStringList FileEx::allFiles(const QString & strDir)
+QStringList FileEx::allFiles(const QString &strDir)
 {
     QStringList ret;
     // 这个函数可以执行任何任务，
@@ -77,7 +77,7 @@ QStringList FileEx::allFiles(const QString & strDir)
     return ret;
 }
 
-QString FileEx::getHash(const QString &strFilename, QCryptographicHash::Algorithm method)
+QString FileEx::getHash(const QString &strFilename, const QCryptographicHash::Algorithm &method)
 {
     if(!QFileInfo::exists(strFilename))
     {
@@ -112,7 +112,7 @@ QString FileEx::getHash(const QString &strFilename, QCryptographicHash::Algorith
     return QString(byHash.toHex().data());
 }
 
-QString FileEx::fileSize2String(qint64 i64FileSize)
+QString FileEx::fileSize2String(const qint64 &i64FileSize)
 {
     qint32 iG = i64FileSize / 1024 / 1024 / 1024;
     if ( iG > 0)

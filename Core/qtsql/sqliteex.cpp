@@ -16,7 +16,7 @@ SqliteEx & SqliteEx::getClass()
     return s;
 }
 
-bool SqliteEx::initDb(INI_DB_ST init)
+bool SqliteEx::initDb(const INI_DB_ST &init)
 {
     //如果初始化过就不需要初始化了
     if(isInitOK())

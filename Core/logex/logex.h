@@ -47,19 +47,19 @@ public:
     static LogEx & getClass(); //返回对象引用，是单例类
     void initClass(INI_LOG_ST init);
     //常规日志接口
-    void writeLog(QString strLog, LOG_LEVEL_EN level = LEVEL_PRINTF);
+    void writeLog(const QString &strLog, const LOG_LEVEL_EN &level = LEVEL_PRINTF);
     //自定义的日志接口
-    void customLog(QtMsgType type, const QMessageLogContext & context,
-                              const QString & msg);
+    void customLog(const QtMsgType &type, const QMessageLogContext &context,
+                              const QString &msg);
 
 private:
     void autoInit();
-    void iniLogDir(QString strDir);
+    void iniLogDir(const QString &strDir);
 
-    void levelPrintf(QString strLog);
-    void levelLog(QString strLog);
-    void levelEmail(QString strLog); //具体实现还需要完善
-    void levelSms(QString strLog);   //具体实现还需要完善
+    void levelPrintf(const QString &strLog);
+    void levelLog(const QString &strLog);
+    void levelEmail(const QString &strLog); //具体实现还需要完善
+    void levelSms(const QString &strLog);   //具体实现还需要完善
 
 signals:
 

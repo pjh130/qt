@@ -16,7 +16,7 @@ OdbcEx & OdbcEx::getClass()
     return s;
 }
 
-bool OdbcEx::initDb(INI_DB_ST init)
+bool OdbcEx::initDb(const INI_DB_ST &init)
 {
     //如果初始化过就不需要初始化了
     if(isInitOK())

@@ -26,6 +26,7 @@
 #include "capturewidget.h"
 #include <QShortcut>
 #include <QHotkey>
+#include <form_textedit.h>
 
 namespace Ui {
 class MainWindow;
@@ -80,6 +81,8 @@ private slots:
      void slotFinishPixmap(const QPixmap &finishPixmap);
 
      void on_pushButton_qxtglobalshortcut_clicked();
+
+     void on_pushButton_textedit_clicked();
 
 signals:
     void addWork(REQUEST_ST request);

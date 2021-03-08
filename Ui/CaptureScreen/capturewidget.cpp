@@ -67,7 +67,7 @@ CaptureWidget::CaptureWidget(QWidget *parent) :
     }
     qApp->installTranslator(g_translator);
 
-    setAttribute(Qt::WA_DeleteOnClose);
+//    setAttribute(Qt::WA_DeleteOnClose);
     setWindowState(Qt::WindowFullScreen);//setGeometry(QApplication::desktop()->geometry());
     infoTipSize = QSize(infoTipWidth,infoTipHeight);
 
@@ -1038,7 +1038,6 @@ void CaptureWidget::quitAct()
     selectorBoxes.reset();
     bmpCapture     = QPixmap();
     bmpDeskCapture = QPixmap();
-
 }
 
 bool CaptureWidget::initShotHandler(QMouseEvent *evt,MouseEventType MouseOperation)

@@ -11,7 +11,8 @@ ImageEx::~ImageEx()
 }
 
 //this can create a new image file and return a new file path
-bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath, bool bOverwrite)
+bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath,
+                         const bool &bOverwrite)
 {
     //如果是不覆盖，文件原来存在就直接报错
     if (!bOverwrite && QFileInfo::exists(strDesPath))

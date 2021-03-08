@@ -16,7 +16,7 @@ MySqlEx & MySqlEx::getClass()
     return s;
 }
 
-bool MySqlEx::initDb(INI_DB_ST init)
+bool MySqlEx::initDb(const INI_DB_ST &init)
 {
     //如果初始化过就不需要初始化了
     if(isInitOK())

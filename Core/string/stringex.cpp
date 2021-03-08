@@ -10,7 +10,7 @@ StringEx::~StringEx()
 
 }
 
-QByteArray StringEx::first(QByteArray& str, const QByteArray& split)
+QByteArray StringEx::first(QByteArray &str, const QByteArray &split)
 {
     QByteArray ret;
     int endOf = str.indexOf(split);

@@ -21,16 +21,16 @@ public:
     ~DbBase();
 
     //在子类中必须要实现的接口
-    virtual bool initDb(INI_DB_ST init) = 0;
+    virtual bool initDb(const INI_DB_ST &init) = 0;
 
-    void setInit(INI_DB_ST init);
+    void setInit(const INI_DB_ST &init);
     INI_DB_ST & getInit();
 
     QSqlDatabase & getDatabase();
     QSqlQuery & getQuery();
 
     bool isInitOK();
-    void setInitOK(bool bOk);
+    void setInitOK(const bool &bOk);
 
     void closeDB();
     QStringList tables();

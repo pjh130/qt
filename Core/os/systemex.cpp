@@ -59,6 +59,28 @@ QString SystemEx::hostName()
     return QHostInfo::localHostName();
 }
 
+bool SystemEx::setPowerAutoStart(const QString &strPath, const bool &bStart)
+{
+    bool bRet = false;
+    if (strPath.isEmpty())
+    {
+        return bRet;
+    }
+
+#ifdef Q_OS_WIN     //windows platform
+    QSettings reg("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+                  QSettings::NativeFormat);
+    QString strAppPath = QDir::toNativeSeparators(strPath);
+    QString strAppName = QFileInfo(strAppPath).baseName();
+
+    reg.setValue(strAppName, bStart ? strAppPath : "");
+#else
+
+#endif
+
+    return true;
+}
+
 /*==========================================
 //check if the process is running by pid
 //
@@ -443,7 +465,7 @@ bool SystemEx::isAppInstanceRunning(QString strMtxName, QString strAppFile)
     return false;
 }
 
-quint64 SystemEx::getDiskFreeSpace(const QString driver)
+quint64 SystemEx::getDiskFreeSpace(const QString &driver)
 {
     QDir dir(driver);
     //driver.endsWith(":")防止参数是c:会变成死循环
@@ -458,21 +480,21 @@ quint64 SystemEx::getDiskFreeSpace(const QString driver)
     } else {
         return 0;
     }
-//#ifdef Q_OS_WIN
-//    LPCWSTR lpcwstrDriver=(LPCWSTR)driver.utf16();
-//    ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
-//    if( !GetDiskFreeSpaceEx( lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
-//    {
-//        qDebug() << "ERROR: Call to GetDiskFreeSpaceEx() failed.";
-//        return 0;
-//    }
-//    return (quint64) liTotalFreeBytes.QuadPart;
-//#else
-//#endif
+    //#ifdef Q_OS_WIN
+    //    LPCWSTR lpcwstrDriver=(LPCWSTR)driver.utf16();
+    //    ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
+    //    if( !GetDiskFreeSpaceEx( lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
+    //    {
+    //        qDebug() << "ERROR: Call to GetDiskFreeSpaceEx() failed.";
+    //        return 0;
+    //    }
+    //    return (quint64) liTotalFreeBytes.QuadPart;
+    //#else
+    //#endif
     return 0;
 }
 
-quint64 SystemEx::getDiskSpace(const QString driver)
+quint64 SystemEx::getDiskSpace(const QString &driver)
 {
     QDir dir(driver);
     //driver.endsWith(":")防止参数是c:会变成死循环
@@ -488,17 +510,17 @@ quint64 SystemEx::getDiskSpace(const QString driver)
         return 0;
     }
 
-// 不是跨平台的代码，暂时不用
-//#ifdef Q_OS_WIN
-//    LPCWSTR lpcwstrDriver=(LPCWSTR)driver.utf16();
-//    ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
-//    if( !GetDiskFreeSpaceEx( lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
-//    {
-//        qDebug() << "ERROR: Call to GetDiskFreeSpaceEx() failed.";
-//        return 0;
-//    }
-//    return (quint64) liTotalBytes.QuadPart;
-//#else
-//#endif
+    // 不是跨平台的代码，暂时不用
+    //#ifdef Q_OS_WIN
+    //    LPCWSTR lpcwstrDriver=(LPCWSTR)driver.utf16();
+    //    ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
+    //    if( !GetDiskFreeSpaceEx( lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
+    //    {
+    //        qDebug() << "ERROR: Call to GetDiskFreeSpaceEx() failed.";
+    //        return 0;
+    //    }
+    //    return (quint64) liTotalBytes.QuadPart;
+    //#else
+    //#endif
     return 0;
 }

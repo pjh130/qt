@@ -18,7 +18,7 @@ void DbBase::closeDB()
     }
 }
 
-void DbBase::setInit(INI_DB_ST init)
+void DbBase::setInit(const INI_DB_ST &init)
 {
     m_init.strHostName = init.strHostName;
     m_init.strDatabaseName = init.strDatabaseName;
@@ -36,7 +36,7 @@ bool DbBase::isInitOK()
     return m_bInitDB;
 }
 
-void DbBase::setInitOK(bool bOk)
+void DbBase::setInitOK(const bool &bOk)
 {
     m_bInitDB = bOk;
 }

@@ -27,8 +27,8 @@ LogEx & LogEx::getClass()
     return log;
 }
 
-void LogEx::customLog(QtMsgType type, const QMessageLogContext & context,
-                                 const QString & msg)
+void LogEx::customLog(const QtMsgType &type, const QMessageLogContext &context,
+                                 const QString &msg)
 {
     QString txt;
     switch (type) {
@@ -59,7 +59,7 @@ void LogEx::customLog(QtMsgType type, const QMessageLogContext & context,
     levelLog(txt);
 }
 
-void LogEx::iniLogDir(QString strDir)
+void LogEx::iniLogDir(const QString &strDir)
 {
     if (!strDir.isEmpty())
     {
@@ -127,13 +127,13 @@ void LogEx::initClass(INI_LOG_ST init)
     m_bInit = true;
 }
 
-void LogEx::levelPrintf(QString strLog)
+void LogEx::levelPrintf(const QString &strLog)
 {
     QString strNew = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") + "  " + strLog + "\r\n";
     qDebug()<<strNew;
 }
 
-void LogEx::levelLog(QString strLog)
+void LogEx::levelLog(const QString &strLog)
 {
     //日志文件过大就先要备份
     QFileInfo info(m_strLogSave);
@@ -185,7 +185,7 @@ void LogEx::levelLog(QString strLog)
     }
 }
 
-void LogEx::levelEmail(QString strLog)
+void LogEx::levelEmail(const QString &strLog)
 {
     m_init.email.strContent = strLog;
     EmailEx email;
@@ -202,7 +202,7 @@ void LogEx::levelEmail(QString strLog)
     levelPrintf(str);
 }
 
-void LogEx::levelSms(QString strLog)
+void LogEx::levelSms(const QString &strLog)
 {
     QString str;
     if (false)
@@ -216,7 +216,7 @@ void LogEx::levelSms(QString strLog)
     levelPrintf(str);
 }
 
-void LogEx::writeLog(QString strLog, LOG_LEVEL_EN level)
+void LogEx::writeLog(const QString &strLog, const LOG_LEVEL_EN &level)
 {
     m_mutx.lock();
 

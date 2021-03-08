@@ -491,3 +491,9 @@ void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
     hotkey = new QHotkey(QKeySequence("ctrl+alt+D"), true, this);
     connect(hotkey, &QHotkey::activated, this, &MainWindow::on_pushButton_ScreenShot_clicked);
 }
+
+void MainWindow::on_pushButton_textedit_clicked()
+{
+   Form *form = new Form;
+   form->show();
+}

@@ -14,17 +14,17 @@ public:
     ~FileEx();
 
     //把数据写到文件中
-    static bool witeFile(QString strFileName, QByteArray data,
-                         QIODevice::OpenModeFlag mode = QIODevice::Append);
+    static bool witeFile(const QString &strFileName, const QByteArray &data,
+                         const QIODevice::OpenModeFlag &mode = QIODevice::Append);
     //从文件中读取数据
-    static QByteArray readFile(QString strFileName);
+    static QByteArray readFile(const QString &strFileName);
 
     //从目录及子目录中检索出所有文件名
-    static QStringList allFiles(const QString & strDir);
+    static QStringList allFiles(const QString &strDir);
 
     static QString getHash(const QString &strFilename,
-                                   QCryptographicHash::Algorithm method = QCryptographicHash::Md5);
-    static QString fileSize2String(qint64 i64FileSize);
+                                   const QCryptographicHash::Algorithm &method = QCryptographicHash::Md5);
+    static QString fileSize2String(const qint64 &i64FileSize);
 
     /// @brief 取执行文件的版本，仅支持 Windows
     /// @param [in] exeFile 包含版本信息的文件名(.exe, .dll等)

@@ -22,8 +22,11 @@ TEMPLATE = app
 DEFINES += QT_MESSAGELOGCONTEXT
 
 SOURCES += main.cpp\
+        form_textedit.cpp \
         mainwindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    form_textedit.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    form_textedit.ui

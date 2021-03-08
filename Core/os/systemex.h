@@ -23,10 +23,11 @@ public:
     ///       lsb-release, *-release文件获取
     static QString systemName();
     static QString hostName();
+    static bool setPowerAutoStart(const QString &strPath, const bool &bStart = true);
 
     //磁盘空间相关
-    static quint64 getDiskSpace(const QString driver);  //磁盘总空间
-    static quint64 getDiskFreeSpace(const QString driver); //磁盘剩余空间
+    static quint64 getDiskSpace(const QString &driver);  //磁盘总空间
+    static quint64 getDiskFreeSpace(const QString &driver); //磁盘剩余空间
 
     //系统进程相关
     static bool isProcessRunningByPid(long lPid, QString &strErrMsg,

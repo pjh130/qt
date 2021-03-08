@@ -9,7 +9,7 @@ QString EmailEx::getError()
     return m_strLastErr;
 }
 
-void EmailEx::setError(QString strErr)
+void EmailEx::setError(const QString &strErr)
 {
     m_strLastErr = strErr;
 }
@@ -19,7 +19,7 @@ void EmailEx::clearError()
     m_strLastErr.clear();
 }
 
-bool EmailEx::send(EMAIL_TO_ST stTo)
+bool EmailEx::send(const EMAIL_TO_ST &stTo)
 {
     clearError();
 

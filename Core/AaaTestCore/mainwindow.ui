@@ -23,6 +23,13 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="pushButton_textedit">
+      <property name="text">
+       <string>TextEdit</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pushButton_excel">
       <property name="text">
        <string>excel</string>

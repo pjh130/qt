@@ -10,7 +10,7 @@ TimeEx::~TimeEx()
 
 }
 
-void TimeEx::blockTime(qint64 timeout)
+void TimeEx::blockTime(const qint64 &timeout)
 {
     QEventLoop loop;
     QTimer::singleShot(timeout, &loop, SLOT(quit()));
@@ -41,7 +41,7 @@ QString TimeEx::YYYY_MM_DD_HH_MM_SS()
     return QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
 }
 
-QDateTime TimeEx::toDateTime(const QString& text)
+QDateTime TimeEx::toDateTime(const QString &text)
 {
     QDateTime ret = QDateTime();
     switch(text.length())
@@ -94,7 +94,7 @@ QDateTime TimeEx::toDateTime(const QString& text)
     return ret;
 }
 
-QDateTime TimeEx::toDateTime(double timeDouble)
+QDateTime TimeEx::toDateTime(const double &timeDouble)
 {
     int    days    = int(timeDouble);
     double seconds = timeDouble - days;

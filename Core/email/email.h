@@ -38,10 +38,10 @@ public:
     explicit EmailEx(QObject *parent = 0);
 
     QString getError();
-    bool send(EMAIL_TO_ST stTo);
+    bool send(const EMAIL_TO_ST &stTo);
 
 private:
-    void setError(QString strErr);
+    void setError(const QString &strErr);
     void clearError();
 
 signals:

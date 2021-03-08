@@ -7,6 +7,7 @@
 #include($$PWD/xxx.pri)
 
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\CaptureScreen\CaptureScreen.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Ui\TextEdit\textedit.pri)
 
 #加入路径
 UI_LIBRARY_LOCATION = $$PWD

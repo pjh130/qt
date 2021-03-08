@@ -13,7 +13,7 @@ public:
     ~TimeEx();
 
     //阻塞一段时间
-    static void blockTime(qint64 timeout);
+    static void blockTime(const qint64 &timeout);
 
     //返回当前时间字符串：yyyyMMdd
     static QString YYYYMMDD();
@@ -26,9 +26,9 @@ public:
 
     const static qint64 JULIAN_DAY = 2415019;
     /// @brief 转换字符串为日期时间
-    static QDateTime toDateTime(const QString& text);
+    static QDateTime toDateTime(const QString &text);
     /// @brief 转换数据为日期时间
-    static QDateTime toDateTime(double timeDouble);
+    static QDateTime toDateTime(const double &timeDouble);
 };
 
 #endif // TIMEEX_H

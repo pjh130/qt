@@ -16,7 +16,7 @@ PsqlEx & PsqlEx::getClass()
     return s;
 }
 
-bool PsqlEx::initDb(INI_DB_ST init)
+bool PsqlEx::initDb(const INI_DB_ST &init)
 {
     //如果初始化过就不需要初始化了
     if(isInitOK())

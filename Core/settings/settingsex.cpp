@@ -45,7 +45,12 @@ bool SettingsEx::removeValue(const QString &strInitPath, const QString &strGroup
                              const QString &strKey)
 {
     QSettings setting(strInitPath, QSettings::IniFormat);
-    setting.remove(strGroup + "/" + strKey);
+    if(strGroup.isEmpty())
+    {
+        setting.remove(strKey);
+    } else {
+        setting.remove(strGroup + "/" + strKey);
+    }
 
     return true;
 }

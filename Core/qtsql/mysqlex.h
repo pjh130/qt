@@ -10,7 +10,7 @@ public:
     ~MySqlEx();
 
     static MySqlEx & getClass(); //返回对象引用，是单例类
-    bool initDb(INI_DB_ST init);
+    bool initDb(const INI_DB_ST &init);
 
 private:
 
