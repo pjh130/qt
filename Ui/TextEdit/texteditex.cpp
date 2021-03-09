@@ -234,7 +234,7 @@ void TextEditEx::insertRichText(QString resFile)
             QString faceName = getImgsrcName(resFile);
             QString textRich = QString("<img src='%1'>").arg(faceName);
             qDebug()<<textRich;
-            qDebug()<<QByteArray::fromBase64(QByteArray(faceName.toStdString().c_str())).data();
+//            qDebug()<<QByteArray::fromBase64(QByteArray(faceName.toStdString().c_str())).data();
             textCursor().insertHtml(textRich);
             insertCustomResource(faceName,resFile);
     }
@@ -244,7 +244,7 @@ void TextEditEx::insertRichText(QString resFile)
             QString faceName = getImgsrcName(resFile);
             QString textRich = QString("<img src='%1'>").arg(faceName);
             qDebug()<<textRich;
-            qDebug()<<QByteArray::fromBase64(QByteArray(faceName.toStdString().c_str())).data();
+//            qDebug()<<QByteArray::fromBase64(QByteArray(faceName.toStdString().c_str())).data();
 //            textCursor().insertImage(faceName);
             insertHtml(textRich);
             insertCustomResource(faceName,resFile);

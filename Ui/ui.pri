@@ -6,6 +6,11 @@
 #useage:
 #include($$PWD/xxx.pri)
 
+#VERSION = 1.0
+#QMAKE_TARGET_COMPANY = "panpan"
+#QMAKE_TARGET_COPYRIGHT = "Copyright (C) panpan <hello@xxx.com>"
+#QMAKE_TARGET_DESCRIPTION = "xxxxxxxxxxxxxxxxxxxxx"
+
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\CaptureScreen\CaptureScreen.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\TextEdit\textedit.pri)
 
@@ -13,5 +18,3 @@ include(D:\Code\Go\src\github.com\pjh130\qt\Ui\TextEdit\textedit.pri)
 UI_LIBRARY_LOCATION = $$PWD
 INCLUDEPATH += $$UI_LIBRARY_LOCATION
 DEPENDPATH += $$UI_LIBRARY_LOCATION
-
-

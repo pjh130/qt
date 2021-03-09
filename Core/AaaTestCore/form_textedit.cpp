@@ -10,6 +10,7 @@ Form::Form(QWidget *parent) :
 
     setWindowTitle("TextEdit");
     resize(800, 1000);
+    ui->textEdit->setFocus();
 }
 
 Form::~Form()
