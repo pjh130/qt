@@ -14,6 +14,8 @@ HEADERS += \
     $$PWD/networkaccessmanagerex.h \
     $$PWD/tcpserver.h \
     $$PWD/tcpsocket.h \
+    $$PWD/tcpsocketclient.h \
+    $$PWD/tcpsocketthread.h \
     $$PWD/udpex.h \
     $$PWD/threadhandle.h
 
@@ -22,6 +24,8 @@ SOURCES += \
     $$PWD/networkaccessmanagerex.cpp \
     $$PWD/tcpserver.cpp \
     $$PWD/tcpsocket.cpp \
+    $$PWD/tcpsocketclient.cpp \
+    $$PWD/tcpsocketthread.cpp \
     $$PWD/udpex.cpp \
     $$PWD/threadhandle.cpp
 

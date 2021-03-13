@@ -27,6 +27,8 @@
 #include <QShortcut>
 #include <QHotkey>
 #include <form_textedit.h>
+#include "tcchinese.h"
+#include "tcpsocketclient.h"
 
 namespace Ui {
 class MainWindow;
@@ -88,6 +90,7 @@ signals:
     void addWork(REQUEST_ST request);
     void start();
     void startCaptureWidget();
+    void startSocket(const QString &strIp, const quint16 port);
 
 private:
     Ui::MainWindow *ui;

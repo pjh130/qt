@@ -6,6 +6,11 @@ STRING_LIBRARY_LOCATION = $$PWD
 INCLUDEPATH += $$STRING_LIBRARY_LOCATION
 DEPENDPATH += $$STRING_LIBRARY_LOCATION
 
+#tchinese这个类中需要
+win32 {
+    LIBS += -luser32
+}
+
 win32 {
 HEADERS += \
     $$PWD/msime.h

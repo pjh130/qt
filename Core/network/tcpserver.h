@@ -3,6 +3,7 @@
 #include <QTcpServer>
 #include <QHash>
 #include "tcpsocket.h"
+#include "tcpsocketthread.h"
 #include <QUuid>
 
 
@@ -17,6 +18,7 @@ public:
 
     void setMaxPendingConnections(int numConnections);//重写设置最大连接数函数
 signals:
+    void startSocket(qintptr socketDescriptor);//sokcet开始工作
     void connectClient(const int , const QString & ,const quint16 );//发送新用户连接信息
     void sockDisConnect(int ,QString ,quint16);//断开连接的用户信息
     void sentData(const qintptr socketID, const QString &strKey, const QByteArray &data);
@@ -35,8 +37,12 @@ protected slots:
 
 protected:
     void incomingConnection(qintptr socketDescriptor);//覆盖已获取多线程
+    void getSockect1(qintptr socketDescriptor);
+    void getSockect2(qintptr socketDescriptor);
 private:
-    QHash<int,TcpSocket *> * tcpClient;//管理连接的map
+    QHash<int,TcpSocket *> tcpClient1;//管理连接的map
+    QHash<int,TcpSocketThread *> tcpClient2;//管理连接的map
+    bool m_bUse_1_or_2;
     int maxConnections;
 
 };

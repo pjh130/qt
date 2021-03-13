@@ -51,7 +51,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(400, 488);
+        MainWindow->resize(400, 514);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -163,7 +163,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton_email->setText(QCoreApplication::translate("MainWindow", "email", nullptr));
+        pushButton_email->setText(QCoreApplication::translate("MainWindow", "\351\202\256\344\273\266", nullptr));
         pushButton_textedit->setText(QCoreApplication::translate("MainWindow", "TextEdit", nullptr));
         pushButton_excel->setText(QCoreApplication::translate("MainWindow", "excel", nullptr));
         pushButton_log->setText(QCoreApplication::translate("MainWindow", "log", nullptr));

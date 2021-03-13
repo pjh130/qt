@@ -7,9 +7,10 @@
 #include($$PWD/xxx.pri)
 
 #VERSION = 1.0
+#QMAKE_TARGET_PRODUCT = "product"
 #QMAKE_TARGET_COMPANY = "panpan"
 #QMAKE_TARGET_COPYRIGHT = "Copyright (C) panpan <hello@xxx.com>"
-#QMAKE_TARGET_DESCRIPTION = "xxxxxxxxxxxxxxxxxxxxx"
+#QMAKE_TARGET_DESCRIPTION = "panpan personal"
 
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\CaptureScreen\CaptureScreen.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\TextEdit\textedit.pri)

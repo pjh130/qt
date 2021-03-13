@@ -1,18 +1,24 @@
-#ifndef TCPSOCKET_H
-#define TCPSOCKET_H
+#ifndef TCPSOCKETCLIENT_H
+#define TCPSOCKETCLIENT_H
 
+#include <QThread>
 #include <QTcpSocket>
 #include <QQueue>
-#include <QFutureWatcher>
-#include <QByteArray>
-#include <QTime>
+#include <QHostAddress>
+#include <QEventLoop>
+#include <QTimer>
 
-class TcpSocket : public QTcpSocket
+class TcpSocketClient : public QThread
 {
     Q_OBJECT
 public:
-    explicit TcpSocket(qintptr socketDescriptor, QObject *parent = 0);
-    ~TcpSocket();
+    TcpSocketClient();
+    ~TcpSocketClient();
+
+protected:
+    void closeSockect();
+
+public slots:
 
 signals:
     //发送新用户连接信息
@@ -30,16 +36,18 @@ signals:
 public slots:
     void slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data);//发送信号的槽
     void disConTcp(const qintptr socketID);
+    void slotStartSocket(const QString &strIp, const quint16 port); //开始工作
 
 protected slots:
     void slotReadData();//接收数据
-protected:
 
 private:
+    QTcpSocket *m_sockect;
+
     qintptr m_socketID;
     QString m_strIp;
     quint16 m_port;
     QMetaObject::Connection dis;
 };
 
-#endif // TCPSOCKET_H
+#endif // TCPSOCKETCLIENT_H

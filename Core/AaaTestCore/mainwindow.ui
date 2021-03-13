@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>488</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QPushButton" name="pushButton_email">
       <property name="text">
-       <string>email</string>
+       <string>邮件</string>
       </property>
      </widget>
     </item>

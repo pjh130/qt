@@ -12,7 +12,7 @@ class FileEx
 public:
     FileEx();
     ~FileEx();
-
+    static bool removeFile(const QString &strFileName);
     //把数据写到文件中
     static bool witeFile(const QString &strFileName, const QByteArray &data,
                          const QIODevice::OpenModeFlag &mode = QIODevice::Append);
@@ -20,7 +20,10 @@ public:
     static QByteArray readFile(const QString &strFileName);
 
     //从目录及子目录中检索出所有文件名
-    static QStringList allFiles(const QString &strDir);
+    static QStringList allFiles(const QString &strDir, const QStringList &nameFilters = QStringList(),
+                                bool bFullPath = false);
+    //文件后缀
+    static QString fileSuffix(const QString &strFile);
 
     static QString getHash(const QString &strFilename,
                                    const QCryptographicHash::Algorithm &method = QCryptographicHash::Md5);

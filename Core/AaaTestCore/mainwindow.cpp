@@ -99,6 +99,8 @@ void MainWindow::on_pushButton_log_clicked()
     LogEx::getClass().writeLog("Test 4", LEVEL_SMS);
 
     QMessageLogContext context;
+    LogEx::getClass().messageHandler(QtDebugMsg, context, "Test 55");
+    LogEx::getClass().messageHandler(QtCriticalMsg, context, "Test 66");
     LogEx::getClass().customLog(QtDebugMsg, context, "Test 5");
     LogEx::getClass().customLog(QtWarningMsg, context, "Test 6");
     LogEx::getClass().customLog(QtCriticalMsg, context, "Test 7");
@@ -106,6 +108,16 @@ void MainWindow::on_pushButton_log_clicked()
 
 void MainWindow::on_pushButton_network_clicked()
 {
+    int port = 60000;
+    TcpServer *ser = new TcpServer;
+    qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
+return;
+    TcpSocketClient *cli = new TcpSocketClient;
+    connect(this, &MainWindow::startSocket, cli, &TcpSocketClient::slotStartSocket);
+    cli->start();
+    emit startSocket("127.0.0.1", port);
+    return;
+
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
     st.strUrl = "http://www.baidu.com/";
@@ -134,10 +146,6 @@ void MainWindow::on_pushButton_network_clicked()
             qDebug()<<"NetworkAccessManagerEx::RequestBlock length: "<<reply.byData.length();
         }
     }
-
-
-    TcpServer *ser = new TcpServer;
-    ser->listen(QHostAddress::Any,6666);
 }
 
 void MainWindow::on_pushButton_zip_clicked()
@@ -426,7 +434,12 @@ void MainWindow::on_pushButton_os_clicked()
 
 void MainWindow::on_pushButton_string_clicked()
 {
-
+    QString str = ui->pushButton_email->text();
+    qDebug()<<str;
+    qDebug()<<TcChinese::firstPinyins(str);
+    qDebug()<<TcChinese::toPinyin(str);
+    qDebug()<<TcChinese::toChars(str);
+    qDebug()<<TcChinese::toEnglishName(str);
 }
 
 void MainWindow::on_pushButton_textcodec_clicked()
@@ -494,6 +507,6 @@ void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
 
 void MainWindow::on_pushButton_textedit_clicked()
 {
-   Form *form = new Form;
-   form->show();
+    Form *form = new Form;
+    form->show();
 }

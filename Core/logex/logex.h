@@ -50,7 +50,10 @@ public:
     void writeLog(const QString &strLog, const LOG_LEVEL_EN &level = LEVEL_PRINTF);
     //自定义的日志接口
     void customLog(const QtMsgType &type, const QMessageLogContext &context,
-                              const QString &msg);
+                   const QString &msg);
+    //自定义的日志接口
+    void messageHandler(QtMsgType type, const QMessageLogContext& context,
+                        const QString &msg);
 
 private:
     void autoInit();

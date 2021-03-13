@@ -15,6 +15,8 @@ public:
     //阻塞一段时间
     static void blockTime(const qint64 &timeout);
 
+    static QString time2humanReadable(const QDateTime &time);
+    static QString time2humanReadable(const QDateTime &time, const QString &formate);
     //返回当前时间字符串：yyyyMMdd
     static QString YYYYMMDD();
     //返回当前时间字符串：yyyy-MM-dd

@@ -17,6 +17,7 @@ TcpSocket::TcpSocket(qintptr socketDescriptor, QObject *parent) : //构造函数
             this->deleteLater();
         });
 
+    emit connectClient(m_socketID, m_strIp, m_port);
     qDebug() << "new connect-->"<<m_strIp<<":"<<m_port ;
 }
 

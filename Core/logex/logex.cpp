@@ -59,6 +59,48 @@ void LogEx::customLog(const QtMsgType &type, const QMessageLogContext &context,
     levelLog(txt);
 }
 
+void LogEx::messageHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg)
+{
+    Q_UNUSED(context);
+
+    //FIXME: useless waning message from qt, ignore it
+#ifndef QT_DEBUG
+    if (msg.startsWith("libpng warning: iCCP:") || msg.startsWith("QSslSocket: cannot call unresolved"))
+        return;
+#endif
+
+    if (type == QtWarningMsg && msg.startsWith("Property") && msg.indexOf("has no notify signal") != -1)
+        return;
+
+    QString strWrite;
+    switch (type) {
+    case QtDebugMsg:
+        strWrite = QString("[DEBUG] %1").arg(msg.toUtf8().constData());
+        break;
+#if QT_VERSION >= 0x050500
+    case QtInfoMsg:
+        strWrite = QString("[INFO] %1").arg(msg.toUtf8().constData());
+        break;
+#endif
+    case QtWarningMsg:
+        strWrite = QString("[WARNING]: %1 (%2:%3, %4)").arg(msg.toUtf8().constData()).arg(context.file)
+                .arg(context.line).arg(context.function);
+        break;
+    case QtCriticalMsg:
+        strWrite = QString("[CRITICAL]: %1 (%2:%3, %4)").arg(msg.toUtf8().constData()).arg(context.file)
+                .arg(context.line).arg(context.function);
+        break;
+    case QtFatalMsg:
+        strWrite = QString("[FATAL]: %1 (%2:%3, %4)").arg(msg.toUtf8().constData()).arg(context.file)
+                .arg(context.line).arg(context.function);
+        break;
+    }
+
+    fprintf(stderr,"%s\n", strWrite.toUtf8().constData());
+
+    levelLog(strWrite);
+}
+
 void LogEx::iniLogDir(const QString &strDir)
 {
     if (!strDir.isEmpty())

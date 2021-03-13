@@ -14,6 +14,12 @@ FileEx::~FileEx()
 
 }
 
+bool FileEx::removeFile(const QString &strFileName)
+{
+    QDir dir(strFileName);
+    return dir.remove(strFileName);
+}
+
 bool FileEx::witeFile(const QString &strFileName, const QByteArray &data,
                       const QIODevice::OpenModeFlag &mode)
 {
@@ -52,26 +58,43 @@ QByteArray FileEx::readFile(const QString &strFileName)
     return data;
 }
 
+QString FileEx::fileSuffix(const QString &strFile)
+{
+    if (strFile.isEmpty() || QFile::exists(strFile))
+    {
+        return "";
+    }
+
+    QFileInfo info(strFile);
+    return info.suffix();
+}
+
 //从目录及子目录中检索出所有文件名
-QStringList FileEx::allFiles(const QString &strDir)
+QStringList FileEx::allFiles(const QString &strDir, const QStringList &nameFilters,
+                             bool bFullPath)
 {
     QStringList ret;
     // 这个函数可以执行任何任务，
     // 这里只是简单地输出各个文件（夹）的名字
     QDir dir(strDir);
-    QStringList
-            list = dir.entryList(QDir::Dirs, QDir::Name);
+    QStringList list = dir.entryList(QDir::Dirs, QDir::Name);
     for (QStringList::Iterator it = list.begin(); it != list.end(); it++)
     {
         if ("." != *it && ".." != *it)
         {
-            ret.append(allFiles(strDir + QDir::separator() + *it));
+            ret.append(allFiles(strDir + QDir::separator() + *it, nameFilters, bFullPath));
         }
     }
-    list = dir.entryList(QDir::Files, QDir::Name);
+    list = dir.entryList(nameFilters, QDir::Files, QDir::Name);
+//    list = dir.entryList(nameFilters, QDir::Files, QDir::Name);
     for (QStringList::Iterator it = list.begin(); it != list.end(); it++)
     {
-        ret.append(*it);
+        QString add = *it;
+        if(bFullPath)
+        {
+            add = strDir + QDir::separator() + add;
+        }
+        ret.append(add);
     }
 
     return ret;
@@ -93,8 +116,11 @@ QString FileEx::getHash(const QString &strFilename, const QCryptographicHash::Al
     QByteArray byHash;
     if (false)
     {
-        //大文件时候会出错，没找到好的方法之前废弃不用
-        byHash = QCryptographicHash::hash(file.readAll(), method);
+        //大文件时候会线程阻塞卡住,有UI的地方废弃不用
+//        byHash = QCryptographicHash::hash(file.readAll(), method);
+        QCryptographicHash hs(QCryptographicHash::Md5);
+        hs.addData(&file);
+        byHash = hs.result();
     } else {
         //有个弊端：文件太大了会很耗时阻塞执行的线程
         QCryptographicHash hs(QCryptographicHash::Md5);
