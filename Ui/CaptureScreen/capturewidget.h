@@ -17,6 +17,7 @@
 #include "recttoolbar.h"
 #include "texttoolbar.h"
 #include <QShortcut>
+#include <QScreen>
 //#include "CaptureScreenDll_global.h"
 
 const QPen   defaultPen(defaultColor,defauleLineWidth,Qt::SolidLine,Qt::FlatCap);

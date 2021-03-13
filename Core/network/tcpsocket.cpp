@@ -6,6 +6,7 @@
 TcpSocket::TcpSocket(qintptr socketDescriptor, QObject *parent) : //构造函数在主线程执行，lambda在子线程
     QTcpSocket(parent),m_socketID(socketDescriptor)
 {
+    qDebug()<<"TcpSocket::TcpSocket: "<<QThread::currentThreadId();
     this->setSocketDescriptor(socketDescriptor);
     m_strIp = this->peerAddress().toString();
     m_port = this->peerPort();
@@ -28,7 +29,7 @@ TcpSocket::~TcpSocket()
 
 void TcpSocket::slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data)
 {
-//    qDebug()<<"slotSentData: "<<QThread::currentThreadId();
+    qDebug()<<"TcpSocket::slotSentData: "<<QThread::currentThreadId();
     if(socketID == m_socketID)
     {
         //只发送匹配自己的数据
@@ -73,7 +74,7 @@ void TcpSocket::disConTcp(const qintptr socketID)
 
 void TcpSocket::slotReadData()
 {
-//    qDebug()<<"slotReadData: "<<QThread::currentThreadId();
+    qDebug()<<"TcpSocket::slotReadData: "<<QThread::currentThreadId();
     QByteArray data  = this->readAll();
 
     //收到的数据不做处理转发出去

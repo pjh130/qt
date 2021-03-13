@@ -130,3 +130,12 @@ QString DirEx::formatPath(const QString &path)
     }
     return new_path;
 }
+
+QString DirEx::toSameSeparator(const QString &strPath, const QString &strSeparator)
+{
+    QString strNew = strPath;
+    strNew = strNew.replace("\\", strSeparator);
+    strNew = strNew.replace("/", strSeparator);
+
+    return strNew;
+}

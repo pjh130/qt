@@ -1,0 +1,41 @@
+-ID:/Develop/Qt/5.15.2/msvc2019_64/mkspecs/win32-msvc
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/AaaTestCore
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/email
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/email/header
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/email
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/email/header
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/logex
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/network
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/ThreadHandle
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/excel
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtZlib
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/qzip/header
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/qtsql
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/file
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/time
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/image
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/string
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/os
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/textcodec
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/settings
+-ID:/Code/Go/src/github.com/pjh130/qt/Core/QHotkey/QHotkey
+-ID:/Code/Go/src/github.com/pjh130/qt/Core
+-ID:/Code/Go/src/github.com/pjh130/qt/Ui/CaptureScreen
+-ID:/Code/Go/src/github.com/pjh130/qt/Ui/TextEdit
+-ID:/Code/Go/src/github.com/pjh130/qt/Ui/framewindow
+-ID:/Code/Go/src/github.com/pjh130/qt/Ui
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/ActiveQt
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtWidgets
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtGui
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtANGLE
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtNetwork
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtSql
+-ID:/Develop/Qt/5.15.2/msvc2019_64/include/QtCore
+-ID:\Develop\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.28.29333\ATLMFC\include
+-ID:\Develop\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.28.29333\include
+-IC:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt
+-IC:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared
+-IC:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um
+-IC:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt
+-IC:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt

@@ -51,7 +51,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_suffix">
         <property name="text">
-         <string>*.exe;*.tmp</string>
+         <string>*.log;*.tmp</string>
         </property>
        </widget>
       </item>
@@ -63,6 +63,13 @@
        <widget class="QPushButton" name="pushButton_clear">
         <property name="text">
          <string>清理</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_clear">
+        <property name="text">
+         <string>000</string>
         </property>
        </widget>
       </item>

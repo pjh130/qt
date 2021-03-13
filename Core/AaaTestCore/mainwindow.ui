@@ -23,6 +23,13 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="pushButton_frame">
+      <property name="text">
+       <string>UI框架</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pushButton_textedit">
       <property name="text">
        <string>TextEdit</string>

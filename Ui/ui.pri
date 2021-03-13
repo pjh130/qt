@@ -1,7 +1,7 @@
 #====仅仅是个人总结用，部分代码来别人的成果，非常感谢原作者====
 #  所有涉及的原作者有如下（如果有遗漏会补上）：
 #    1. xiehechong
-#    2. 
+#    2. shuaishishu
 
 #useage:
 #include($$PWD/xxx.pri)
@@ -14,6 +14,9 @@
 
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\CaptureScreen\CaptureScreen.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\TextEdit\textedit.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Ui\framewindow\frame.pri)
+#include(D:\Code\Go\src\github.com\pjh130\qt\Ui\qt_controls\qt_controls.pri)
+
 
 #加入路径
 UI_LIBRARY_LOCATION = $$PWD

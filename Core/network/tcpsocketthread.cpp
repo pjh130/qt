@@ -23,7 +23,7 @@ void TcpSocketThread::closeSockect()
 void TcpSocketThread::slotStartSocket(qintptr socketDescriptor)
 {
     m_socketID = socketDescriptor;
-    m_sockect = new QTcpSocket;
+    m_sockect = new QTcpSocket(this);
     m_sockect->setSocketDescriptor(socketDescriptor);
     m_strIp = m_sockect->peerAddress().toString();
     m_port = m_sockect->peerPort();

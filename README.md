@@ -9,6 +9,8 @@ qt
 ####部署
 - [Qt for Windows - Deployment](http://doc.qt.io/qt-5/windows-deployment.html)
 
+####好的开源
+- [Qt编写的一些开源的QWidgetDemo，预计会有100多个](https://gitee.com/feiyangqingyun/QWidgetDemo)
 
 ####学习
 - [有什么很好的软件是用 Qt 编写的](https://www.zhihu.com/question/19630324)

@@ -459,8 +459,12 @@ void CaptureWidget::drawXYWHInfo(QPainter *painter)
         strTipsText = QString(tr("Capture Info:\n X:%1 Y:%2\n W:%3 H:%4")).arg(rtPickRect.x(),4).arg(rtPickRect.y(),4)
                 .arg(rtPickRect.width(),4).arg(rtPickRect.height(),4);
         painter->fillRect(rect,color);
-        painter->setPen(QPen(Qt::black));//设置画笔的颜色为黑色
-        painter->drawText(rect,Qt::AlignLeft|Qt::AlignVCenter,strTipsText);
+
+        {
+            QPen p(Qt::black);//设置画笔的颜色为黑色
+            painter->setPen(p);
+            painter->drawText(rect,Qt::AlignLeft|Qt::AlignVCenter,strTipsText);
+        }
         break;
     default:
         break;
@@ -762,12 +766,16 @@ void CaptureWidget::toggle()
     //start capture screen
     if(!isVisible())
     {
-        //rtDeskCapture  = QApplication::desktop()->geometry();
-        rtDeskCapture  = QApplication::desktop()->screenGeometry();
-        bmpDeskCapture = QPixmap::grabWindow(QApplication::desktop()->winId());
-        //        int x = (rtDeskCapture.width() - infoWelcomeWidth)/2;
-        //        int y = (rtDeskCapture.height() - infoWelcomeHeight)/2;
-        //        welcomeTipPosition = QPoint(x,y);
+        rtDeskCapture  = QApplication::desktop()->rect();
+//        rtDeskCapture  = QApplication::desktop()->screenGeometry();
+//        bmpDeskCapture = QPixmap::grabWindow(QApplication::desktop()->winId());
+
+#if (QT_VERSION <= QT_VERSION_CHECK(5,0,0))
+    bmpDeskCapture = QPixmap::grabWindow(QApplication::desktop()->winId());
+#else
+    QScreen *pscreen = QApplication::primaryScreen();
+    bmpDeskCapture = pscreen->grabWindow(QApplication::desktop()->winId());
+#endif
         setVisible(true);
         setWindowState(windowState()|Qt::WindowFullScreen|Qt::WindowActive);
     }

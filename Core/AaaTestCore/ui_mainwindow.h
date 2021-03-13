@@ -27,6 +27,7 @@ public:
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *pushButton_email;
+    QPushButton *pushButton_frame;
     QPushButton *pushButton_textedit;
     QPushButton *pushButton_excel;
     QPushButton *pushButton_log;
@@ -62,6 +63,11 @@ public:
         pushButton_email->setObjectName(QString::fromUtf8("pushButton_email"));
 
         verticalLayout->addWidget(pushButton_email);
+
+        pushButton_frame = new QPushButton(centralWidget);
+        pushButton_frame->setObjectName(QString::fromUtf8("pushButton_frame"));
+
+        verticalLayout->addWidget(pushButton_frame);
 
         pushButton_textedit = new QPushButton(centralWidget);
         pushButton_textedit->setObjectName(QString::fromUtf8("pushButton_textedit"));
@@ -164,6 +170,7 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButton_email->setText(QCoreApplication::translate("MainWindow", "\351\202\256\344\273\266", nullptr));
+        pushButton_frame->setText(QCoreApplication::translate("MainWindow", "UI\346\241\206\346\236\266", nullptr));
         pushButton_textedit->setText(QCoreApplication::translate("MainWindow", "TextEdit", nullptr));
         pushButton_excel->setText(QCoreApplication::translate("MainWindow", "excel", nullptr));
         pushButton_log->setText(QCoreApplication::translate("MainWindow", "log", nullptr));

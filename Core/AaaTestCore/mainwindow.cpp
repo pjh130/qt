@@ -111,7 +111,7 @@ void MainWindow::on_pushButton_network_clicked()
     int port = 60000;
     TcpServer *ser = new TcpServer;
     qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
-return;
+    return;
     TcpSocketClient *cli = new TcpSocketClient;
     connect(this, &MainWindow::startSocket, cli, &TcpSocketClient::slotStartSocket);
     cli->start();
@@ -452,6 +452,10 @@ void MainWindow::on_pushButton_image_clicked()
     QString strSrc = "D:\\test\\matebook.png";
     QString strDec = "D:\\test\\new\\matebook.png";
     qDebug()<<"toGrayImge: "<<ImageEx::toGrayImge(strSrc, strDec);
+
+     strSrc = "D:\\test\\background.jpg";
+     strDec = "D:\\test\\new\\background.png";
+     qDebug()<<"jpg2Png: "<<ImageEx::jpg2Png(strSrc, strDec);
 }
 
 void MainWindow::on_pushButton_settings_clicked()
@@ -509,4 +513,42 @@ void MainWindow::on_pushButton_textedit_clicked()
 {
     Form *form = new Form;
     form->show();
+}
+
+void MainWindow::on_pushButton_frame_clicked()
+{
+    int iSwitch = 1;
+    switch (iSwitch) {
+    case 0:
+    {
+        //毛玻璃效果暂时还不行
+        blurWindow *frame = new blurWindow;
+        frame->resize(400, 300);
+        frame->show();
+    }
+        break;
+    case 1:
+    {
+        windowFrame *frame = new windowFrame;
+        frame->resize(400, 300);
+        frame->show();
+
+//        frame->autoFillBackground();
+//        QPalette palette;
+//        palette.setColor(QPalette::Background,QColor(192,253,123));  //设置背景色
+//        //设置背景图片
+//        //palette.setBrush(QPalette::Background,QBrush(QPixmap(":/background.png")));
+//        frame->setPalette(palette);
+    }
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    default:
+        break;
+    }
+
 }

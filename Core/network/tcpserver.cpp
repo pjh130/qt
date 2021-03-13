@@ -4,7 +4,7 @@
 TcpServer::TcpServer(QObject *parent,int numConnections) :
     QTcpServer(parent)
 {
-    m_bUse_1_or_2 = false;  //1-true, 2-false
+    m_bUse_1_or_2 = true;  //1-true, 2-false
     //注册自定义的信号槽参数
     qRegisterMetaType<qintptr>("qintptr");
 
@@ -54,10 +54,10 @@ void TcpServer::incomingConnection(qintptr socketDescriptor) //多线程必须�
 
 void TcpServer::getSockect1(qintptr socketDescriptor)
 {
-    auto th = ThreadHandle::getClass().getThread();
-    auto tcpTemp = new TcpSocket(socketDescriptor);
+    QThread *th = ThreadHandle::getClass().getThread();
+    TcpSocket *tcpTemp = new TcpSocket(socketDescriptor);
 
-    connect(tcpTemp,&TcpSocket::sockDisConnect,this,&TcpServer::sockDisConnectSlot);//NOTE:断开连接的处理，从列表移除，并释放断开的Tcpsocket，此槽必须实现，线程管理计数也是考的他
+    connect(tcpTemp,SIGNAL(sockDisConnect(qintptr,QString,quint16,QThread*)),this,SLOT(sockDisConnectSlot(qintptr,QString,quint16,QThread*)));//NOTE:断开连接的处理，从列表移除，并释放断开的Tcpsocket，此槽必须实现，线程管理计数也是考的他
     connect(this,&TcpServer::sentDisConnect,tcpTemp,&TcpSocket::disConTcp);//断开信号
     connect(this,&TcpServer::sentData,tcpTemp,&TcpSocket::slotSentData);//发送数据
     connect(tcpTemp,&TcpSocket::sendDataRet, this,&TcpServer::slotSendDataRet);//发送数据的结果
@@ -69,7 +69,7 @@ void TcpServer::getSockect1(qintptr socketDescriptor)
 }
 void TcpServer::getSockect2(qintptr socketDescriptor)
 {
-    auto tcpTemp = new TcpSocketThread;
+    TcpSocketThread *tcpTemp = new TcpSocketThread;
 
     connect(this,&TcpServer::startSocket,tcpTemp,&TcpSocketThread::slotStartSocket);//开始工作
     connect(this,&TcpServer::sentDisConnect,tcpTemp,&TcpSocketThread::disConTcp);//断开信号
@@ -80,7 +80,8 @@ void TcpServer::getSockect2(qintptr socketDescriptor)
     connect(tcpTemp,&TcpSocketThread::connectClient, this,&TcpServer::connectClient); //通知连接
 
     tcpClient2.insert(socketDescriptor,tcpTemp);//插入到连接信息中
-//    tcpTemp->start();
+    tcpTemp->start();
+    qDebug()<<"tcpTemp: "<<tcpTemp->currentThreadId();
 
     emit startSocket(socketDescriptor);
 }
@@ -104,6 +105,7 @@ void TcpServer::sockDisConnectSlot(const qintptr socketID , const QString &strIp
         {
             TcpSocketThread *socket = tcpClient2.value(socketID);
             tcpClient1.remove(socketID);//连接管理中移除断开连接的socket
+            socket->exit();
             socket->deleteLater();
         }
     }

@@ -44,6 +44,8 @@ public:
     /// @param count 第几个文件
     /// @param name 源文件名
     void currentFile(int count, const QString &name);
+    //转换成相同的分隔符
+    static QString toSameSeparator(const QString &strPath, const QString &strSeparator = QDir::separator());
 private:
     int m_copyFileCount;
     void doDirTree(const QString &fromPath, const QString &toPath,

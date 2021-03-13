@@ -94,6 +94,7 @@ QStringList FileEx::allFiles(const QString &strDir, const QStringList &nameFilte
         {
             add = strDir + QDir::separator() + add;
         }
+        add = DirEx::toSameSeparator(add);
         ret.append(add);
     }
 

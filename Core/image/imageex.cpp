@@ -10,6 +10,37 @@ ImageEx::~ImageEx()
 
 }
 
+bool ImageEx::jpg2Png(const QString &strSrcPath, QString &strDesPath,
+                         const bool &bOverwrite)
+{
+    //如果是不覆盖，文件原来存在就直接报错
+    if (!bOverwrite && QFileInfo::exists(strDesPath))
+    {
+        return false;
+    }
+
+    if(strSrcPath.isEmpty() || !QFileInfo::exists(strSrcPath))
+    {
+        return false;
+    }
+
+    //如果目录不存在需要创建
+    QFileInfo info(strDesPath);
+    QDir dir(info.absoluteDir());
+    if (!dir.exists())
+    {
+        dir.mkdir(info.absoluteDir().path());
+    }
+    QImage image;
+    image.load(strSrcPath, "JPG");
+    if (image.isNull())
+    {
+        return false;
+    }
+
+    return image.save(strDesPath, "PNG");
+}
+
 //this can create a new image file and return a new file path
 bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath,
                          const bool &bOverwrite)
@@ -26,6 +57,10 @@ bool ImageEx::toGrayImge(const QString &strSrcPath, QString &strDesPath,
     }
 
     QImage image(strSrcPath);
+    if (image.isNull())
+    {
+        return false;
+    }
     int w = image.width();
     int h = image.height();
     QImage iGray(w, h, QImage::Format_RGB32);

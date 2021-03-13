@@ -2,6 +2,7 @@
 #define SYSTEMEX_H
 
 #include <QtCore>
+#include <QProcess>
 #include <QHostInfo>
 #include <QStorageInfo>
 #ifdef Q_OS_WIN
@@ -28,6 +29,12 @@ public:
     //磁盘空间相关
     static quint64 getDiskSpace(const QString &driver);  //磁盘总空间
     static quint64 getDiskFreeSpace(const QString &driver); //磁盘剩余空间
+
+    //获取系统硬件信息
+    static QString getWMIC(const QString &cmd);
+    static QString getCpuName();
+    static QString getCpuId();
+    static QString getDiskNum();
 
     //系统进程相关
     static bool isProcessRunningByPid(long lPid, QString &strErrMsg,

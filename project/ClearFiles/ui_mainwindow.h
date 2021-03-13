@@ -38,6 +38,7 @@ public:
     QLineEdit *lineEdit_suffix;
     QHBoxLayout *horizontalLayout_3;
     QPushButton *pushButton_clear;
+    QLabel *label_clear;
     QSpacerItem *horizontalSpacer_2;
     QTextEdit *textEdit;
     QMenuBar *menubar;
@@ -88,6 +89,11 @@ public:
 
         horizontalLayout_3->addWidget(pushButton_clear);
 
+        label_clear = new QLabel(centralwidget);
+        label_clear->setObjectName(QString::fromUtf8("label_clear"));
+
+        horizontalLayout_3->addWidget(label_clear);
+
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_2);
@@ -119,8 +125,9 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         pushButton_choose->setText(QCoreApplication::translate("MainWindow", "\351\200\211\346\213\251\351\234\200\350\246\201\346\270\205\347\220\206\347\232\204\346\226\207\344\273\266\345\244\271", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "\351\234\200\350\246\201\346\270\205\347\220\206\347\232\204\346\226\207\344\273\266\345\220\216\347\274\200\346\240\274\345\274\217\345\244\232\344\270\252\345\217\257\344\273\245\347\224\250;\345\210\206\351\232\224", nullptr));
-        lineEdit_suffix->setText(QCoreApplication::translate("MainWindow", "*.exe;*.tmp", nullptr));
+        lineEdit_suffix->setText(QCoreApplication::translate("MainWindow", "*.log;*.tmp", nullptr));
         pushButton_clear->setText(QCoreApplication::translate("MainWindow", "\346\270\205\347\220\206", nullptr));
+        label_clear->setText(QCoreApplication::translate("MainWindow", "000", nullptr));
     } // retranslateUi
 
 };

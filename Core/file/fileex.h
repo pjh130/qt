@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QHash>
 #include <QCryptographicHash>
+#include "direx.h"
 
 class FileEx
 {

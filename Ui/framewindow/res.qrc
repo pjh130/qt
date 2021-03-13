@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/close.png</file>
+        <file>res/combox_rightdown.png</file>
+        <file>res/combox_rightdown_active.png</file>
+        <file>res/maximum.png</file>
+        <file>res/minimum.png</file>
+        <file>res/resume.png</file>
+        <file>res/cancel.png</file>
+        <file>res/Ok.png</file>
+        <file>res/item_normal.png</file>
+        <file>res/decline.png</file>
+        <file>res/skinWindowBackground.png</file>
+        <file>res/skinwindowdelete.png</file>
+        <file>res/skinWindowforeground.png</file>
+        <file>res/skinAddMuseOn.png</file>
+        <file>res/skinAddNormal.png</file>
+        <file>res/leave.png</file>
+        <file>res/onLine.png</file>
+        <file>res/leave_menu.png</file>
+        <file>res/onLine_menu.png</file>
+        <file>res/PicSelected.png</file>
+        <file>res/skinWindowBar.png</file>
+        <file>res/meeting.png</file>
+        <file>res/meeting_menu.png</file>
+        <file>res/goout.png</file>
+        <file>res/goout_menu.png</file>
+        <file>res/statusBtnBG_active.png</file>
+        <file>res/statusBtnBG_hover.png</file>
+        <file>res/statusBtnBG_normal.png</file>
+		<file>res/background.png</file>
+		<file>res/BG004.jpg</file>
+        <file>res/Icon01.png</file>
+    </qresource>
+</RCC>

@@ -13,6 +13,42 @@ SystemEx::~SystemEx()
 
 }
 
+QString SystemEx::getWMIC(const QString &cmd)
+{
+    //获取cpu名称：wmic cpu get Name
+    //获取cpu核心数：wmic cpu get NumberOfCores
+    //获取cpu线程数：wmic cpu get NumberOfLogicalProcessors
+    //查询cpu序列号：wmic cpu get processorid
+    //查询主板序列号：wmic baseboard get serialnumber
+    //查询BIOS序列号：wmic bios get serialnumber
+    //查看硬盘：wmic diskdrive get serialnumber
+    QProcess p;
+    p.start(cmd);
+    p.waitForFinished();
+    QString result = QString::fromLocal8Bit(p.readAllStandardOutput());
+    QStringList list = cmd.split(" ");
+    result = result.remove(list.last(), Qt::CaseInsensitive);
+    result = result.replace("\r", "");
+    result = result.replace("\n", "");
+    result = result.simplified();
+    return result;
+}
+
+QString SystemEx::getCpuName()
+{
+    return getWMIC("wmic cpu get name");
+}
+
+QString SystemEx::getCpuId()
+{
+    return getWMIC("wmic cpu get processorid");
+}
+
+QString SystemEx::getDiskNum()
+{
+    return getWMIC("wmic diskdrive where index=0 get serialnumber");
+}
+
 // return OS's name
 QString SystemEx::systemName()
 {

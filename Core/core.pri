@@ -1,7 +1,7 @@
 #====仅仅是个人总结用，部分代码来别人的成果，非常感谢原作者====
 #  所有涉及的原作者有如下（如果有遗漏会补上）：
 #    1. 天池共享源码库 Tianchi share library for Qt (C++)
-#    2. moyannie同学
+#    2. moyannie
 
 #useage:
 #include($$PWD/xxx.pri)

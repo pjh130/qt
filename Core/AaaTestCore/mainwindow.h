@@ -29,6 +29,8 @@
 #include <form_textedit.h>
 #include "tcchinese.h"
 #include "tcpsocketclient.h"
+#include "blurWindow.h"
+#include "windowframe.h"
 
 namespace Ui {
 class MainWindow;
@@ -85,6 +87,8 @@ private slots:
      void on_pushButton_qxtglobalshortcut_clicked();
 
      void on_pushButton_textedit_clicked();
+
+     void on_pushButton_frame_clicked();
 
 signals:
     void addWork(REQUEST_ST request);
