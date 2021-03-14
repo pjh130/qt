@@ -230,12 +230,12 @@ void LogEx::levelLog(const QString &strLog)
 void LogEx::levelEmail(const QString &strLog)
 {
     m_init.email.strContent = strLog;
-    EmailEx email;
 
     QString str;
-    if (!email.send(m_init.email))
+    QString strError;
+    if (!EmailCore::send(m_init.email, strError))
     {
-        str = "Failed to send email: " + email.getError() + "----" + strLog.mid(0,LOG_ONE_MAX_LENGTH);
+        str = "Failed to send email: " + strError + "----" + strLog.mid(0,LOG_ONE_MAX_LENGTH);
         levelLog(str);
     } else {
         str = "Success to send email!";

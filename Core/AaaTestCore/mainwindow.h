@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <windows.h>
 #include "logex.h"
-#include "email.h"
+#include "emailex.h"
 #include "networkaccessmanagerex.h"
 #include "tcpserver.h"
 #include "JlCompress.h"

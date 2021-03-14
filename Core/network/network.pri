@@ -3,9 +3,10 @@
 
 QT += network
 
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\ThreadHandle\threadhandle.pri)
+
 # Location
 NETWORK_LIBRARY_LOCATION = $$PWD
-
 INCLUDEPATH += $$NETWORK_LIBRARY_LOCATION
 DEPENDPATH += $$NETWORK_LIBRARY_LOCATION
 
@@ -16,8 +17,7 @@ HEADERS += \
     $$PWD/tcpsocket.h \
     $$PWD/tcpsocketclient.h \
     $$PWD/tcpsocketthread.h \
-    $$PWD/udpex.h \
-    $$PWD/threadhandle.h
+    $$PWD/udpex.h
 
 SOURCES += \
     $$PWD/ipex.cpp \
@@ -26,7 +26,6 @@ SOURCES += \
     $$PWD/tcpsocket.cpp \
     $$PWD/tcpsocketclient.cpp \
     $$PWD/tcpsocketthread.cpp \
-    $$PWD/udpex.cpp \
-    $$PWD/threadhandle.cpp
+    $$PWD/udpex.cpp
 
 

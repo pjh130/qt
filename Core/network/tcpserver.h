@@ -4,6 +4,7 @@
 #include <QHash>
 #include "tcpsocket.h"
 #include "tcpsocketthread.h"
+#include "threadhandle.h"
 #include <QUuid>
 
 

@@ -5,10 +5,10 @@
 SMTP_LIBRARY_LOCATION = $$PWD
 
 HEADERS += \
-    $$PWD/email.h
+    $$PWD/emailex.h
 
 SOURCES += \
-    $$PWD/email.cpp
+    $$PWD/emailex.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$SMTP_LIBRARY_LOCATION/lib/release/ -lSMTPEmail
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$SMTP_LIBRARY_LOCATION/lib/debug/ -lSMTPEmail

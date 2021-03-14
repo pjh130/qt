@@ -2,6 +2,7 @@
 #  所有涉及的原作者有如下（如果有遗漏会补上）：
 #    1. 天池共享源码库 Tianchi share library for Qt (C++)
 #    2. moyannie
+#    2. 倪大侠 整理:feiyangqingyun
 
 #useage:
 #include($$PWD/xxx.pri)

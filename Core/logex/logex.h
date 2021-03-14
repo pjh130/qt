@@ -9,7 +9,7 @@
 #include <QDateTime>
 #include <QtCore>
 #include <QDir>
-#include "email.h"
+#include "emailex.h"
 
 //日志等级
 typedef enum {

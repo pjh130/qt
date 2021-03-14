@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //注册自定义的信号槽参数
     qRegisterMetaType<QPrivateSignal>("QPrivateSignal");
-    qDebug()<<"MainWindow: "<<QThread::currentThreadId();
+    qDebug()<<"MainWindow currentThreadId: "<<QThread::currentThreadId();
     //程序内的热键
     //    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_D),this);
     //    connect(shortcut, SIGNAL(activated()), this, SLOT(on_pushButton_ScreenShot_clicked()));
@@ -26,26 +26,57 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_email_clicked()
 {
     EMAIL_TO_ST to;
-    EmailEx email;
 
     to.strHost = "smtp.qq.com";;
     to.iPort = 587;;
     to.strUser = "89284497@qq.com";
     to.strUserName = "panpan";
-    to.strPwd  = "xxxx";
+    to.strPwd  = "xxx";
     to.toUsers<<"2209764788@qq.com";
     to.toUsers<<"pjh130@163.com";
     to.files<<"D:\\test\\1.txt";
     to.files<<"D:\\test\\2.txt";
     to.strSubject = "Send email test";
-    to.strContent = "Hello world!";
-
-    if(!email.send(to))
+//    to.bSsl = false;
+    if (true)
     {
-        qDebug()<<email.getError();
+        to.strContent = "Hello world!";
     } else {
-        qDebug()<<"Send email success!";
+        QFile file("D:\\test\\test.html");
+        if(file.open(QIODevice::ReadOnly))
+        {
+            to.strContent = file.readAll();
+            file.close();
+        }
     }
+
+
+    if(false)
+    {
+        QString strErr;
+        if(!EmailCore::send(to, strErr))
+        {
+            qDebug()<<strErr;
+        } else {
+            qDebug()<<"Send email success!";
+        }
+    } else {
+        EmailThread *thread = new EmailThread(to);
+        QEventLoop loop;
+        connect(thread, &QThread::finished, &loop, &QEventLoop::quit);
+        thread->start();
+        loop.exec();
+        EMAIL_RESULT_ST ret = thread->getResult();
+        if(!ret.bOk)
+        {
+            qDebug()<<ret.strErr;
+        } else {
+            qDebug()<<"Send email success!";
+        }
+//        thread->exit();
+        thread->deleteLater();
+    }
+
 }
 
 void MainWindow::on_pushButton_excel_clicked()

@@ -7,8 +7,10 @@ INCLUDEPATH += $$TIME_LIBRARY_LOCATION
 DEPENDPATH += $$TIME_LIBRARY_LOCATION
 
 HEADERS += \
-    $$PWD/timeex.h
+    $$PWD/timeex.h \
+    $$PWD/lunarcalendarinfo.h
 
 SOURCES += \
-    $$PWD/timeex.cpp
+    $$PWD/timeex.cpp \
+    $$PWD/lunarcalendarinfo.cpp
 

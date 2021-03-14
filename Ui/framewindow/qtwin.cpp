@@ -183,9 +183,9 @@ WindowNotifier *QtWin::windowNotifier()
 /* 所有窗口响应 DWM 状态变换消息 */
 bool WindowNotifier::winEvent(MSG *message, long *result)
 {
-	/**
-	 * When OS user switch,the IN application will crash,so remove these code
-	 */
+    /**
+     * When OS user switch,the IN application will crash,so remove these code
+     */
     //if (message && message->message == WM_DWMCOMPOSITIONCHANGED) {
     //    bool compositionEnabled = QtWin::isCompositionEnabled();
     //    foreach(QWidget * widget, widgets) {

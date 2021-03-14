@@ -6,6 +6,8 @@
 
 windowFrame::windowFrame(QWidget *parent, Qt::WindowFlags f) : NoFrameDialog(parent, f)
 {
+    setWindowTitle("Window frame");
+
     m_isMaxSize = false;
     m_bMousePressOnTitleButton = false;
 
@@ -35,9 +37,8 @@ windowFrame::windowFrame(QWidget *parent, Qt::WindowFlags f) : NoFrameDialog(par
     hideMaxButton(false);
     hideMinButton(false);
     hideCloseButton(false);
-    setObjectName("myframe");
-    setStyleSheet("windowFrame#myframe{border-image:url(:/res/BG004.jpg)}");
-//    setStyleSheet("background-image:url(:/res/BG004.jpg);");
+
+    setBackground(":/res/BG004.jpg");
 }
 
 windowFrame::~windowFrame()
@@ -47,6 +48,13 @@ windowFrame::~windowFrame()
         delete *iter;
     }
     m_lstCustomTitleButton.clear();
+}
+
+void windowFrame::setBackground(const QString &strImage)
+{
+    setObjectName("myframe");
+    setStyleSheet(QString("windowFrame#myframe{border-image:url(%1)}").arg(strImage));
+    //    setStyleSheet("background-image:url(:/res/BG004.jpg);");
 }
 
 bool windowFrame::titleButtonClicked(QLabel *)

@@ -7,8 +7,6 @@
 #include <ActiveQt/QAxObject>
 #endif // Q_OS_WIN
 
-
-
 #define TC_FREE(x)  {delete x; x=NULL;}
 
 class ExcelBasePrivate
