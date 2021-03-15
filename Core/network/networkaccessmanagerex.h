@@ -2,9 +2,10 @@
 #define NETWORKACCESSMANAGEREX_H
 
 #include <QThread>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkRequest>
+#include <QCoreApplication>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QUrl>
 #include <QTimer>
 #include <QMap>
@@ -53,9 +54,13 @@ public:
     //阻塞的方式执行http请求,如果返回值为空，则strError里边会有错误信息
     static void RequestBlock(const REQUEST_ST &request, REPLY_ST &st);
 
+protected:
+    void run();
+
 public slots:
-    void slotStart();
+//    void slotStart();
     void slotWork();
+    void slotWorkBlock();
     void slotAddWork(REQUEST_ST request);
 
     //网络收发数据相关
@@ -88,11 +93,10 @@ private:
     static void dealRequestTraceBlock(const REQUEST_ST &request, REPLY_ST &st);
     static void dealRequestConnectBlock(const REQUEST_ST &request, REPLY_ST &st);
 
-
 signals:
     void workResult(REPLY_ST st);
 
-    void workFinished();
+//    void workFinished();
     void workStart();
 
 protected:

@@ -38,7 +38,7 @@ windowFrame::windowFrame(QWidget *parent, Qt::WindowFlags f) : NoFrameDialog(par
     hideMinButton(false);
     hideCloseButton(false);
 
-    setBackground(":/res/BG004.jpg");
+    setBackgroudImage(":/res/background.png");
 }
 
 windowFrame::~windowFrame()
@@ -50,7 +50,7 @@ windowFrame::~windowFrame()
     m_lstCustomTitleButton.clear();
 }
 
-void windowFrame::setBackground(const QString &strImage)
+void windowFrame::setBackgroudImage(const QString &strImage)
 {
     setObjectName("myframe");
     setStyleSheet(QString("windowFrame#myframe{border-image:url(%1)}").arg(strImage));
@@ -165,8 +165,9 @@ void windowFrame::reSortTitleButton()
     if (!m_CloseButton.isHidden())
     {
         QSize sizeCloseButton = m_CloseButton.size();
-        QPoint pointCloseButton(0, -1);
-        pointCloseButton.rx() = sizeMainWindow.width() - sizeCloseButton.width() + 1;
+//        QPoint pointCloseButton(0, -1);
+        QPoint pointCloseButton(0, 3);
+        pointCloseButton.rx() = sizeMainWindow.width() - sizeCloseButton.width() - 5;
         m_CloseButton.move(pointCloseButton);
 
         iXPos = pointCloseButton.x();
@@ -175,7 +176,8 @@ void windowFrame::reSortTitleButton()
     if (!m_MaxButton.isHidden())
     {
         QSize sizeMaxButton = m_MaxButton.size();
-        QPoint pointMaxButton(0, -1);
+//        QPoint pointMaxButton(0, -1);
+        QPoint pointMaxButton(0, 3);
         pointMaxButton.rx() = iXPos - sizeMaxButton.width();
         m_MaxButton.move(pointMaxButton);
 
@@ -185,7 +187,8 @@ void windowFrame::reSortTitleButton()
     if (!m_MinButton.isHidden())
     {
         QSize sizeMinButton = m_MinButton.size();
-        QPoint pointMinButton(0, -1);
+//        QPoint pointMinButton(0, -1);
+        QPoint pointMinButton(0, 3);
         pointMinButton.rx() = iXPos - sizeMinButton.width();
         m_MinButton.move(pointMinButton);
 

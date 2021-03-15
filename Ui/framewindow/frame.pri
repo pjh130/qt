@@ -31,4 +31,4 @@ SOURCES += \
 }
 
 RESOURCES += \
-    $$PWD/res.qrc
+    $$PWD/res_frame.qrc

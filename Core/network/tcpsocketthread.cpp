@@ -1,12 +1,23 @@
 #include "tcpsocketthread.h"
 
-TcpSocketThread::TcpSocketThread()
+TcpSocketThread::TcpSocketThread(qintptr socketDescriptor)
 {
+    //注册自定义的信号槽参数
+    qRegisterMetaType<SEND_DATA_ST>("SEND_DATA_ST");
+    m_socketID = socketDescriptor;
     m_sockect = NULL;
+    m_timer = NULL;
 }
 
 TcpSocketThread::~TcpSocketThread()
 {
+    if(m_timer)
+    {
+        m_timer->stop();
+        m_timer->deleteLater();
+        m_timer = NULL;
+    }
+
     closeSockect();
 }
 
@@ -20,26 +31,54 @@ void TcpSocketThread::closeSockect()
     }
 }
 
-void TcpSocketThread::slotStartSocket(qintptr socketDescriptor)
+void TcpSocketThread::run()
 {
-    m_socketID = socketDescriptor;
-    m_sockect = new QTcpSocket(this);
-    m_sockect->setSocketDescriptor(socketDescriptor);
+    m_timer = new QTimer;
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()), Qt::DirectConnection);
+    m_timer->start(100);
+
+    m_sockect = new QTcpSocket;
+    m_sockect->setSocketDescriptor(m_socketID);
     m_strIp = m_sockect->peerAddress().toString();
     m_port = m_sockect->peerPort();
-    connect(m_sockect,&QTcpSocket::readyRead,this,&TcpSocketThread::slotReadData);
+    connect(m_sockect,&QTcpSocket::readyRead,this,&TcpSocketThread::slotReadData, Qt::DirectConnection);
     dis = connect(m_sockect,&QTcpSocket::disconnected,
-        [&](){
-            qDebug() << "disconnect" ;
-            closeSockect();
-            emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
-        });
+                  [&](){
+        qDebug() << "disconnect" ;
+        closeSockect();
+        emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
+    });
 
     emit connectClient(m_socketID, m_strIp, m_port);
     qDebug() << "new connect-->"<<m_strIp<<":"<<m_port ;
+
+    exec();
 }
 
-void TcpSocketThread::slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data)
+void TcpSocketThread::slotWork()
+{
+    m_lock.lock();
+    if (m_lstSenddata.isEmpty())
+    {
+        m_lock.unlock();
+        return;
+    }
+    SEND_DATA_ST st = m_lstSenddata.takeFirst();
+    m_lock.unlock();
+
+    qDebug()<<"TcpSocketThread::slotWork currentThreadId: "<<QThread::currentThreadId();
+    qint64 send =  m_sockect->write(st.byData);
+    if (send == st.byData.length())
+    {
+        //成功
+        emit sendDataRet(m_socketID, st.strKey, true, "");
+    } else {
+        //失败
+        emit sendDataRet(m_socketID, st.strKey, false, m_sockect->errorString());
+    }
+}
+
+void TcpSocketThread::slotSentData(SEND_DATA_ST st)
 {
     qDebug()<<"TcpSocketThread::slotSentData currentThreadId: "<<QThread::currentThreadId();
     if(m_sockect == NULL)
@@ -47,29 +86,16 @@ void TcpSocketThread::slotSentData(const qintptr socketID, const QString &strKey
         return;
     }
 
-    if(socketID == m_socketID)
+    if(st.socketID == m_socketID || -1 == st.socketID )
     {
-        //只发送匹配自己的数据
-        qint64 send =  m_sockect->write(data);
-        if (send == data.length())
-        {
-            //成功
-            emit sendDataRet(m_socketID, strKey, true, "");
-        } else {
-            //失败
-            emit sendDataRet(m_socketID, strKey, false, m_sockect->errorString());
-        }
-    } else if(-1 == socketID ){
-        //默认是数据群发
-        qint64 send = m_sockect->write(data);
-        if (send == data.length())
-        {
-            //成功
-            emit sendDataRet(m_socketID, strKey, true, "");
-        } else {
-            //失败
-            emit sendDataRet(m_socketID, strKey, false, m_sockect->errorString());
-        }
+        SEND_DATA_ST add;
+        add.socketID = st.socketID;
+        add.strKey = st.strKey;
+        add.byData = st.byData;
+
+        m_lock.lock();
+        m_lstSenddata.append(add);
+        m_lock.unlock();
     } else {
         //不做任何处理
     }

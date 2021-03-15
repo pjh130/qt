@@ -11,6 +11,7 @@ blurWindow::blurWindow(QWidget *parent, Qt::WindowFlags f) : windowFrame(parent,
     m_bSetFrontColor = false;
 
     setBackgroudImage(":/res/background.png");
+//    setwindowHearImage(":/res/background.png", true);
 }
 
 blurWindow::~blurWindow()
@@ -40,9 +41,11 @@ void blurWindow::updateImageBuffer(const QSize &size)
     QPainter painter(&m_imageBuffer);
     painter.setOpacity(m_realOpacity);
 
+    bool bDrwa = false;
     if (!m_imageBackgroud.isNull())
     {
         painter.drawImage(0, 0, m_imageBackgroud.scaled(size));
+        bDrwa = true;
     }
 
     if (!m_imageHeaderImage.isNull())
@@ -50,9 +53,11 @@ void blurWindow::updateImageBuffer(const QSize &size)
         if (m_bHeaderImageShowHole)
         {
             painter.drawImage(0, 0, m_imageHeaderImage.scaled(size));
+            bDrwa = true;
         }
         else
         {
+            bDrwa = true;
             painter.drawImage(0, 0, m_imageHeaderImage);
         }
     }
@@ -65,8 +70,18 @@ void blurWindow::updateImageBuffer(const QSize &size)
              iter != m_colorList.end(); ++iter)
         {
             painter.fillRect(iter->first, iter->second);
+            bDrwa = true;
         }
     }
+
+    //如果都没处理，窗口会是透明的,需要特出梳理一下
+    if (!bDrwa)
+    {
+        QColor color;
+        color.setRgb(0,100,120);
+        painter.fillRect(rect(), color);
+    }
+
 }
 
 void blurWindow::setwindowHearImage(const QString &strImagePath, bool bShowOnHoleWindow)

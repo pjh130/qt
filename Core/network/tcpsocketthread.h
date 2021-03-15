@@ -5,16 +5,20 @@
 #include <QTcpSocket>
 #include <QQueue>
 #include <QHostAddress>
+#include <QMutex>
+#include <QTimer>
+#include "netpublic.h"
 
 class TcpSocketThread : public QThread
 {
     Q_OBJECT
 public:
-    TcpSocketThread();
+    TcpSocketThread(qintptr socketDescriptor);
     ~TcpSocketThread();
 
 protected:
     void closeSockect();
+    void run();
 
 public slots:
 
@@ -32,20 +36,24 @@ signals:
     void receiveData(const qintptr socketID, const QByteArray data);
 
 public slots:
-    void slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data);//发送信号的槽
+    void slotSentData(SEND_DATA_ST st);//发送信号的槽
     void disConTcp(const qintptr socketID);
-    void slotStartSocket(qintptr socketDescriptor); //开始工作
+//    void slotStartSocket(qintptr socketDescriptor); //开始工作
+    void slotWork();
 
 protected slots:
     void slotReadData();//接收数据
 
 private:
     QTcpSocket *m_sockect;
+    QTimer *m_timer;
+    QMutex m_lock;
 
     qintptr m_socketID;
     QString m_strIp;
     quint16 m_port;
     QMetaObject::Connection dis;
+    QList<SEND_DATA_ST> m_lstSenddata;
 };
 
 #endif // TCPSOCKETTHREAD_H

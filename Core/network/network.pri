@@ -12,6 +12,7 @@ DEPENDPATH += $$NETWORK_LIBRARY_LOCATION
 
 HEADERS += \
     $$PWD/ipex.h \
+    $$PWD/netpublic.h \
     $$PWD/networkaccessmanagerex.h \
     $$PWD/tcpserver.h \
     $$PWD/tcpsocket.h \
@@ -21,6 +22,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/ipex.cpp \
+    $$PWD/netpublic.cpp \
     $$PWD/networkaccessmanagerex.cpp \
     $$PWD/tcpserver.cpp \
     $$PWD/tcpsocket.cpp \

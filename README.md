@@ -31,4 +31,5 @@ qt
 
 ####音视频
 - [QtAV是基于Qt和FFmpeg的跨平台高性能音视频播放框架](https://github.com/wang-bin/QtAV)
+- [VLC-Qt：一个结合了 Qt 应用程序和 libVLC 的免费开源库](https://www.cnblogs.com/lvdongjie/p/9805214.html)
 

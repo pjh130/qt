@@ -22,7 +22,6 @@
 #include "imageex.h"
 #include "textcodecex.h"
 #include "settingsex.h"
-//#include "fullscreenwidget.h"
 #include "capturewidget.h"
 #include <QShortcut>
 #include <QHotkey>
@@ -31,6 +30,7 @@
 #include "tcpsocketclient.h"
 #include "blurWindow.h"
 #include "windowframe.h"
+#include "mywidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -92,7 +92,6 @@ private slots:
 
 signals:
     void addWork(REQUEST_ST request);
-    void start();
     void startCaptureWidget();
     void startSocket(const QString &strIp, const quint16 port);
 

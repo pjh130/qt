@@ -27,31 +27,20 @@ TcpSocket::~TcpSocket()
 }
 
 
-void TcpSocket::slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data)
+void TcpSocket::slotSentData(SEND_DATA_ST st)
 {
     qDebug()<<"TcpSocket::slotSentData: "<<QThread::currentThreadId();
-    if(socketID == m_socketID)
+    if(st.socketID == m_socketID || -1 == st.socketID)
     {
         //只发送匹配自己的数据
-        qint64 send = write(data);
-        if (send == data.length())
+        qint64 send = write(st.byData);
+        if (send == st.byData.length())
         {
             //成功
-            emit sendDataRet(m_socketID, strKey, true, "");
+            emit sendDataRet(m_socketID, st.strKey, true, "");
         } else {
             //失败
-            emit sendDataRet(m_socketID, strKey, false, errorString());
-        }
-    } else if(-1 == socketID ){
-        //默认是数据群发
-        qint64 send = write(data);
-        if (send == data.length())
-        {
-            //成功
-            emit sendDataRet(m_socketID, strKey, true, "");
-        } else {
-            //失败
-            emit sendDataRet(m_socketID, strKey, false, errorString());
+            emit sendDataRet(m_socketID, st.strKey, false, errorString());
         }
     } else {
         //不做任何处理

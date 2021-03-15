@@ -2,10 +2,16 @@
 #include <QApplication>
 #include "textcodecex.h"
 #include <QHotkey>
+#include "appex.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //生成部署的脚本
+    AppEx::deployQt();
+//    AppEx::deployQt(QApplication::applicationFilePath());
+//    AppEx::deployQt(QApplication::applicationFilePath(), "xxx");
 
     //设置字符集
     TextCodecEx::setCodecForLocale();

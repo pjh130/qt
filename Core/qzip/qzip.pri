@@ -7,9 +7,9 @@ INCLUDEPATH += D:\Develop\Qt\5.15.2\msvc2019_64\include\QtZlib
 # Location of SMTP Library
 QZIP_LIBRARY_LOCATION = $$PWD
 
-win32:CONFIG(release, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/release/ -lquazip
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/debug/ -lquazipd
-else:unix: LIBS += -L$$QZIP_LIBRARY_LOCATION -lquazip
+win32:CONFIG(release, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/lib/release/ -lquazip
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$QZIP_LIBRARY_LOCATION/lib/debug/ -lquazipd
+else:unix: LIBS += -L$$QZIP_LIBRARY_LOCATION/lib -lquazip
 
 INCLUDEPATH += $$QZIP_LIBRARY_LOCATION/header
 DEPENDPATH += $$QZIP_LIBRARY_LOCATION

@@ -7,7 +7,7 @@ QMAKE_TARGET_COPYRIGHT = "Copyright (C) panpan <hello@xxx.com>"  #用于声明�
 QMAKE_TARGET_DESCRIPTION = "xxxxxxxxx"         #用于描述应用程序
 
 TARGET      	=  pksystem   #生成的程序名
-DESTDIR     	+= bin        #生成的应用程序放置的目录
+DESTDIR     	= bin        #生成的应用程序放置的目录
 UI_DIR      	=  temp/ui    #指定uic命令将.ui文件转化成ui_*.h文件的存放的目录
 OBJECTS_DIR 	=  temp/obj   #指定目标文件(obj)的存放目录
 MOC_DIR     	=  temp/moc   #指定moc命令将含Q_OBJECT的头文件转换成标准.h文件的存放目录

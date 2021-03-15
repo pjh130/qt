@@ -6,6 +6,7 @@
 #include <QFutureWatcher>
 #include <QByteArray>
 #include <QTime>
+#include "netpublic.h"
 
 class TcpSocket : public QTcpSocket
 {
@@ -28,7 +29,7 @@ signals:
     void receiveData(const qintptr socketID, const QByteArray data);
 
 public slots:
-    void slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data);//发送信号的槽
+    void slotSentData(SEND_DATA_ST st);//发送信号的槽
     void disConTcp(const qintptr socketID);
 
 protected slots:

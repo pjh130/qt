@@ -6,6 +6,7 @@
 #include "tcpsocketthread.h"
 #include "threadhandle.h"
 #include <QUuid>
+#include "netpublic.h"
 
 
 //继承QTCPSERVER以实现多线程TCPscoket的服务器。
@@ -19,10 +20,9 @@ public:
 
     void setMaxPendingConnections(int numConnections);//重写设置最大连接数函数
 signals:
-    void startSocket(qintptr socketDescriptor);//sokcet开始工作
     void connectClient(const int , const QString & ,const quint16 );//发送新用户连接信息
     void sockDisConnect(int ,QString ,quint16);//断开连接的用户信息
-    void sentData(const qintptr socketID, const QString &strKey, const QByteArray &data);
+    void sentData(SEND_DATA_ST st);
     void sentDisConnect(int i); //断开特定连接，并释放资源，-1为断开所有。
 
 public slots:

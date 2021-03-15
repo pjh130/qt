@@ -7,6 +7,7 @@ TcpSocketClient::TcpSocketClient()
 
 TcpSocketClient::~TcpSocketClient()
 {
+
     closeSockect();
 }
 
@@ -28,18 +29,18 @@ void TcpSocketClient::slotStartSocket(const QString &strIp, const quint16 port)
     m_port = port;
     connect(m_sockect,&QTcpSocket::readyRead,this,&TcpSocketClient::slotReadData);
     dis = connect(m_sockect,&QTcpSocket::disconnected,
-        [&](){
-            qDebug() << "disconnect" ;
-            closeSockect();
-            emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
-        });
+                  [&](){
+        qDebug() << "disconnect" ;
+        closeSockect();
+        emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
+    });
     m_sockect->connectToHost(m_strIp, port);
     QEventLoop loop;
     connect(m_sockect, &QTcpSocket::stateChanged, &loop, &QEventLoop::quit);
     //加个超时
-//    QTimer::singleShot(30, &loop, SLOT(quit()));
+    //    QTimer::singleShot(30, &loop, SLOT(quit()));
     loop.exec();
-//    return;
+    //    return;
     if(m_sockect->state() == QTcpSocket::ConnectedState)
     {
         emit connectClient(m_socketID, m_strIp, m_port);
@@ -51,7 +52,7 @@ void TcpSocketClient::slotStartSocket(const QString &strIp, const quint16 port)
     }
 }
 
-void TcpSocketClient::slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data)
+void TcpSocketClient::slotSentData(SEND_DATA_ST st)
 {
     qDebug()<<"TcpSocketClient::slotSentData currentThreadId: "<<QThread::currentThreadId();
     if(m_sockect == NULL)
@@ -59,28 +60,17 @@ void TcpSocketClient::slotSentData(const qintptr socketID, const QString &strKey
         return;
     }
 
-    if(socketID == m_socketID)
+    if(st.socketID == m_socketID || -1 == st.socketID)
     {
         //只发送匹配自己的数据
-        qint64 send =  m_sockect->write(data);
-        if (send == data.length())
+        qint64 send =  m_sockect->write(st.byData);
+        if (send == st.byData.length())
         {
             //成功
-            emit sendDataRet(m_socketID, strKey, true, "");
+            emit sendDataRet(m_socketID, st.strKey, true, "");
         } else {
             //失败
-            emit sendDataRet(m_socketID, strKey, false, m_sockect->errorString());
-        }
-    } else if(-1 == socketID ){
-        //默认是数据群发
-        qint64 send = m_sockect->write(data);
-        if (send == data.length())
-        {
-            //成功
-            emit sendDataRet(m_socketID, strKey, true, "");
-        } else {
-            //失败
-            emit sendDataRet(m_socketID, strKey, false, m_sockect->errorString());
+            emit sendDataRet(m_socketID, st.strKey, false, m_sockect->errorString());
         }
     } else {
         //不做任何处理

@@ -7,6 +7,7 @@
 #include <QHostAddress>
 #include <QEventLoop>
 #include <QTimer>
+#include "netpublic.h"
 
 class TcpSocketClient : public QThread
 {
@@ -34,7 +35,7 @@ signals:
     void receiveData(const qintptr socketID, const QByteArray data);
 
 public slots:
-    void slotSentData(const qintptr socketID, const QString &strKey, const QByteArray &data);//发送信号的槽
+    void slotSentData(SEND_DATA_ST st);//发送信号的槽
     void disConTcp(const qintptr socketID);
     void slotStartSocket(const QString &strIp, const quint16 port); //开始工作
 

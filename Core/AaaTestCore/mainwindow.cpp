@@ -37,7 +37,7 @@ void MainWindow::on_pushButton_email_clicked()
     to.files<<"D:\\test\\1.txt";
     to.files<<"D:\\test\\2.txt";
     to.strSubject = "Send email test";
-//    to.bSsl = false;
+    //    to.bSsl = false;
     if (true)
     {
         to.strContent = "Hello world!";
@@ -73,7 +73,7 @@ void MainWindow::on_pushButton_email_clicked()
         } else {
             qDebug()<<"Send email success!";
         }
-//        thread->exit();
+        //        thread->exit();
         thread->deleteLater();
     }
 
@@ -139,33 +139,42 @@ void MainWindow::on_pushButton_log_clicked()
 
 void MainWindow::on_pushButton_network_clicked()
 {
-    int port = 60000;
-    TcpServer *ser = new TcpServer;
-    qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
-    return;
-    TcpSocketClient *cli = new TcpSocketClient;
-    connect(this, &MainWindow::startSocket, cli, &TcpSocketClient::slotStartSocket);
-    cli->start();
-    emit startSocket("127.0.0.1", port);
-    return;
+    if (true)
+    {
+        int port = 60000;
+        TcpServer *ser = new TcpServer;
+        qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
+        return;
+        TcpSocketClient *cli = new TcpSocketClient;
+        connect(this, &MainWindow::startSocket, cli, &TcpSocketClient::slotStartSocket);
+        cli->start();
+        emit startSocket("127.0.0.1", port);
+        return;
+    }
 
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
     st.strUrl = "http://www.baidu.com/";
-    //    st.strUrl = "http://www.bbbbbbbbbaidu.com/";
+//        st.strUrl = "http://www.bbbbbbbbbaidu.com/";
     st.strTask = QUuid::createUuid().toString();
 
-    if (false)
+    if (true)
     {
         NetworkAccessManagerEx *network = new NetworkAccessManagerEx();
-        network->start();
-
-        connect(this, SIGNAL(start()), network, SLOT(slotStart()));
         connect(this, SIGNAL(addWork(REQUEST_ST)), network, SLOT(slotAddWork(REQUEST_ST)));
         connect(network, SIGNAL(workResult(REPLY_ST)), this, SLOT(slotWorkResult(REPLY_ST)));
+        network->start();
 
-        emit start();
         emit addWork(st);
+        st.method = REQUEST_METHOD_POST;
+        st.strTask = QUuid::createUuid().toString();
+        st.strUrl = "http://localhost:60000";
+        emit addWork(st);
+//        st.method = REQUEST_METHOD_HEAD;
+//        st.strTask = QUuid::createUuid().toString();
+//        st.strUrl = "http://www.baidu.com/";
+//        emit addWork(st);
+
     } else {
         REPLY_ST reply;
         NetworkAccessManagerEx::RequestBlock(st, reply);
@@ -484,9 +493,9 @@ void MainWindow::on_pushButton_image_clicked()
     QString strDec = "D:\\test\\new\\matebook.png";
     qDebug()<<"toGrayImge: "<<ImageEx::toGrayImge(strSrc, strDec);
 
-     strSrc = "D:\\test\\background.jpg";
-     strDec = "D:\\test\\new\\background.png";
-     qDebug()<<"jpg2Png: "<<ImageEx::jpg2Png(strSrc, strDec);
+    strSrc = "D:\\test\\background.jpg";
+    strDec = "D:\\test\\new\\background.png";
+    qDebug()<<"jpg2Png: "<<ImageEx::jpg2Png(strSrc, strDec);
 }
 
 void MainWindow::on_pushButton_settings_clicked()
@@ -548,28 +557,29 @@ void MainWindow::on_pushButton_textedit_clicked()
 
 void MainWindow::on_pushButton_frame_clicked()
 {
-    int iSwitch = 1;
+    if (false)
+    {
+        MyWidget *p = new MyWidget();
+        p->show();
+
+        return;
+    }
+    int iSwitch = 0;
     switch (iSwitch) {
     case 0:
     {
-        //毛玻璃效果暂时还不行
+        //毛玻璃效果
         blurWindow *frame = new blurWindow;
-        frame->resize(400, 300);
+        frame->resize(800, 600);
+        //        frame->setOpacity(0.5);//设置透明度
         frame->show();
     }
         break;
     case 1:
     {
         windowFrame *frame = new windowFrame;
-        frame->resize(400, 300);
+        frame->resize(800, 600);
         frame->show();
-
-//        frame->autoFillBackground();
-//        QPalette palette;
-//        palette.setColor(QPalette::Background,QColor(192,253,123));  //设置背景色
-//        //设置背景图片
-//        //palette.setBrush(QPalette::Background,QBrush(QPixmap(":/background.png")));
-//        frame->setPalette(palette);
     }
         break;
     case 2:

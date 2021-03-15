@@ -17,7 +17,7 @@ public:
     void hideMinButton(bool bHide);
     void hideCloseButton(bool bHide);
 
-    void setBackground(const QString &strImage);
+    void setBackgroudImage(const QString &strImage);
     QLabel* getCloseButton();
     QLabel* addTitlebutton(const QPixmap &pixmap, const QSize &size);
 

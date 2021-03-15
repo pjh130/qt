@@ -23,21 +23,53 @@ NetworkAccessManagerEx::~NetworkAccessManagerEx()
     }
 }
 
-void NetworkAccessManagerEx::slotStart()
+void NetworkAccessManagerEx::run()
 {
+    qDebug()<<"NetworkAccessManagerEx::run: "<<QThread::currentThreadId();
     m_manager = new QNetworkAccessManager;
-
     m_timer = new QTimer;
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()));
+    //必须加DirectConnection，要不连接的slot在父线程中执行
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()), Qt::DirectConnection);
     m_timer->start(100);
 
     emit workStart();
+    exec();
 }
 
+//void NetworkAccessManagerEx::slotStart()
+//{
+//    qDebug()<<"NetworkAccessManagerEx::slotStart: "<<QThread::currentThreadId();
+//    m_manager = new QNetworkAccessManager;
+
+//    m_timer = new QTimer;
+//    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()));
+//    m_timer->start(100);
+
+//    emit workStart();
+//}
+
 void NetworkAccessManagerEx::RequestBlock(const REQUEST_ST &request, REPLY_ST &st)
-{   st.strTask = request.strTask;
+{
+    st.strTask = request.strTask;
     return dealRequestBlock(request, st);
 }
+
+void NetworkAccessManagerEx::slotWorkBlock()
+{
+    m_lock.lock();
+    if(m_task.length() <= 0)
+    {
+        m_lock.unlock();
+        return;
+    }
+    REQUEST_ST stReq = m_task.takeAt(0);
+    m_lock.unlock();
+
+    REPLY_ST st;
+    dealRequestBlock(stReq, st);
+    emit workResult(st);
+}
+
 void NetworkAccessManagerEx::slotWork()
 {
     m_lock.lock();
@@ -161,9 +193,9 @@ void NetworkAccessManagerEx::dealRequestHead(const REQUEST_ST &request)
     }
 
     QNetworkReply *reply = m_manager->head(req);
-    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
     connect(m_manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(slotReplyFinished(QNetworkReply*)));
+            this, SLOT(slotReplyFinished(QNetworkReply*)), Qt::DirectConnection);
     m_reply.insert(reply, request.strTask);
 }
 
@@ -205,9 +237,9 @@ void NetworkAccessManagerEx::dealRequestGet(const REQUEST_ST &request)
     }
 
     QNetworkReply *reply = m_manager->get(req);
-    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
     connect(m_manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(slotReplyFinished(QNetworkReply*)));
+            this, SLOT(slotReplyFinished(QNetworkReply*)), Qt::DirectConnection);
     m_reply.insert(reply, request.strTask);
 }
 
@@ -251,9 +283,9 @@ void NetworkAccessManagerEx::dealRequestPost(const REQUEST_ST &request)
     }
 
     QNetworkReply *reply = m_manager->post(req, request.byData);
-    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+    QMetaObject::Connection dis = connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
     connect(m_manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(slotReplyFinished(QNetworkReply*)));
+            this, SLOT(slotReplyFinished(QNetworkReply*)), Qt::DirectConnection);
     m_reply.insert(reply, request.strTask);
 }
 
@@ -296,9 +328,9 @@ void NetworkAccessManagerEx::dealRequestDelete(const REQUEST_ST &request)
     }
 
     QNetworkReply *reply = m_manager->deleteResource(req);
-    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
     connect(m_manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(slotReplyFinished(QNetworkReply*)));
+            this, SLOT(slotReplyFinished(QNetworkReply*)), Qt::DirectConnection);
     m_reply.insert(reply, request.strTask);
 }
 
@@ -352,9 +384,9 @@ void NetworkAccessManagerEx::dealRequestPut(const REQUEST_ST &request)
     }
 
     QNetworkReply *reply = m_manager->put(req, request.byData);
-    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
+    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
     connect(m_manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(slotReplyFinished(QNetworkReply*)));
+            this, SLOT(slotReplyFinished(QNetworkReply*)), Qt::DirectConnection);
     m_reply.insert(reply, request.strTask);
 }
 
@@ -426,17 +458,17 @@ void NetworkAccessManagerEx::slotError(QNetworkReply::NetworkError err)
 
 void NetworkAccessManagerEx::slotReplyFinished(QNetworkReply *reply)
 {
+    qDebug()<<"NetworkAccessManagerEx::slotReplyFinished: "<<QThread::currentThreadId();
+
     REPLY_ST st;
     //查询链表中是否存在数据
     if(m_reply.contains(reply))
     {
         st.strTask = m_reply.value(reply);
-//        QString str = "Find [" + st.strTask + "] network result";
+        //        QString str = "Find [" + st.strTask + "] network result";
 
         //旧数据
         QByteArray old = m_buff.value(st.strTask);
-        QByteArray newdata = reply->readAll();
-        st.byData = old + newdata;
 
         //删除链表数据
         m_reply.remove(reply);
@@ -448,11 +480,12 @@ void NetworkAccessManagerEx::slotReplyFinished(QNetworkReply *reply)
             st.strError = reply->errorString().toUtf8();
         } else {
             st.bOk = true;
+            QByteArray newdata = reply->readAll();
+            st.byData = old + newdata;
         }
-
         emit workResult(st);
-
     } else {
+
     }
 
     reply->close();
