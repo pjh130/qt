@@ -143,6 +143,7 @@ void MainWindow::on_pushButton_network_clicked()
     {
         int port = 60000;
         TcpServer *ser = new TcpServer;
+        connect(this, &MainWindow::sentDisConnect, ser, &TcpServer::sentDisConnect);
         qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
         return;
         TcpSocketClient *cli = new TcpSocketClient;
@@ -545,6 +546,7 @@ void MainWindow::slotFinishPixmap(const QPixmap &finishPixmap)
 
 void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
 {
+    emit sentDisConnect(-1);
     hotkey = new QHotkey(QKeySequence("ctrl+alt+D"), true, this);
     connect(hotkey, &QHotkey::activated, this, &MainWindow::on_pushButton_ScreenShot_clicked);
 }

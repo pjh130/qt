@@ -18,6 +18,7 @@ public:
 
 protected:
     void closeSockect();
+    void stopTimer();
     void run();
 
 public slots:
@@ -43,9 +44,11 @@ public slots:
 
 protected slots:
     void slotReadData();//接收数据
+    void slotDisconnect();
 
 private:
     QTcpSocket *m_sockect;
+    bool bStopTimer;
     QTimer *m_timer;
     QMutex m_lock;
 

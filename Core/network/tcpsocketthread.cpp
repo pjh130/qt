@@ -7,9 +7,16 @@ TcpSocketThread::TcpSocketThread(qintptr socketDescriptor)
     m_socketID = socketDescriptor;
     m_sockect = NULL;
     m_timer = NULL;
+    bStopTimer = false;
 }
 
 TcpSocketThread::~TcpSocketThread()
+{
+    //这里不能停止timer
+    closeSockect();
+}
+
+void TcpSocketThread::stopTimer()
 {
     if(m_timer)
     {
@@ -17,8 +24,6 @@ TcpSocketThread::~TcpSocketThread()
         m_timer->deleteLater();
         m_timer = NULL;
     }
-
-    closeSockect();
 }
 
 void TcpSocketThread::closeSockect()
@@ -42,12 +47,7 @@ void TcpSocketThread::run()
     m_strIp = m_sockect->peerAddress().toString();
     m_port = m_sockect->peerPort();
     connect(m_sockect,&QTcpSocket::readyRead,this,&TcpSocketThread::slotReadData, Qt::DirectConnection);
-    dis = connect(m_sockect,&QTcpSocket::disconnected,
-                  [&](){
-        qDebug() << "disconnect" ;
-        closeSockect();
-        emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
-    });
+    dis = connect(m_sockect, &QTcpSocket::disconnected, this, &TcpSocketThread::slotDisconnect, Qt::DirectConnection);
 
     emit connectClient(m_socketID, m_strIp, m_port);
     qDebug() << "new connect-->"<<m_strIp<<":"<<m_port ;
@@ -57,6 +57,15 @@ void TcpSocketThread::run()
 
 void TcpSocketThread::slotWork()
 {
+    if(bStopTimer)
+    {
+        qDebug()<<"``````````stop timer````````";
+        stopTimer();
+        closeSockect();
+
+        exit();
+        return;
+    }
     m_lock.lock();
     if (m_lstSenddata.isEmpty())
     {
@@ -110,15 +119,21 @@ void TcpSocketThread::disConTcp(const qintptr socketID)
 
     if (socketID == m_socketID)
     {
-        m_sockect->disconnectFromHost();
+        bStopTimer = true;
+//        m_sockect->disconnectFromHost();
     }
     else if (socketID == -1) //-1为全部断开
     {
         disconnect(dis); //先断开连接的信号槽，防止二次析构
-        m_sockect->disconnectFromHost();
-        m_sockect->deleteLater();
-        m_sockect = NULL;
+        bStopTimer = true;
     }
+}
+
+void TcpSocketThread::slotDisconnect()
+{
+    emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
+    stopTimer();
+    exit();
 }
 
 void TcpSocketThread::slotReadData()

@@ -82,22 +82,23 @@ private slots:
 
     void on_pushButton_ScreenShot_clicked();
 
-     void slotFinishPixmap(const QPixmap &finishPixmap);
+    void slotFinishPixmap(const QPixmap &finishPixmap);
 
-     void on_pushButton_qxtglobalshortcut_clicked();
+    void on_pushButton_qxtglobalshortcut_clicked();
 
-     void on_pushButton_textedit_clicked();
+    void on_pushButton_textedit_clicked();
 
-     void on_pushButton_frame_clicked();
+    void on_pushButton_frame_clicked();
 
 signals:
+    void sentDisConnect(int i);
     void addWork(REQUEST_ST request);
     void startCaptureWidget();
     void startSocket(const QString &strIp, const quint16 port);
 
 private:
     Ui::MainWindow *ui;
-//    FullScreenWidget *fullWidget;
+    //    FullScreenWidget *fullWidget;
     CaptureWidget *captureWidget;
     QHotkey *hotkey;
 };
