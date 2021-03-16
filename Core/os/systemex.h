@@ -12,12 +12,17 @@
 #include <unistd.h>
 #include <stdlib.h>
 #endif
+#include <QDesktopServices>
 
 class SystemEx
 {
 public:
     SystemEx();
     ~SystemEx();
+
+    //获取系统变量的值
+    static QString getEnvironmentValue(const QString &strKey);
+    static bool openExplorer(const QString &path);
 
     /// @brief 取操作系统名称，支持Windows和Linux
     /// @note Windows从注册表中获取,Linux从依次从/etc下的os-release

@@ -12,36 +12,7 @@
 #include <QMutex>
 #include <QUuid>
 #include <QEventLoop>
-
-typedef enum
-{
-    REQUEST_METHOD_HEAD,
-    REQUEST_METHOD_GET,
-    REQUEST_METHOD_POST,
-    REQUEST_METHOD_DELETE,
-    REQUEST_METHOD_OPTIONS,
-    REQUEST_METHOD_PUT,
-    REQUEST_METHOD_PATCH,
-    REQUEST_METHOD_TRACE,
-    REQUEST_METHOD_CONNECT,
-} REQUEST_METHOD_EN;
-
-typedef struct
-{
-    REQUEST_METHOD_EN method;
-    QString strTask;
-    QString strUrl;
-    QByteArray byData;
-    QMap<QByteArray, QByteArray> map;
-}REQUEST_ST;
-
-typedef struct
-{
-    bool  bOk;
-    QString strTask;
-    QString strError;
-    QByteArray byData;
-}REPLY_ST;
+#include "netpublic.h"
 
 class NetworkAccessManagerEx : public QThread
 {
@@ -55,6 +26,7 @@ public:
     static void RequestBlock(const REQUEST_ST &request, REPLY_ST &st);
 
 protected:
+    void quitThread();
     void run();
 
 public slots:
@@ -67,6 +39,7 @@ public slots:
     void slotReadyRead();
     void slotError(QNetworkReply::NetworkError err);
     void slotReplyFinished(QNetworkReply *reply);
+    void slotQuit();
 
 private:
     //信号槽的方式请求
@@ -102,6 +75,7 @@ signals:
 protected:
 
 private:
+    bool m_bQuit;
     QTimer *m_timer;
     QMutex m_lock;
     QNetworkAccessManager *m_manager;

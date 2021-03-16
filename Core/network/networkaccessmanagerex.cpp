@@ -8,24 +8,44 @@ NetworkAccessManagerEx::NetworkAccessManagerEx()
 
     m_timer = NULL;
     m_manager = NULL;
+    m_bQuit = false;
 }
 
 NetworkAccessManagerEx::~NetworkAccessManagerEx()
 {
+    quitThread();
+}
+
+void NetworkAccessManagerEx::slotQuit()
+{
+    m_bQuit = true;
+}
+
+void NetworkAccessManagerEx::quitThread()
+{
     if (m_manager != NULL)
     {
         m_manager->deleteLater();
+        m_manager = NULL;
     }
 
     if (m_timer != NULL)
     {
+        m_timer->stop();
         m_timer->deleteLater();
+        m_timer = NULL;
+    }
+
+    if(isRunning())
+    {
+        wait(1000);
+        exit();
     }
 }
 
 void NetworkAccessManagerEx::run()
 {
-    qDebug()<<"NetworkAccessManagerEx::run: "<<QThread::currentThreadId();
+    //    qDebug()<<"NetworkAccessManagerEx::run: "<<QThread::currentThreadId();
     m_manager = new QNetworkAccessManager;
     m_timer = new QTimer;
     //必须加DirectConnection，要不连接的slot在父线程中执行
@@ -35,18 +55,6 @@ void NetworkAccessManagerEx::run()
     emit workStart();
     exec();
 }
-
-//void NetworkAccessManagerEx::slotStart()
-//{
-//    qDebug()<<"NetworkAccessManagerEx::slotStart: "<<QThread::currentThreadId();
-//    m_manager = new QNetworkAccessManager;
-
-//    m_timer = new QTimer;
-//    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()));
-//    m_timer->start(100);
-
-//    emit workStart();
-//}
 
 void NetworkAccessManagerEx::RequestBlock(const REQUEST_ST &request, REPLY_ST &st)
 {
@@ -72,6 +80,12 @@ void NetworkAccessManagerEx::slotWorkBlock()
 
 void NetworkAccessManagerEx::slotWork()
 {
+    if(m_bQuit)
+    {
+        quitThread();
+        return;
+    }
+
     m_lock.lock();
     if(m_task.length() <= 0)
     {
@@ -283,7 +297,7 @@ void NetworkAccessManagerEx::dealRequestPost(const REQUEST_ST &request)
     }
 
     QNetworkReply *reply = m_manager->post(req, request.byData);
-    QMetaObject::Connection dis = connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
+    connect(reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()), Qt::DirectConnection);
     connect(m_manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(slotReplyFinished(QNetworkReply*)), Qt::DirectConnection);
     m_reply.insert(reply, request.strTask);

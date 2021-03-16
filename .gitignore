@@ -11,6 +11,10 @@
 *.user
 *.log
 *.tmp
+*.pdb
+*.stash
+*.exp
+*.ilk
 
 # Folders
 _obj

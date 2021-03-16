@@ -139,3 +139,45 @@ QString DirEx::toSameSeparator(const QString &strPath, const QString &strSeparat
 
     return strNew;
 }
+
+QStringList DirEx::removeWorkDir(const QString &workDir, const QStringList &filters)
+{
+    QStringList result;
+    QDir dir(workDir);
+    if (!dir.exists())
+        return result;
+
+    QFileInfoList dirs = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot);
+
+    foreach (QFileInfo d, dirs) {
+        removeWorkDir(d.filePath(),filters);
+    }
+
+    QFileInfoList files = dir.entryInfoList(filters,QDir::Files);
+    foreach (QFileInfo f, files) {
+        bool b = QFile::remove(f.filePath());
+        if (b) {
+            result << f.fileName();
+        }
+    }
+    return result;
+}
+
+bool DirEx::CopyDirectory(const QString &src, const QString &dest)
+{
+    QDir dir(src);
+    foreach(QFileInfo info, dir.entryInfoList(QDir::Files)) {
+        if (info.isFile() && !info.isSymLink()) {
+            QFile in(info.filePath());
+            if (!in.open(QFile::ReadOnly)) {
+                return false;
+            }
+            QFile out(dest+"/"+info.fileName());
+            if (!out.open(QFile::WriteOnly)) {
+                return false;
+            }
+            out.write(in.readAll());
+        }
+    }
+    return true;
+}

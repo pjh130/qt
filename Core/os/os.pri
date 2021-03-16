@@ -7,8 +7,10 @@ INCLUDEPATH += $$OS_LIBRARY_LOCATION
 DEPENDPATH += $$OS_LIBRARY_LOCATION
 
 HEADERS += \
-    $$PWD/systemex.h
+    $$PWD/systemex.h \
+    $$PWD/processex.h
 
 SOURCES += \
-    $$PWD/systemex.cpp
+    $$PWD/systemex.cpp \
+    $$PWD/processex.cpp
 

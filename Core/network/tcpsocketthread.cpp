@@ -8,7 +8,7 @@ TcpSocketThread::TcpSocketThread(qintptr socketDescriptor, QObject *parent):
     m_socketID = socketDescriptor;
     m_sockect = NULL;
     m_timer = NULL;
-    bStopTimer = false;
+    m_bQuit = false;
 }
 
 TcpSocketThread::~TcpSocketThread()
@@ -17,13 +17,21 @@ TcpSocketThread::~TcpSocketThread()
     closeSockect();
 }
 
-void TcpSocketThread::stopTimer()
+void TcpSocketThread::quitThread()
 {
     if(m_timer)
     {
         m_timer->stop();
         m_timer->deleteLater();
         m_timer = NULL;
+    }
+
+    closeSockect();
+
+    if(isRunning())
+    {
+        wait(1000);
+        exit();
     }
 }
 
@@ -39,6 +47,7 @@ void TcpSocketThread::closeSockect()
 
 void TcpSocketThread::run()
 {
+    //connect加Qt::DirectConnection表示slot的执行线程就是信号发出者所在的线程
     if (m_socketID <= 0)
     {
         emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());
@@ -57,22 +66,20 @@ void TcpSocketThread::run()
     dis = connect(m_sockect, &QTcpSocket::disconnected, this, &TcpSocketThread::slotDisconnect, Qt::DirectConnection);
 
     emit connectClient(m_socketID, m_strIp, m_port);
-    qDebug() << "new connect-->"<<m_strIp<<":"<<m_port ;
+    qDebug() << "new connect-->"<<m_strIp<<":"<<m_port;
 
     exec();
 }
 
 void TcpSocketThread::slotWork()
 {
-    if(bStopTimer)
+    if(m_bQuit)
     {
         qDebug()<<"``````````stop timer````````";
-        stopTimer();
-        closeSockect();
-
-        exit();
+        quitThread();
         return;
     }
+
     m_lock.lock();
     if (m_lstSenddata.isEmpty())
     {
@@ -82,7 +89,7 @@ void TcpSocketThread::slotWork()
     SEND_DATA_ST st = m_lstSenddata.takeFirst();
     m_lock.unlock();
 
-    qDebug()<<"TcpSocketThread::slotWork currentThreadId: "<<QThread::currentThreadId();
+//    qDebug()<<"TcpSocketThread::slotWork currentThreadId: "<<QThread::currentThreadId();
     qint64 send =  m_sockect->write(st.byData);
     if (send == st.byData.length())
     {
@@ -94,9 +101,9 @@ void TcpSocketThread::slotWork()
     }
 }
 
-void TcpSocketThread::slotSentData(SEND_DATA_ST st)
+void TcpSocketThread::slotSendData(SEND_DATA_ST st)
 {
-    qDebug()<<"TcpSocketThread::slotSentData currentThreadId: "<<QThread::currentThreadId();
+    //    qDebug()<<"TcpSocketThread::slotSendData currentThreadId: "<<QThread::currentThreadId();
     if(m_sockect == NULL)
     {
         return;
@@ -126,23 +133,21 @@ void TcpSocketThread::disConTcp(const qintptr socketID)
 
     if (socketID == m_socketID)
     {
-        bStopTimer = true;
-//        m_sockect->disconnectFromHost();
+        m_bQuit = true;
+        //        m_sockect->disconnectFromHost();
     }
     else if (socketID == -1) //-1为全部断开
     {
         disconnect(dis); //先断开连接的信号槽，防止二次析构
-        bStopTimer = true;
+        m_bQuit = true;
     }
 }
 
 void TcpSocketThread::slotDisconnect()
 {
-    qDebug()<<"TcpSocketThread::slotDisconnect";
+    //    qDebug()<<"TcpSocketThread::slotDisconnect";
     emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
-    stopTimer();
-    closeSockect();
-    exit();
+    m_bQuit = true;
 }
 
 void TcpSocketThread::slotReadData()
@@ -152,7 +157,7 @@ void TcpSocketThread::slotReadData()
         return;
     }
 
-    qDebug()<<"TcpSocketThread::slotReadData currentThreadId: "<<QThread::currentThreadId();
+    //    qDebug()<<"TcpSocketThread::slotReadData currentThreadId: "<<QThread::currentThreadId();
     QByteArray data  = m_sockect->readAll();
 
     //收到的数据不做处理转发出去

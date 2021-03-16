@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include "fileex.h"
+#include "appex.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

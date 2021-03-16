@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //    fullWidget = NULL;
     captureWidget = NULL;
     hotkey = NULL;
+    QJson::Parser p;
+    p.parse("hello");
+    qDebug()<<"QJson errorString:"<<p.errorString();
 }
 
 MainWindow::~MainWindow()
@@ -76,7 +79,6 @@ void MainWindow::on_pushButton_email_clicked()
         //        thread->exit();
         thread->deleteLater();
     }
-
 }
 
 void MainWindow::on_pushButton_excel_clicked()
@@ -119,6 +121,9 @@ void MainWindow::on_pushButton_excel_clicked()
 
 void MainWindow::on_pushButton_log_clicked()
 {
+//    Find::Internal::SearchResultWidget *search = new Find::Internal::SearchResultWidget;
+//    search->show();
+
     INI_LOG_ST init;
     init.strLogDir = "D:\\test\\log";
     LogEx::getClass().initClass(init);
@@ -145,14 +150,14 @@ void MainWindow::on_pushButton_network_clicked()
     case 0:
     {
         TcpServer *ser = new TcpServer;
-        connect(this, &MainWindow::sentDisConnect, ser, &TcpServer::sentDisConnect);
+        connect(this, &MainWindow::sendDisConnect, ser, &TcpServer::sendDisConnect);
         qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
     }
         break;
     case 1:
     {
         TcpSocketClient *cli = new TcpSocketClient("127.0.0.1", port);
-        connect(this, &MainWindow::clientSentData, cli, &TcpSocketClient::slotSentData);
+        connect(this, &MainWindow::clientSendData, cli, &TcpSocketClient::slotSendData);
         cli->start();
     }
         break;
@@ -476,6 +481,9 @@ void MainWindow::on_pushButton_time_clicked()
 
 void MainWindow::on_pushButton_os_clicked()
 {
+    qDebug()<<SystemEx::getEnvironmentValue("GOROOT");
+//    qDebug()<<SystemEx::openExplorer("D:\\test\\111.mp4");
+
     qDebug()<<QLocale::system().name();
     qDebug()<<SystemEx::systemName();
     qDebug()<<SystemEx::hostName();
@@ -570,8 +578,9 @@ void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
     SEND_DATA_ST st;
     st.socketID = -1;
     st.byData = "hello i am client";
-    emit clientSentData(st);
-    emit sentDisConnect(-1);
+    emit clientSendData(st);
+    emit sendDisConnect(-1);
+
     hotkey = new QHotkey(QKeySequence("ctrl+alt+D"), true, this);
     connect(hotkey, &QHotkey::activated, this, &MainWindow::on_pushButton_ScreenShot_clicked);
 }

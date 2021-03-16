@@ -12,7 +12,7 @@ TcpServer::TcpServer(QObject *parent,int numConnections) :
 
 TcpServer::~TcpServer()
 {
-    emit this->sentDisConnect(-1);
+    emit this->sendDisConnect(-1);
 }
 
 void TcpServer::setMaxPendingConnections(int numConnections)
@@ -52,7 +52,7 @@ void TcpServer::incomingConnection(qintptr socketDescriptor) //多线程必须�
     st.socketID = socketDescriptor;
     st.strKey = QUuid::createUuid().toString();
     st.byData = "Hello";
-    emit sentData(st);
+    emit sendData(st);
 }
 
 void TcpServer::getSockect1(qintptr socketDescriptor)
@@ -61,8 +61,8 @@ void TcpServer::getSockect1(qintptr socketDescriptor)
     TcpSocket *tcpTemp = new TcpSocket(socketDescriptor);
 
     connect(tcpTemp,SIGNAL(sockDisConnect(qintptr,QString,quint16,QThread*)),this,SLOT(sockDisConnectSlot(qintptr,QString,quint16,QThread*)));//NOTE:断开连接的处理，从列表移除，并释放断开的Tcpsocket，此槽必须实现，线程管理计数也是考的他
-    connect(this,&TcpServer::sentDisConnect,tcpTemp,&TcpSocket::disConTcp);//断开信号
-    connect(this,&TcpServer::sentData,tcpTemp,&TcpSocket::slotSentData);//发送数据
+    connect(this,&TcpServer::sendDisConnect,tcpTemp,&TcpSocket::disConTcp);//断开信号
+    connect(this,&TcpServer::sendData,tcpTemp,&TcpSocket::slotSendData);//发送数据
     connect(tcpTemp,&TcpSocket::sendDataRet, this,&TcpServer::slotSendDataRet);//发送数据的结果
     connect(tcpTemp,&TcpSocket::receiveData, this,&TcpServer::slotReceiveData);//接收客户端发送来的数据
     connect(tcpTemp,&TcpSocket::connectClient, this,&TcpServer::connectClient); //通知连接
@@ -74,8 +74,8 @@ void TcpServer::getSockect2(qintptr socketDescriptor)
 {
     TcpSocketThread *tcpTemp = new TcpSocketThread(socketDescriptor);
 
-    connect(this,&TcpServer::sentDisConnect,tcpTemp,&TcpSocketThread::disConTcp);//断开信号
-    connect(this,&TcpServer::sentData,tcpTemp,&TcpSocketThread::slotSentData);//发送数据
+    connect(this,&TcpServer::sendDisConnect,tcpTemp,&TcpSocketThread::disConTcp);//断开信号
+    connect(this,&TcpServer::sendData,tcpTemp,&TcpSocketThread::slotSendData);//发送数据
     connect(tcpTemp,&TcpSocketThread::sockDisConnect,this,&TcpServer::sockDisConnectSlot);//NOTE:断开连接的处理，从列表移除，并释放断开的Tcpsocket，此槽必须实现，线程管理计数也是考的他
     connect(tcpTemp,&TcpSocketThread::sendDataRet, this,&TcpServer::slotSendDataRet);//发送数据的结果
     connect(tcpTemp,&TcpSocketThread::receiveData, this,&TcpServer::slotReceiveData);//接收客户端发送来的数据
@@ -83,7 +83,6 @@ void TcpServer::getSockect2(qintptr socketDescriptor)
 
     tcpClient2.insert(socketDescriptor,tcpTemp);//插入到连接信息中
     tcpTemp->start();
-    qDebug()<<"tcpTemp: "<<tcpTemp->currentThreadId();
 }
 
 void TcpServer::sockDisConnectSlot(const qintptr socketID , const QString &strIp,
@@ -127,7 +126,7 @@ void TcpServer::slotSendDataRet(const qintptr socketID, const QString &strKey,
 
 void TcpServer::clear()
 {
-    emit this->sentDisConnect(-1);
+    emit this->sendDisConnect(-1);
     ThreadHandle::getClass().clear();
     tcpClient1.clear();
     tcpClient2.clear();

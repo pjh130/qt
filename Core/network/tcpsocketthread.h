@@ -18,7 +18,7 @@ public:
 
 protected:
     void closeSockect();
-    void stopTimer();
+    void quitThread();
     void run();
 
 public slots:
@@ -37,7 +37,7 @@ signals:
     void receiveData(const qintptr socketID, const QByteArray data);
 
 public slots:
-    void slotSentData(SEND_DATA_ST st);//发送信号的槽
+    void slotSendData(SEND_DATA_ST st);//发送信号的槽
     void disConTcp(const qintptr socketID);
     void slotWork();
     void slotReadData();//接收数据
@@ -51,7 +51,7 @@ public:
     quint16 m_port;
     QMetaObject::Connection dis;
 private:
-    bool bStopTimer;
+    bool m_bQuit;
     QMutex m_lock;
 
     QList<SEND_DATA_ST> m_lstSenddata;

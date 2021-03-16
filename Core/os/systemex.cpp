@@ -13,6 +13,22 @@ SystemEx::~SystemEx()
 
 }
 
+QString SystemEx::getEnvironmentValue(const QString &strKey)
+{
+    return QProcessEnvironment::systemEnvironment().value(strKey);
+}
+
+bool SystemEx::openExplorer(const QString &path)
+{
+    QFileInfo info(path);
+    if (info.isDir()) {
+        return QDesktopServices::openUrl(QUrl::fromLocalFile(info.filePath()));
+    } else {
+        return QDesktopServices::openUrl(QUrl::fromLocalFile(info.path()));
+    }
+    return false;
+}
+
 QString SystemEx::getWMIC(const QString &cmd)
 {
     //获取cpu名称：wmic cpu get Name
@@ -98,7 +114,7 @@ QString SystemEx::hostName()
 bool SystemEx::setPowerAutoStart(const QString &strPath, const bool &bStart)
 {
     bool bRet = false;
-    if (strPath.isEmpty())
+    if (strPath.isEmpty() || !QFile::exists(strPath))
     {
         return bRet;
     }

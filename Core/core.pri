@@ -2,7 +2,8 @@
 #  所有涉及的原作者有如下（如果有遗漏会补上）：
 #    1. 天池共享源码库 Tianchi share library for Qt (C++)
 #    2. moyannie
-#    2. 倪大侠 整理:feiyangqingyun
+#    3. 倪大侠 整理:feiyangqingyun
+#    4. visualfc@gmail.com
 
 #useage:
 #include($$PWD/xxx.pri)
@@ -34,6 +35,7 @@ include(D:\Code\Go\src\github.com\pjh130\qt\Core\textcodec\textcodec.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\settings\settings.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\QHotkey\qhotkey.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Core\appex\appex.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Core\qjson\qjson.pri)
 
 #加入路径
 CORE_LIBRARY_LOCATION = $$PWD

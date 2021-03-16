@@ -39,3 +39,5 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     form_textedit.ui
+
+OTHER_FILES +=

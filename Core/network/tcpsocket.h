@@ -29,7 +29,7 @@ signals:
     void receiveData(const qintptr socketID, const QByteArray data);
 
 public slots:
-    void slotSentData(SEND_DATA_ST st);//发送信号的槽
+    void slotSendData(SEND_DATA_ST st);//发送信号的槽
     void disConTcp(const qintptr socketID);
 
 protected slots:

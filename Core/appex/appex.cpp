@@ -10,7 +10,7 @@ AppEx::~AppEx()
 
 }
 
-bool AppEx::deployQt(const QString &strAppPath, const QString &strWindeployqt)
+bool AppEx::deployScript(const QString &strAppPath, const QString &strWindeployqt)
 {
     QString strName = "deploy.bat";
     QString strFile;

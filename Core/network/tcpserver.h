@@ -22,8 +22,8 @@ public:
 signals:
     void connectClient(const int , const QString & ,const quint16 );//发送新用户连接信息
     void sockDisConnect(int ,QString ,quint16);//断开连接的用户信息
-    void sentData(SEND_DATA_ST st);
-    void sentDisConnect(int i); //断开特定连接，并释放资源，-1为断开所有。
+    void sendData(SEND_DATA_ST st);
+    void sendDisConnect(int i); //断开特定连接，并释放资源，-1为断开所有。
 
 public slots:
     //在这里处理接收到的数据逻辑

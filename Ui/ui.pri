@@ -20,7 +20,7 @@
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\CaptureScreen\CaptureScreen.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\TextEdit\textedit.pri)
 include(D:\Code\Go\src\github.com\pjh130\qt\Ui\framewindow\frame.pri)
-#include(D:\Code\Go\src\github.com\pjh130\qt\Ui\qt_controls\qt_controls.pri)
+include(D:\Code\Go\src\github.com\pjh130\qt\Ui\qtc_searchresult\qtc_searchresult.pri)
 
 
 #加入路径

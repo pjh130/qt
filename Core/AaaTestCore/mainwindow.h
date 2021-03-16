@@ -31,6 +31,8 @@
 #include "blurWindow.h"
 #include "windowframe.h"
 #include "mywidget.h"
+#include "parser.h"
+#include "searchresultwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -92,8 +94,8 @@ private slots:
     void on_pushButton_frame_clicked();
 
 signals:
-    void clientSentData(SEND_DATA_ST st);
-    void sentDisConnect(int i);
+    void clientSendData(SEND_DATA_ST st);
+    void sendDisConnect(int i);
     void addWork(REQUEST_ST request);
     void startCaptureWidget();
 

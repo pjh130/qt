@@ -14,6 +14,7 @@ public:
     FileEx();
     ~FileEx();
     static bool removeFile(const QString &strFileName);
+    static QStringList removeFiles(const QStringList &files);
     //把数据写到文件中
     static bool witeFile(const QString &strFileName, const QByteArray &data,
                          const QIODevice::OpenModeFlag &mode = QIODevice::Append);

@@ -16,7 +16,7 @@ public:
     ~AppEx();
 
     //生成一个自动打包的脚本,参数都为空的时候，默认生成当前程序的打包脚本
-    static bool deployQt(const QString &strAppPath = "", const QString &strWindeployqt = "");
+    static bool deployScript(const QString &strAppPath = "", const QString &strWindeployqt = "");
 
 protected:
 

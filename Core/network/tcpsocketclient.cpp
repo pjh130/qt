@@ -39,8 +39,7 @@ void TcpSocketClient::run()
     } else {
         qDebug() << "connect failed-->"<<m_strIp<<":"<<m_port<<"  "<<m_sockect->errorString();
         emit sockDisConnect(m_socketID, m_strIpSer, m_portSer, QThread::currentThread());
-        stopTimer();
-        closeSockect();
+        quitThread();
         return;
     }
 

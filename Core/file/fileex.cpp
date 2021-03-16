@@ -20,6 +20,17 @@ bool FileEx::removeFile(const QString &strFileName)
     return dir.remove(strFileName);
 }
 
+QStringList FileEx::removeFiles(const QStringList &files)
+{
+    QStringList result;
+    foreach (QString file, files) {
+        if (QFile::exists(file) && QFile::remove(file)) {
+            result << file;
+        }
+    }
+    return result;
+}
+
 bool FileEx::witeFile(const QString &strFileName, const QByteArray &data,
                       const QIODevice::OpenModeFlag &mode)
 {

@@ -12,6 +12,14 @@ public:
     DirEx();
     ~DirEx();
 
+    //转换成相同的分隔符
+    static QString toSameSeparator(const QString &strPath, const QString &strSeparator = QDir::separator());
+    //删除文件夹
+    static QStringList removeWorkDir(const QString &workDir, const QStringList &filters);
+    //拷贝文件夹(仅仅针对第一级目录)
+    static bool CopyDirectory(const QString &src, const QString &dest);
+
+
     /// @brief 查找文件夹内所有的文件
     /// @param path 要查找的文件夹
     /// @param nameFilters 文件过滤
@@ -44,8 +52,7 @@ public:
     /// @param count 第几个文件
     /// @param name 源文件名
     void currentFile(int count, const QString &name);
-    //转换成相同的分隔符
-    static QString toSameSeparator(const QString &strPath, const QString &strSeparator = QDir::separator());
+
 private:
     int m_copyFileCount;
     void doDirTree(const QString &fromPath, const QString &toPath,
