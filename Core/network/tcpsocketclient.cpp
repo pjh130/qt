@@ -1,115 +1,48 @@
 #include "tcpsocketclient.h"
 
-TcpSocketClient::TcpSocketClient()
+TcpSocketClient::TcpSocketClient(const QString &strIp, const quint16 port, QObject *parent):
+    TcpSocketThread(-1, parent)
 {
+    m_timer = NULL;
     m_sockect = NULL;
+    m_strIpSer = strIp;
+    m_portSer = port;
+    m_socketID = -1;
 }
 
 TcpSocketClient::~TcpSocketClient()
 {
 
-    closeSockect();
 }
 
-void TcpSocketClient::closeSockect()
+void TcpSocketClient::run()
 {
-    if(m_sockect)
-    {
-        m_sockect->close();
-        m_sockect->deleteLater();
-        m_sockect = NULL;
-    }
-}
+    m_timer = new QTimer;
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()), Qt::DirectConnection);
+    m_timer->start(100);
 
-void TcpSocketClient::slotStartSocket(const QString &strIp, const quint16 port)
-{
-    qDebug()<<"TcpSocketClient::slotStartSocket";
     m_sockect = new QTcpSocket;
-    m_strIp = strIp;
-    m_port = port;
-    connect(m_sockect,&QTcpSocket::readyRead,this,&TcpSocketClient::slotReadData);
-    dis = connect(m_sockect,&QTcpSocket::disconnected,
-                  [&](){
-        qDebug() << "disconnect" ;
-        closeSockect();
-        emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
-    });
-    m_sockect->connectToHost(m_strIp, port);
+
+    connect(m_sockect,&QTcpSocket::readyRead,this,&TcpSocketThread::slotReadData, Qt::DirectConnection);
+    dis = connect(m_sockect, &QTcpSocket::disconnected, this, &TcpSocketThread::slotDisconnect, Qt::DirectConnection);
+    m_sockect->connectToHost(m_strIpSer, m_portSer);
     QEventLoop loop;
     connect(m_sockect, &QTcpSocket::stateChanged, &loop, &QEventLoop::quit);
-    //加个超时
-    //    QTimer::singleShot(30, &loop, SLOT(quit()));
     loop.exec();
-    //    return;
     if(m_sockect->state() == QTcpSocket::ConnectedState)
     {
+        m_strIp = m_sockect->peerAddress().toString();
+        m_port = m_sockect->peerPort();
+        m_socketID = m_sockect->socketDescriptor();
         emit connectClient(m_socketID, m_strIp, m_port);
-        qDebug() << "new connect-->"<<m_strIp<<":"<<m_port ;
+        qDebug() << "new connect-->"<<m_strIp<<":"<<m_port;
     } else {
         qDebug() << "connect failed-->"<<m_strIp<<":"<<m_port<<"  "<<m_sockect->errorString();
-        emit connectClient(-1, m_strIp, m_port);
+        emit sockDisConnect(m_socketID, m_strIpSer, m_portSer, QThread::currentThread());
+        stopTimer();
         closeSockect();
-    }
-}
-
-void TcpSocketClient::slotSentData(SEND_DATA_ST st)
-{
-    qDebug()<<"TcpSocketClient::slotSentData currentThreadId: "<<QThread::currentThreadId();
-    if(m_sockect == NULL)
-    {
         return;
     }
 
-    if(st.socketID == m_socketID || -1 == st.socketID)
-    {
-        //只发送匹配自己的数据
-        qint64 send =  m_sockect->write(st.byData);
-        if (send == st.byData.length())
-        {
-            //成功
-            emit sendDataRet(m_socketID, st.strKey, true, "");
-        } else {
-            //失败
-            emit sendDataRet(m_socketID, st.strKey, false, m_sockect->errorString());
-        }
-    } else {
-        //不做任何处理
-    }
+    exec();
 }
-
-void TcpSocketClient::disConTcp(const qintptr socketID)
-{
-    if(m_sockect == NULL)
-    {
-        return;
-    }
-
-    if (socketID == m_socketID)
-    {
-        m_sockect->disconnectFromHost();
-    }
-    else if (socketID == -1) //-1为全部断开
-    {
-        disconnect(dis); //先断开连接的信号槽，防止二次析构
-        m_sockect->disconnectFromHost();
-        m_sockect->deleteLater();
-        m_sockect = NULL;
-    }
-}
-
-void TcpSocketClient::slotReadData()
-{
-    qDebug()<<"TcpSocketClient::slotReadData currentThreadId: "<<QThread::currentThreadId();
-
-    if(m_sockect == NULL)
-    {
-        return;
-    }
-
-    QByteArray data  = m_sockect->readAll();
-
-    //收到的数据不做处理转发出去
-    emit receiveData(m_socketID, data);
-}
-
-

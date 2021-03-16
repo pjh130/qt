@@ -1,6 +1,7 @@
 #include "tcpsocketthread.h"
 
-TcpSocketThread::TcpSocketThread(qintptr socketDescriptor)
+TcpSocketThread::TcpSocketThread(qintptr socketDescriptor, QObject *parent):
+    QThread(parent)
 {
     //注册自定义的信号槽参数
     qRegisterMetaType<SEND_DATA_ST>("SEND_DATA_ST");
@@ -38,6 +39,12 @@ void TcpSocketThread::closeSockect()
 
 void TcpSocketThread::run()
 {
+    if (m_socketID <= 0)
+    {
+        emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());
+        return;
+    }
+
     m_timer = new QTimer;
     connect(m_timer, SIGNAL(timeout()), this, SLOT(slotWork()), Qt::DirectConnection);
     m_timer->start(100);
@@ -131,8 +138,10 @@ void TcpSocketThread::disConTcp(const qintptr socketID)
 
 void TcpSocketThread::slotDisconnect()
 {
+    qDebug()<<"TcpSocketThread::slotDisconnect";
     emit sockDisConnect(m_socketID, m_strIp, m_port, QThread::currentThread());//发送断开连接的用户信息
     stopTimer();
+    closeSockect();
     exit();
 }
 

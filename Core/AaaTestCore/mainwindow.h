@@ -48,6 +48,7 @@ public:
     void testMysql();
     void testOdbc();
     void testPsql();
+    void testHttp();
 
 private slots:
     void on_pushButton_email_clicked();
@@ -91,10 +92,10 @@ private slots:
     void on_pushButton_frame_clicked();
 
 signals:
+    void clientSentData(SEND_DATA_ST st);
     void sentDisConnect(int i);
     void addWork(REQUEST_ST request);
     void startCaptureWidget();
-    void startSocket(const QString &strIp, const quint16 port);
 
 private:
     Ui::MainWindow *ui;

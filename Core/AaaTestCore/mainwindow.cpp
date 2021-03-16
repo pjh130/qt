@@ -139,20 +139,41 @@ void MainWindow::on_pushButton_log_clicked()
 
 void MainWindow::on_pushButton_network_clicked()
 {
-    if (true)
+    int port = 60000;
+    int iSwitch = 1;
+    switch (iSwitch) {
+    case 0:
     {
-        int port = 60000;
         TcpServer *ser = new TcpServer;
         connect(this, &MainWindow::sentDisConnect, ser, &TcpServer::sentDisConnect);
         qDebug()<<"listen QHostAddress: "<< ser->listen(QHostAddress::Any,port);
-        return;
-        TcpSocketClient *cli = new TcpSocketClient;
-        connect(this, &MainWindow::startSocket, cli, &TcpSocketClient::slotStartSocket);
-        cli->start();
-        emit startSocket("127.0.0.1", port);
-        return;
     }
+        break;
+    case 1:
+    {
+        TcpSocketClient *cli = new TcpSocketClient("127.0.0.1", port);
+        connect(this, &MainWindow::clientSentData, cli, &TcpSocketClient::slotSentData);
+        cli->start();
+    }
+        break;
+    case 2:
+        testHttp();
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    default:
+        break;
+    }
+}
 
+void MainWindow::testHttp()
+{
     REQUEST_ST st;
     st.method = REQUEST_METHOD_GET;
     st.strUrl = "http://www.baidu.com/";
@@ -546,6 +567,10 @@ void MainWindow::slotFinishPixmap(const QPixmap &finishPixmap)
 
 void MainWindow::on_pushButton_qxtglobalshortcut_clicked()
 {
+    SEND_DATA_ST st;
+    st.socketID = -1;
+    st.byData = "hello i am client";
+    emit clientSentData(st);
     emit sentDisConnect(-1);
     hotkey = new QHotkey(QKeySequence("ctrl+alt+D"), true, this);
     connect(hotkey, &QHotkey::activated, this, &MainWindow::on_pushButton_ScreenShot_clicked);

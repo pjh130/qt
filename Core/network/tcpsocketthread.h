@@ -13,7 +13,7 @@ class TcpSocketThread : public QThread
 {
     Q_OBJECT
 public:
-    TcpSocketThread(qintptr socketDescriptor);
+    TcpSocketThread(qintptr socketDescriptor, QObject *parent = 0);
     ~TcpSocketThread();
 
 protected:
@@ -39,23 +39,21 @@ signals:
 public slots:
     void slotSentData(SEND_DATA_ST st);//发送信号的槽
     void disConTcp(const qintptr socketID);
-//    void slotStartSocket(qintptr socketDescriptor); //开始工作
     void slotWork();
-
-protected slots:
     void slotReadData();//接收数据
     void slotDisconnect();
 
-private:
+public:
     QTcpSocket *m_sockect;
-    bool bStopTimer;
     QTimer *m_timer;
-    QMutex m_lock;
-
     qintptr m_socketID;
     QString m_strIp;
     quint16 m_port;
     QMetaObject::Connection dis;
+private:
+    bool bStopTimer;
+    QMutex m_lock;
+
     QList<SEND_DATA_ST> m_lstSenddata;
 };
 
